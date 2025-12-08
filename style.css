@@ -1,5 +1,6 @@
 :root {
   --bg-color: #ebebeb;
+  --bg-light-dark-color: #d4d4d4;
   --text-color: #5d5d5d;
   --success-color: #53bd57;
   --success-color-dark: #3f9742;
@@ -7,10 +8,25 @@
   --dismiss-color: #dd3a3a;
   --dismiss-color-dark: #b83434;
   --border-color: #ddd;
+  --border-dark-color: #979797;
   --btn-default-color: black;
   --btn-default-hover-color: #333;
   --btn-default-disabled-color: #888;
   --btn-default-disabled-hover-color: #7b7b7b;
+  --title-desktop-font-size: 32px;
+  --title-mobile-font-size: 24px;
+  --nav-links-desktop-font-size: 16px;
+  --nav-links-mobile-font-size: 14px;
+  --btn-text-desktop-font-size: 16px;
+  --btn-text-mobile-font-size: 12px;
+  --card-header-desktop-font-size: 24px;
+  --card-header-mobile-font-size: 16px;
+  --card-text-desktop-font-size: 14px;
+  --card-text-mobile-font-size: 12px;
+  --input-label-desktop-font-size: 14px;
+  --input-label-mobile-font-size: 12px;
+  --input-placeholder-desktop-font-size: 14px;
+  --input-placeholder-mobile-font-size: 12px;
 }
 
 body {
@@ -20,18 +36,31 @@ body {
   font-family: Arial, sans-serif;
 }
 
+header {
+  background-color: var(--bg-color);
+}
+
 nav {
+  max-width: 1250px;
   padding: 4px 32px;
   display: flex;
   align-items: center;
+  margin: 0 auto;
   gap: 16px;
-  background-color: var(--bg-color);
   color: var(--text-color);
 }
-nav a {
-  text-decoration: none;
+nav h2 {
+  font-size: var(--title-desktop-font-size);
 }
-nav a:hover {
+nav .nav-links {
+  display: flex;
+  gap: 16px;
+}
+nav .nav-links a {
+  text-decoration: none;
+  font-size: var(--nav-links-font-desktop-size);
+}
+nav .nav-links a:hover {
   cursor: pointer;
 }
 
@@ -39,10 +68,23 @@ hr {
   margin: 16px 0px;
 }
 
+.nav-burger {
+  display: none;
+  cursor: pointer;
+  padding: 4px;
+  border: 1px solid var(--border-dark-color);
+  border-radius: 2px;
+}
+.nav-burger .burger-line {
+  height: 2px;
+  width: 20px;
+  margin: 2px;
+  background-color: var(--text-color);
+}
+
 .main-content {
   display: flex;
   justify-content: center;
-  min-height: calc(100vh - 44px - 96px);
 }
 
 .container {
@@ -59,10 +101,10 @@ hr {
 .grid .grid-column {
   padding: 12px;
 }
-.grid .grid-column-5 {
+.grid .grid-column-left {
   grid-column: span 5;
 }
-.grid .grid-column-7 {
+.grid .grid-column-right {
   grid-column: span 7;
 }
 
@@ -72,7 +114,7 @@ hr {
   color: white;
   border: none;
   border-radius: 4px;
-  font-size: 14px;
+  font-size: var(--btn-text-desktop-font-size);
 }
 
 .button:hover {
@@ -136,8 +178,11 @@ hr {
   color: var(--text-color);
   margin: 8px 0px;
 }
+.recipe-list .recipe-card .recipe-info h3 {
+  font-size: var(--card-header-desktop-font-size);
+}
 .recipe-list .recipe-card .recipe-info p {
-  font-size: 12px;
+  font-size: var(--card-text-desktop-font-size);
 }
 .recipe-list .recipe-card img {
   max-height: 70px;
@@ -165,14 +210,14 @@ hr {
   border: 1px solid;
   border-radius: 4px;
   border-color: var(--border-color);
-  font-size: 14px;
+  font-size: var(--input-placeholder-desktop-font-size);
 }
 .form .form-input .form-input-field:focus {
   outline: none;
 }
 .form .form-input label {
   margin-bottom: 4px;
-  font-size: 12px;
+  font-size: var(--input-label-desktop-font-size);
   font-weight: bold;
 }
 .form img {
@@ -201,4 +246,53 @@ hr {
 .ingredient-add-boxes {
   padding: 4px 0px;
   gap: 28px;
+}
+
+@media only screen and (max-width: 1200px) {
+  nav h2 {
+    font-size: var(--title-mobile-font-size);
+  }
+  nav .nav-links {
+    display: none;
+    padding: 20px;
+    left: 0px;
+    width: 100%;
+    background-color: var(--bg-light-dark-color);
+    position: absolute;
+    top: 75px;
+    flex-direction: column;
+  }
+  nav .nav-links a {
+    margin-left: 16px;
+    font-size: var(--nav-links-mobile-font-size);
+  }
+  nav .nav-burger {
+    display: flex;
+    flex-direction: column;
+    margin-left: auto;
+  }
+  .button {
+    font-size: var(--btn-text-mobile-font-size);
+  }
+  .recipe-list .recipe-card .recipe-info h3 {
+    font-size: var(--card-header-mobile-font-size);
+  }
+  .recipe-list .recipe-card .recipe-info p {
+    font-size: var(--card-text-mobile-font-size);
+  }
+  .form .form-input .form-input-field {
+    font-size: var(--input-placeholder-mobile-font-size);
+  }
+  .form .form-input label {
+    font-size: var(--input-label-mobile-font-size);
+  }
+  .grid .grid-column-left {
+    grid-column: span 12;
+  }
+  .grid .grid-column-right {
+    grid-column: span 12;
+  }
+  .container {
+    max-width: 600px;
+  }
 }/*# sourceMappingURL=style.css.map */

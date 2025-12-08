@@ -11,8 +11,17 @@
     <header>
       <nav>
         <h2>Recipe Book</h2>
-        <a>Authentificate</a>
-        <a>Shopping list</a>
+        <div id="nav-links" class="nav-links show">
+          <a>Authentificate</a>
+          <a>Shopping list</a>
+          <a>Shopping list</a>
+          <a>Shopping list</a>
+        </div>
+        <div id="nav-burger" class="nav-burger">
+          <div class="burger-line"></div>
+          <div class="burger-line"></div>
+          <div class="burger-line"></div>
+        </div>
       </nav>
     </header>
 
@@ -21,7 +30,7 @@
       <!-- grid layout -->
       <div class="container grid">
         <!-- first column -->
-        <section class="grid-column-5">
+        <section class="grid-column-left">
           <!-- new recipe button -->
           <button class="button button-success">New Recipe</button>
           <hr />
@@ -45,7 +54,7 @@
         </section>
 
         <!-- second column -->
-        <section class="grid-column-7">
+        <section class="grid-column-right">
           <!-- add form -->
           <form id="add-recipe-form" class="form" action="">
             <!-- buttons -->
@@ -137,5 +146,6 @@
         </section>
       </div>
     </main>
+    <script src="index.js"></script>
   </body>
 </html>
