@@ -32,6 +32,7 @@
 body {
   display: block;
   margin: 0;
+  box-sizing: border-box;
   height: 100vh;
   font-family: Arial, sans-serif;
 }
@@ -54,9 +55,9 @@ nav h2 {
 }
 nav .nav-links {
   display: flex;
-  gap: 16px;
 }
 nav .nav-links a {
+  margin-left: 32px;
   text-decoration: none;
   font-size: var(--nav-links-font-desktop-size);
 }
@@ -223,6 +224,7 @@ hr {
 .form img {
   border-radius: 2px;
   max-width: 300px;
+  width: 100%;
   height: auto;
 }
 
@@ -248,23 +250,29 @@ hr {
   gap: 28px;
 }
 
-@media only screen and (max-width: 1200px) {
+@media only screen and (max-width: 768px) {
   nav h2 {
     font-size: var(--title-mobile-font-size);
   }
   nav .nav-links {
-    display: none;
-    padding: 20px;
+    display: flex;
+    height: 0px;
+    overflow: hidden;
     left: 0px;
     width: 100%;
     background-color: var(--bg-light-dark-color);
     position: absolute;
     top: 75px;
     flex-direction: column;
+    transition: height 0.3s ease-in-out;
+  }
+  nav .nav-links.show {
+    overflow: visible;
+    height: 100px;
   }
   nav .nav-links a {
-    margin-left: 16px;
     font-size: var(--nav-links-mobile-font-size);
+    padding: 16px 0px;
   }
   nav .nav-burger {
     display: flex;
