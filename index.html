@@ -4,7 +4,12 @@
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <title>Recipe Book</title>
-    <link rel="stylesheet" href="style.css" />
+    <link rel="stylesheet" href="main.css" />
+    <link rel="stylesheet" href="styles/general.css" />
+    <link rel="stylesheet" href="styles/buttons.css" />
+    <link rel="stylesheet" href="styles/form.css" />
+    <link rel="stylesheet" href="styles/navigation.css" />
+    <link rel="stylesheet" href="styles/recipe.css" />
   </head>
   <body>
     <!-- the nav bar -->
@@ -34,13 +39,107 @@
           <hr />
           <!-- recipe list -->
           <div class="recipe-list">
-            <article class="recipe-card">
-              <div class="recipe-info">
-                <h3>Toast</h3>
-                <p>adasd</p>
-              </div>
-              <img src="./images/toast.jpg" alt="toast image" />
-            </article>
+            <section>
+              <article id="toast-recipe" class="recipe-card">
+                <div class="recipe-info">
+                  <h3>Toast</h3>
+                  <p>adasd</p>
+                </div>
+                <img src="./images/toast.jpg" alt="toast image" />
+              </article>
+              <section class="recipe-order-toast">
+                <div class="recipe-order-category">
+                  <h4>Alegeti ingredientele:</h4>
+                  <div class="recipe-order-list">
+                    <div>
+                      <input
+                        type="checkbox"
+                        id="ingredient-1"
+                        name="ingredient-1"
+                      />
+                      <label for="ingredient-1">Salata verde</label>
+                    </div>
+                    <div>
+                      <input
+                        type="checkbox"
+                        id="ingredient-2"
+                        name="ingredient-2"
+                      />
+                      <label for="ingredient-2">Rosii</label>
+                    </div>
+                    <div>
+                      <input
+                        type="checkbox"
+                        id="ingredient-3"
+                        name="ingredient-3"
+                      />
+                      <label for="ingredient-3">Ceapa rosie</label>
+                    </div>
+                    <div>
+                      <input
+                        type="checkbox"
+                        id="ingredient-4"
+                        name="ingredient-4"
+                      />
+                      <label for="ingredient-4">Porumb</label>
+                    </div>
+                  </div>
+                </div>
+                <div class="recipe-order-category">
+                  <h4>Alegeti sosul:</h4>
+                  <div class="recipe-order-list">
+                    <div>
+                      <input type="checkbox" id="sauce-1" name="sauce-1" />
+                      <label for="sauce-1">Tzatziki</label>
+                    </div>
+                    <div>
+                      <input type="checkbox" id="sauce-2" name="sauce-2" />
+                      <label for="sauce-2">Ketchup dulce</label>
+                    </div>
+                    <div>
+                      <input type="checkbox" id="sauce-3" name="sauce-3" />
+                      <label for="sauce-3">Ketchup picant</label>
+                    </div>
+                  </div>
+                </div>
+                <div class="recipe-order-category">
+                  <h4>Doriti tacamuri?</h4>
+                  <div class="recipe-order-list">
+                    <div>
+                      <input
+                        type="radio"
+                        id="tacamuri-yes"
+                        name="tacamuri"
+                        value="yes"
+                      />
+                      <label for="tacamuri-yes">Da</label>
+                    </div>
+                    <div>
+                      <input
+                        type="radio"
+                        id="tacamuri-no"
+                        name="tacamuri"
+                        value="no"
+                      />
+                      <label for="tacamuri-no">No</label>
+                    </div>
+                  </div>
+                </div>
+                <div class="recipe-order-category">
+                  <h4>Adresa de livrare si numarul de contact</h4>
+                  <div>
+                    <textarea
+                      cols="40"
+                      class="max-width-full"
+                      id="delivery-address"
+                      name="tacamuri"
+                      value="yes"
+                      placeholder="Ex: str. Popesti, nr.1, ap 10"
+                    ></textarea>
+                  </div>
+                </div>
+              </section>
+            </section>
             <article class="recipe-card">
               <div class="recipe-info">
                 <h3>Avocado</h3>
@@ -64,7 +163,6 @@
             <div class="form-input column">
               <label for="name">Name</label>
               <input
-                tabindex="1"
                 class="form-input-field"
                 type="text"
                 name="name"
@@ -77,7 +175,6 @@
             <div class="form-input column">
               <label for="image-url">Image URL</label>
               <input
-                tabindex="2"
                 class="form-input-field"
                 type="text"
                 name="image-url"
@@ -95,7 +192,6 @@
             <div class="form-input column">
               <label for="description">Description</label>
               <textarea
-                tabindex="3"
                 class="form-input-field max-width-full"
                 name="description"
                 id="description"
@@ -103,11 +199,10 @@
               ></textarea>
             </div>
             <!-- ingredient list -->
-            <form name="ingredient-list" class="form" action="" method="post">
+            <div class="form">
               <div class="form-input column">
                 <div class="form-input row ingredient-add-boxes">
                   <input
-                    tabindex="4"
                     required
                     class="form-input-field width-60"
                     type="text"
@@ -115,43 +210,39 @@
                     id="ingredient-name-1"
                   />
                   <input
-                    tabindex="5"
                     required
                     class="form-input-field width-20"
                     type="text"
                     name="ingredient-quantity-1"
                     id="ingredient-quantity-1"
                   />
-                  <button class="button button-dismiss">X</button>
+                  <button tabindex="-1" class="button button-dismiss">X</button>
                 </div>
                 <div class="form-input row ingredient-add-boxes">
                   <input
-                    tabindex="6"
                     class="form-input-field width-60"
                     type="text"
                     name="ingredient-name-2"
                     id="ingredient-name-2"
                   />
                   <input
-                    tabindex="7"
                     class="form-input-field width-20"
                     type="text"
                     name="ingredient-quantity-2"
                     id="ingredient-quantity-2"
                   />
-                  <button class="button button-dismiss">X</button>
+                  <button tabindex="-1" class="button button-dismiss">X</button>
                 </div>
               </div>
 
               <hr />
               <button
-                tabindex="8"
                 type="submit"
                 class="button button-success width-fit-content"
               >
                 Add ingredient
               </button>
-            </form>
+            </div>
           </form>
         </section>
       </div>

@@ -1,0 +1,30 @@
+:root {
+  --bg-color: #ebebeb;
+  --bg-light-dark-color: #d4d4d4;
+  --text-color: #5d5d5d;
+  --success-color: #53bd57;
+  --success-color-dark: #3f9742;
+  --success-color-light: #8ddb90;
+  --dismiss-color: #dd3a3a;
+  --dismiss-color-dark: #b83434;
+  --border-color: #ddd;
+  --border-dark-color: #979797;
+  --btn-default-color: black;
+  --btn-default-hover-color: #333;
+  --btn-default-disabled-color: #888;
+  --btn-default-disabled-hover-color: #7b7b7b;
+  --title-desktop-font-size: 32px;
+  --title-mobile-font-size: 24px;
+  --nav-links-desktop-font-size: 16px;
+  --nav-links-mobile-font-size: 14px;
+  --btn-text-desktop-font-size: 16px;
+  --btn-text-mobile-font-size: 12px;
+  --card-header-desktop-font-size: 24px;
+  --card-header-mobile-font-size: 16px;
+  --card-text-desktop-font-size: 14px;
+  --card-text-mobile-font-size: 12px;
+  --input-label-desktop-font-size: 14px;
+  --input-label-mobile-font-size: 12px;
+  --input-placeholder-desktop-font-size: 14px;
+  --input-placeholder-mobile-font-size: 12px;
+}
