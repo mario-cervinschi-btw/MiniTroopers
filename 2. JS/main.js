@@ -32,6 +32,7 @@ document.addEventListener("DOMContentLoaded", function () {
   const lastName = "Lovelace";
   const age = 36;
 
+  // or using +
   console.log(
     `2. Bio: Hello, my name is ${firstName} ${lastName}, I was born ${age} years ago.`
   );
@@ -66,8 +67,9 @@ document.addEventListener("DOMContentLoaded", function () {
   console.log(
     "3. Iterate keys:" /* iterate over the object's keys and values and log them */
   );
+
   for (let [key, value] of Object.entries(person)) {
-    console.log(`${key}: ${value}`);
+    console.log(key, ": ", value);
   }
 
   /*
@@ -77,7 +79,11 @@ document.addEventListener("DOMContentLoaded", function () {
   const sentence = "   hello there GENERAL KENOBI   ";
 
   function toSentenceCase(str) {
+    // removing spaces from start and end of sentence
     str = str.trim().toLowerCase();
+    // splitting the words into an array and then converting it into a string
+    // to remove spaces between words
+    str = str.split(/\s+/).join(" ");
     str = str.charAt(0).toUpperCase() + str.slice(1);
     return str + ".";
   }
@@ -90,9 +96,9 @@ document.addEventListener("DOMContentLoaded", function () {
   const greeting = "Ho Ho Ho! Merry Christmas!";
 
   console.log("5. Indexed iteration:");
-  for (let i = 0; i < greeting.length; i++) {
-    console.log(`Index ${i}: ${greeting[i]} 🎅`);
-  }
+  [...greeting].forEach((index, el) => {
+    console.log(`Index ${index}: ${el} 🎅`);
+  });
 
   /** Array Methods **/
   /*
@@ -118,8 +124,10 @@ document.addEventListener("DOMContentLoaded", function () {
     { id: 6, color: "crimson", height: 7, width: 8, distance: 16 },
   ];
 
+  // getting only objects that actually have the key attribute
+  // otherwise returning empty array
   function pluck(arr, key) {
-    return arr.map((obj) => obj[key]);
+    return arr.filter((obj) => key in obj).map((obj) => obj[key]);
   }
 
   console.log("7.", pluck(mappings, "color")); // => ['magenta', 'red', 'green' .......];
@@ -150,6 +158,7 @@ If returns false it will be included.
   function iterator(obj) {
     return obj.height < 10;
   }
+
   function reject(arr, iter) {
     return arr.filter((obj) => !iter(obj));
   }
@@ -170,13 +179,7 @@ If returns false it will be included.
 13. Write a function that returns true if all elements in the array have the area > = 10, false otherwise.
 */
   function getAreasAreBigger(mappings, area) {
-    const areaArr = calculateArea(mappings);
-
-    const filteredArr = areaArr.filter((obj) => obj.area >= 10);
-
-    if (filteredArr.length == mappings.length) return true;
-
-    return false;
+    return calculateArea(mappings).every((obj) => obj.area >= 10);
   }
   console.log("13.", getAreasAreBigger(mappings, 10));
 
@@ -192,12 +195,9 @@ If returns false it will be included.
 15. Write a function that returns the total distance (the sum of the element distances).
 */
   function getTotalDistance(mappings) {
-    let sum = 0;
-    mappings.forEach((element) => {
-      sum += element.distance;
-    });
-
-    return sum;
+    return mappings.reduce((sum, obj) => {
+      return sum + obj.distance;
+    }, 0);
   }
   console.log("15. Sum of distances: ", getTotalDistance(mappings));
 
