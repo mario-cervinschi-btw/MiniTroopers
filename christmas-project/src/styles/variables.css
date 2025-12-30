@@ -12,8 +12,17 @@
   --spacing-medium: 1rem;
   --spacing-large: 1.5rem;
 
+  --border-size: 1px;
   --border-radius: 5px;
+
+  --border-radius-bottom: 0px 0px 5px 5px;
+  --border-radius-top: 5px 5px 0px 0px;
+
   --transition-speed: 0.3s;
+
+  --padding-small: 4px 8px;
+  --padding-medium: 8px 16px;
+  --padding-large: 16px 32px;
 
   --font-bold: 600;
 }

@@ -1,0 +1,9 @@
+.recent-employees-list {
+  padding: 0px;
+  list-style: none;
+  color: var(--color-dark-gray);
+}
+
+.recent-employees-list li {
+  padding: 2px 0px;
+}

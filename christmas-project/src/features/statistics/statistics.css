@@ -1,0 +1,17 @@
+.stats {
+  display: flex;
+  flex-direction: column;
+  gap: var(--spacing-medium);
+}
+
+.stat-item {
+  display: flex;
+  justify-content: space-between;
+  padding: var(--spacing-medium) var(--spacing-small);
+  border-radius: var(--border-radius);
+  background-color: var(--color-light-gray);
+}
+
+.stat-item strong {
+  color: var(--color-christmas-green);
+}

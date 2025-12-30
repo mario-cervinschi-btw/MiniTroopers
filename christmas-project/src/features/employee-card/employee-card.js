@@ -1,3 +1,8 @@
+const link = document.createElement('link');
+link.rel = 'stylesheet';
+link.href = 'src/features/employee-card/employee-card.css';
+document.head.appendChild(link);
+
 export function createEmployeeCard(employee, clickHandler) {
   const card = document.createElement('article');
   const headerBtn = document.createElement('button');

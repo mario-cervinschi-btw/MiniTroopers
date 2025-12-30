@@ -1,6 +1,6 @@
 import employeesData from './data/employee-data.json';
 import { initializeEmployeesState } from './state/state.js';
-import { renderEmployeeList } from './features/employee-list/employee-list.js';
+import { renderPagedEmployeeList } from './features/employee-list/employee-list.js';
 
 import 'bootstrap-icons/font/bootstrap-icons.min.css';
 import './styles/main.css';
@@ -12,6 +12,6 @@ import { addFormEventListeners } from './features/filter-form/filter-form.js';
 
 initializeEmployeesState(employeesData);
 
-renderEmployeeList();
+renderPagedEmployeeList();
 renderEmployeeStatistics();
 addFormEventListeners();

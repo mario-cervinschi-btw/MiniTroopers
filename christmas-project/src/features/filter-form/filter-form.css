@@ -1,0 +1,34 @@
+.filter-group {
+  display: flex;
+  flex-direction: column;
+  gap: var(--spacing-small);
+}
+
+.filter-group select,
+input {
+  border: var(--border-size) solid var(--color-border);
+  border-radius: var(--border-radius);
+  padding: var(--spacing-small);
+}
+
+.filter-group label {
+  font-weight: var(--font-bold);
+}
+
+#filter-form {
+  display: grid;
+  grid-template-columns: 3fr 3fr 2fr;
+  gap: var(--spacing-medium);
+  align-items: end;
+}
+
+.form-buttons {
+  display: flex;
+  justify-content: center;
+  flex-direction: row;
+  gap: var(--spacing-small);
+}
+
+.form-buttons button {
+  width: 100%;
+}

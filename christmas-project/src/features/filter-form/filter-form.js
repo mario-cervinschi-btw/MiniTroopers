@@ -1,6 +1,9 @@
-//  HELPER COMMENT: Here we don't have a starter code snippet :P
-
 import { getAllEmployees, setFilteredEmployees } from '../../state/state';
+
+const link = document.createElement('link');
+link.rel = 'stylesheet';
+link.href = 'src/features/filter-form/filter-form.css';
+document.head.appendChild(link);
 
 const form = document.getElementById('filter-form');
 const statusFilter = document.getElementById('status-filter');
@@ -50,7 +53,7 @@ export function addFormEventListeners() {
   resetBtn.addEventListener('click', function () {
     form.reset();
 
-    history.pushState(null, '', '');
+    history.pushState(null, '', '/');
 
     setFilteredEmployees(getAllEmployees());
   });

@@ -1,8 +1,4 @@
-//  HELPER COMMENT: Private state - should not be accessed directly
-// use the provided getter and setter functions to interact with the state
-// add your own if u need more functionality ;)
-
-import { renderEmployeeList } from '../features/employee-list/employee-list';
+import { renderPagedEmployeeList } from '../features/employee-list/employee-list';
 
 let state = {
   allEmployees: [],
@@ -86,6 +82,13 @@ export function initializeEmployeesState(employees) {
   };
 }
 
+export function getEmployeesForCurrentPage() {
+  return state.filteredEmployees.slice(
+    (state.currentPage - 1) * state.itemsPerPage,
+    state.currentPage * state.itemsPerPage
+  );
+}
+
 /**
  * Update filtered employees list
  * Resets to page 1 when filtering
@@ -97,7 +100,7 @@ export function setFilteredEmployees(employees) {
     filteredEmployees: [...employees],
     currentPage: 1,
   };
-  renderEmployeeList();
+  renderPagedEmployeeList();
 }
 
 /**
