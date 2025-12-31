@@ -5,49 +5,75 @@ link.rel = 'stylesheet';
 link.href = 'src/features/filter-form/filter-form.css';
 document.head.appendChild(link);
 
+const MIN_CHARACTERS_FILTER = 2;
+const TIMEOUT_CHARACTERS_FILTER = 300;
+
 const form = document.getElementById('filter-form');
 const statusFilter = document.getElementById('status-filter');
 const searchFilter = document.getElementById('search-filter');
 const resetBtn = document.getElementById('reset-filters');
 
+function applyFilters() {
+  const statusValue = statusFilter.value;
+  const searchValue = searchFilter.value.trim().toLowerCase();
+
+  const params = new URLSearchParams();
+
+  if (statusValue) {
+    params.set('status', statusValue);
+  }
+
+  if (searchValue.length >= MIN_CHARACTERS_FILTER) {
+    params.set('search', searchValue);
+  }
+
+  history.pushState(null, '', '?' + params.toString());
+
+  const filteredEmp = getAllEmployees().filter((emp) => {
+    if (statusValue && emp.status !== statusValue) {
+      return false;
+    }
+
+    if (searchValue.length >= MIN_CHARACTERS_FILTER) {
+      const inName = emp.name.toLowerCase().includes(searchValue);
+      const inPresent = emp.desiredPresent.toLowerCase().includes(searchValue);
+
+      if (!inName && !inPresent) {
+        return false;
+      }
+    }
+
+    return true;
+  });
+
+  setFilteredEmployees(filteredEmp);
+}
+
+function debounce(callback, delay) {
+  let timer;
+
+  return function () {
+    clearTimeout(timer);
+    timer = setTimeout(() => {
+      callback();
+    }, delay);
+  };
+}
+
+const debounceApplyFilters = debounce(applyFilters, TIMEOUT_CHARACTERS_FILTER);
+
 export function addFormEventListeners() {
   form.addEventListener('submit', function (e) {
     e.preventDefault();
+    applyFilters();
+  });
 
-    const statusValue = statusFilter.value;
-    const searchValue = searchFilter.value.trim().toLowerCase();
+  searchFilter.addEventListener('input', function () {
+    const value = searchFilter.value.trim();
 
-    const params = new URLSearchParams();
-    if (statusValue) {
-      params.set('status', statusValue);
+    if (value.length >= MIN_CHARACTERS_FILTER || value.length === 0) {
+      debounceApplyFilters();
     }
-
-    if (searchValue) {
-      params.set('search', searchValue);
-    }
-
-    history.pushState(null, '', '?' + params.toString());
-
-    const filteredEmp = getAllEmployees().filter((emp) => {
-      if (statusValue && emp.status !== statusValue) {
-        return false;
-      }
-
-      if (searchValue) {
-        const inName = emp.name.toLowerCase().includes(searchValue);
-        const inPresent = emp.desiredPresent
-          .toLowerCase()
-          .includes(searchValue);
-
-        if (!inName && !inPresent) {
-          return false;
-        }
-      }
-
-      return true;
-    });
-
-    setFilteredEmployees(filteredEmp);
   });
 
   resetBtn.addEventListener('click', function () {

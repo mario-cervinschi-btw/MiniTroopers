@@ -64,7 +64,7 @@ export function createEmployeeCard(employee, clickHandler) {
   const details = card.querySelector('.employee-details');
 
   header.addEventListener('click', () => {
-    toggleAccordion(header, details);
+    toggleAccordion(header, details, icon);
     if (header.classList.contains('drawer-open')) {
       if (clickHandler) {
         clickHandler(employee);
@@ -75,7 +75,9 @@ export function createEmployeeCard(employee, clickHandler) {
   return card;
 }
 
-function toggleAccordion(header, details) {
+function toggleAccordion(header, details, icon) {
   details.classList.toggle('show');
   header.classList.toggle('drawer-open');
+  icon.classList.toggle('bi-chevron-down');
+  icon.classList.toggle('bi-chevron-up');
 }

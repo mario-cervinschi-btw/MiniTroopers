@@ -13,6 +13,7 @@ input {
 
 .filter-group label {
   font-weight: var(--font-bold);
+  font-size: var(--font-size-base);
 }
 
 #filter-form {
@@ -31,4 +32,31 @@ input {
 
 .form-buttons button {
   width: 100%;
+}
+
+.nav h2 {
+  margin-top: 0px;
+  font-size: var(--font-size-large);
+  color: var(--color-christmas-green);
+}
+
+@media (max-width: 1024px) {
+  #filter-form {
+    grid-template-columns: 1fr 1fr;
+  }
+
+  .form-buttons {
+    grid-column: span 2;
+  }
+}
+
+@media (max-width: 768px) {
+  #filter-form {
+    grid-template-columns: 1fr;
+  }
+
+  .form-buttons {
+    grid-column: span 1;
+    flex-direction: column;
+  }
 }

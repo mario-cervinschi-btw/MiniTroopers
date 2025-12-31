@@ -1,3 +1,7 @@
+aside h3 {
+  padding-top: var(--spacing-medium);
+}
+
 .recent-employees-list {
   padding: 0px;
   list-style: none;
@@ -5,5 +9,5 @@
 }
 
 .recent-employees-list li {
-  padding: 2px 0px;
+  font-size: var(--font-size-base);
 }

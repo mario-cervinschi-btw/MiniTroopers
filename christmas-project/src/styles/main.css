@@ -1,8 +1,16 @@
+@font-face {
+  font-family: 'Roboto';
+  src: url('/assets/fonts/Roboto-VariableFont_wdth,wght.ttf') format('ttf');
+  font-weight: 400;
+  font-style: normal;
+}
+
 body {
   padding: 0;
   margin: 0;
   box-sizing: border-box;
   color: var(--color-dark-gray);
+  font-family: 'Roboto', Arial, sans-serif;
 }
 
 .container {
@@ -64,11 +72,6 @@ body {
   box-shadow: 4px 4px 12px var(--color-shadow);
 }
 
-.nav h2 {
-  margin-top: 0px;
-  color: var(--color-christmas-green);
-}
-
 button {
   cursor: pointer;
   border: var(--border-size) solid var(--color-border);
@@ -96,11 +99,14 @@ button.disabled {
   background-color: var(--color-light-gray);
 }
 
-.aside h2,
-h3 {
-  color: var(--color-christmas-red);
-}
-
-.aside h2 {
-  margin-top: 0px;
+/* tablet */
+@media (max-width: 1024px) {
+  .container {
+    grid-template-areas:
+      'header header header'
+      'nav nav nav'
+      'main main main'
+      'aside aside aside'
+      'footer footer footer';
+  }
 }

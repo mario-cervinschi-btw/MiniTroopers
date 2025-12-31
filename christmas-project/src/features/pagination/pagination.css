@@ -4,3 +4,18 @@
   gap: var(--spacing-medium);
   align-items: center;
 }
+
+.pagination > span {
+  font-weight: var(--font-bold);
+  font-size: var(--font-size-base);
+}
+
+@media (max-width: 768px) {
+  .pagination button {
+    width: 100%;
+  }
+  .pagination > span {
+    text-align: center;
+    width: 100%;
+  }
+}
