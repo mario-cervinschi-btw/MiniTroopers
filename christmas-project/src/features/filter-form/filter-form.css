@@ -4,7 +4,7 @@
   gap: var(--spacing-small);
 }
 
-.filter-group select,
+select,
 input {
   border: var(--border-size) solid var(--color-border);
   border-radius: var(--border-radius);

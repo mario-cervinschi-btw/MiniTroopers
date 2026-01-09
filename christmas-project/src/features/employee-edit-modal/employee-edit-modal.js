@@ -5,6 +5,21 @@ link.rel = 'stylesheet';
 link.href = 'src/features/employee-edit-modal/employee-edit-modal.css';
 document.head.appendChild(link);
 
+const errors = {
+  name: (value) =>
+    /^[A-Za-z\s-]{2,}$/.test(value)
+      ? ''
+      : 'Name must have at least 2 letters (including space or - allowed)',
+
+  location: (value) => (value ? '' : 'Location cant be empty'),
+
+  status: (value) => (value ? '' : 'Please select a status'),
+
+  desiredPresent: (value) => (value ? '' : 'Desired present cant be empty'),
+
+  notes: (value) => (value ? '' : 'Notes cant be empty'),
+};
+
 export function renderEditEmployeePopUp(employee) {
   const background = document.createElement('div');
   background.classList.add('employee-edit-background');
@@ -33,6 +48,9 @@ function createForm(employee) {
     value: employee.name ? employee.name : '',
     placeholder: 'Name',
   });
+  name.input.addEventListener('input', () =>
+    validateField(name.input, errors.name, name.error)
+  );
 
   const location = createLabeledInput({
     label: 'Location',
@@ -40,13 +58,28 @@ function createForm(employee) {
     value: employee.location ? employee.location : '',
     placeholder: 'Location',
   });
+  location.input.addEventListener('input', () =>
+    validateField(location.input, errors.location, location.error)
+  );
 
-  const status = createLabeledInput({
+  const status = createLabeledSelect({
     label: 'Status',
     name: 'status',
     value: employee.status ? employee.status : '',
-    placeholder: 'Status',
+    options: [
+      { value: '', text: 'Select status' },
+      { value: 'good', text: 'Good' },
+      { value: 'naughty', text: 'Naughty' },
+    ],
   });
+
+  const statusError = document.createElement('small');
+  statusError.classList.add('form-error');
+  status.labelElement.append(statusError);
+
+  status.input.addEventListener('change', () =>
+    validateField(status.input, errors.status, statusError)
+  );
 
   const desiredPresent = createLabeledInput({
     label: 'Desired Present',
@@ -54,6 +87,13 @@ function createForm(employee) {
     value: employee.desiredPresent ? employee.desiredPresent : '',
     placeholder: 'Desired Present',
   });
+  desiredPresent.input.addEventListener('input', () =>
+    validateField(
+      desiredPresent.input,
+      errors.desiredPresent,
+      desiredPresent.error
+    )
+  );
 
   const notes = createLabeledInput({
     label: 'Notes',
@@ -61,6 +101,9 @@ function createForm(employee) {
     value: employee.notes ? employee.notes : '',
     placeholder: 'Notes',
   });
+  notes.input.addEventListener('input', () =>
+    validateField(notes.input, errors.notes, notes.error)
+  );
 
   const actions = document.createElement('div');
   actions.classList.add('employee-edit-form-actions');
@@ -87,6 +130,21 @@ function createForm(employee) {
 
   form.addEventListener('submit', (event) => {
     event.preventDefault();
+
+    const isValid =
+      validateField(name.input, errors.name, name.error) &
+      validateField(location.input, errors.location, location.error) &
+      validateField(status.input, errors.status, statusError) &
+      validateField(
+        desiredPresent.input,
+        errors.desiredPresent,
+        desiredPresent.error
+      ) &
+      validateField(notes.input, errors.notes, notes.error);
+
+    if (!isValid) {
+      return;
+    }
 
     const newEmployeeData = {
       id: employee.id,
@@ -122,9 +180,51 @@ function createLabeledInput({
   input.value = value;
   input.placeholder = placeholder;
 
-  labelElement.append(input);
+  const error = document.createElement('small');
+  error.classList.add('form-error');
 
-  return { labelElement, input };
+  labelElement.append(input, error);
+
+  return { labelElement, input, error };
+}
+
+function createLabeledSelect({ label, name, value, options }) {
+  const labelElement = document.createElement('label');
+  labelElement.textContent = label;
+
+  const select = document.createElement('select');
+  select.name = name;
+
+  options.forEach((el) => {
+    const option = document.createElement('option');
+    option.value = el.value;
+    option.textContent = el.text;
+    if (el.value === value) {
+      option.selected = true;
+    }
+    select.append(option);
+  });
+
+  labelElement.append(select);
+
+  return { labelElement, input: select };
+}
+
+function validateField(field, validator, errorElement) {
+  const value = field.value.trim();
+  const errorMessage = validator(value);
+
+  if (errorMessage) {
+    field.classList.add('error');
+    errorElement.textContent = errorMessage;
+    errorElement.style.display = 'block';
+    return false;
+  }
+
+  field.classList.remove('error');
+  errorElement.textContent = '';
+  errorElement.style.display = 'none';
+  return true;
 }
 
 function closeModal() {
