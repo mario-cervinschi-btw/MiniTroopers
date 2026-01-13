@@ -1,0 +1,57 @@
+.pagination,
+.pagination-top-buttons {
+  display: flex;
+  justify-content: flex-end;
+  gap: var(--spacing-medium);
+  align-items: center;
+}
+
+.pagination-top {
+  justify-content: space-between;
+}
+
+.pagination,
+.pagination-top > span {
+  font-weight: var(--font-bold);
+  font-size: var(--font-size-base);
+}
+
+.add-employee {
+  display: flex;
+  flex-direction: row;
+  align-items: center;
+  gap: var(--spacing-small);
+}
+
+.add-employee:hover {
+  cursor: pointer;
+}
+
+.add-employee > button {
+  font-size: var(--font-size-large);
+  padding: 0;
+  margin: 0;
+  height: 30px;
+  width: 30px;
+  border-radius: var(--border-radius-full);
+  background-color: transparent;
+}
+
+@media (max-width: 768px) {
+  .pagination-top-buttons button,
+  .pagination-bottom button {
+    width: 100%;
+  }
+  .pagination > span,
+  .pagination-top-buttons > span {
+    text-align: center;
+    width: 100%;
+  }
+  .pagination-top-buttons {
+    width: 100%;
+  }
+  .pagination-top {
+    flex-direction: column;
+    align-items: start;
+  }
+}

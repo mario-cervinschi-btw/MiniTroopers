@@ -1,0 +1,11 @@
+#employees-list article {
+  margin: var(--spacing-medium) 0px;
+}
+
+#result-count {
+  font-weight: var(--font-bold);
+}
+
+.results-section h2 {
+  color: var(--color-christmas-green);
+}

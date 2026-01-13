@@ -1,0 +1,13 @@
+aside h3 {
+  padding-top: var(--spacing-medium);
+}
+
+.recent-employees-list {
+  padding: 0px;
+  list-style: none;
+  color: var(--color-dark-gray);
+}
+
+.recent-employees-list li {
+  font-size: var(--font-size-base);
+}

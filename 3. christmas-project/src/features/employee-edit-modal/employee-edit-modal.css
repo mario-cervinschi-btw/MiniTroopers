@@ -1,0 +1,63 @@
+.employee-edit-background {
+  position: fixed;
+  inset: 0;
+  z-index: 9999;
+
+  background-color: rgba(0, 0, 0, 0.5);
+
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.employee-edit-card {
+  padding: var(--spacing-medium);
+  width: 400px;
+  max-width: 70vw;
+
+  background-color: var(--color-snow-white);
+  border-radius: var(--border-radius);
+}
+
+.employee-edit-form {
+  display: flex;
+  flex-direction: column;
+  gap: var(--spacing-medium);
+}
+
+.employee-edit-form > label {
+  display: flex;
+  flex-direction: column;
+}
+
+.employee-edit-form-actions {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+
+  gap: var(--spacing-small);
+}
+
+.form-error {
+  color: var(--color-christmas-red);
+  font-size: 12px;
+  margin-top: 4px;
+  display: none;
+}
+
+input.error,
+select.error {
+  border: 1px solid var(--color-christmas-red);
+}
+
+.employee-edit-form input:focus,
+.employee-edit-form select:focus,
+.employee-edit-form textarea:focus {
+  outline: none;
+  box-shadow: none;
+}
+
+@media (max-width: 768px) {
+  .employee-edit-form-actions {
+    grid-template-columns: 1fr;
+  }
+}

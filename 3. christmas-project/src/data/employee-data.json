@@ -1,0 +1,218 @@
+[
+  {
+    "id": "emp-a1b2c3d4",
+    "name": "Michael Scott",
+    "location": "Scranton, PA",
+    "status": "good",
+    "desiredPresent": "World's Best Boss Mug (another one)",
+    "notes": "Declared bankruptcy by yelling it. That's not how it works, but A+ for confidence"
+  },
+  {
+    "id": "emp-e5f6g7h8",
+    "name": "Jim Halpert",
+    "location": "Scranton, PA",
+    "status": "good",
+    "desiredPresent": "Industrial-strength staplers in Jell-O molds",
+    "notes": "Spent 50% of work hours pranking Dwight, 40% looking at camera, 10% actually working"
+  },
+  {
+    "id": "emp-i9j0k1l2",
+    "name": "Dwight Schrute",
+    "location": "Scranton, PA",
+    "status": "naughty",
+    "desiredPresent": "Assistant Regional Manager nameplate (not Assistant TO the...)",
+    "notes": "Installed monitoring devices in break room. Beets. Bears. Battlestar Galactica."
+  },
+  {
+    "id": "emp-m3n4o5p6",
+    "name": "Pam Beesly",
+    "location": "Scranton, PA",
+    "status": "good",
+    "desiredPresent": "Fancy new pens for her doodles",
+    "notes": "Finally left reception after many years. We're all very proud and emotional about it"
+  },
+  {
+    "id": "emp-q7r8s9t0",
+    "name": "Ryan Howard",
+    "location": "New York, NY",
+    "status": "naughty",
+    "desiredPresent": "Hair gel and skinny ties in bulk",
+    "notes": "Made some questionable business decisions, came back as temp. Career trajectory: \ud83d\udcc8\ud83d\udcc9\ud83d\udcc9\ud83d\udcc9"
+  },
+  {
+    "id": "emp-u1v2w3x4",
+    "name": "Andy Bernard",
+    "location": "Stamford, CT",
+    "status": "naughty",
+    "desiredPresent": "Anger management sessions (paid)",
+    "notes": "Punched a hole in the wall. Still calls himself 'The Nard Dog' unironically"
+  },
+  {
+    "id": "emp-y5z6a7b8",
+    "name": "Angela Martin",
+    "location": "Scranton, PA",
+    "status": "good",
+    "desiredPresent": "Cat food (premium, organic, locally sourced)",
+    "notes": "Judges everyone. Loves her cats more than people. Can't really blame her."
+  },
+  {
+    "id": "emp-c9d0e1f2",
+    "name": "Kevin Malone",
+    "location": "Scranton, PA",
+    "status": "good",
+    "desiredPresent": "M&Ms and chili pot (spill-proof)",
+    "notes": "Uses 'Why waste time say lot word when few word do trick?' as communication strategy"
+  },
+  {
+    "id": "emp-g3h4i5j6",
+    "name": "Stanley Hudson",
+    "location": "Scranton, PA",
+    "status": "naughty",
+    "desiredPresent": "Pretzel Day every day for a year",
+    "notes": "Did a crossword puzzle instead of working. Every. Single. Day. Living the dream."
+  },
+  {
+    "id": "emp-k7l8m9n0",
+    "name": "Oscar Martinez",
+    "location": "Scranton, PA",
+    "status": "good",
+    "desiredPresent": "Actually ergonomic desk chair",
+    "notes": "Office know-it-all, but in a helpful way. Always has the facts ready."
+  },
+  {
+    "id": "emp-o1p2q3r4",
+    "name": "Phyllis Vance",
+    "location": "Scranton, PA",
+    "status": "good",
+    "desiredPresent": "Microwave popcorn with Bob Vance nameplate",
+    "notes": "Married to Bob Vance, Vance Refrigeration. Did we mention Bob Vance, Vance Refrigeration?"
+  },
+  {
+    "id": "emp-s5t6u7v8",
+    "name": "Toby Flenderson",
+    "location": "Scranton, PA",
+    "status": "naughty",
+    "desiredPresent": "Basic respect from Michael",
+    "notes": "Works in HR which means he's not part of the family. Nobody appreciates HR."
+  },
+  {
+    "id": "emp-w9x0y1z2",
+    "name": "Kelly Kapoor",
+    "location": "Scranton, PA",
+    "status": "good",
+    "desiredPresent": "Complete Ryan Howard memorabilia collection",
+    "notes": "Talks non-stop about celebrities, shopping, and Ryan. Mostly Ryan. OK, only Ryan."
+  },
+  {
+    "id": "emp-a3b4c5d6",
+    "name": "Creed Bratton",
+    "location": "Unknown",
+    "status": "naughty",
+    "desiredPresent": "New identity documents",
+    "notes": "Does quality assurance but no one knows what that means. Very mysterious past. Definitely quirky."
+  },
+  {
+    "id": "emp-e7f8g9h0",
+    "name": "Meredith Palmer",
+    "location": "Scranton, PA",
+    "status": "naughty",
+    "desiredPresent": "Gift cards to various establishments",
+    "notes": "Got hit by Michael's car. Supplier relations expert. Makes bold life choices."
+  },
+  {
+    "id": "emp-i1j2k3l4",
+    "name": "Darryl Philbin",
+    "location": "Scranton, PA",
+    "status": "good",
+    "desiredPresent": "Forklift certification renewal",
+    "notes": "Warehouse manager who's actually competent. Taught Michael about fleece-it-out. Dinkin' flicka."
+  },
+  {
+    "id": "emp-m5n6o7p8",
+    "name": "Erin Hannon",
+    "location": "Scranton, PA",
+    "status": "good",
+    "desiredPresent": "Disposable cameras (she doesn't understand digital)",
+    "notes": "Thinks disposable cameras are single-use. Sweet and enthusiastic. We love her positivity."
+  },
+  {
+    "id": "emp-q9r0s1t2",
+    "name": "Gabe Lewis",
+    "location": "Sabre HQ",
+    "status": "naughty",
+    "desiredPresent": "Self-help books on social skills",
+    "notes": "Corporate liaison who's a bit awkward. Manages to make everything uncomfortable somehow."
+  },
+  {
+    "id": "emp-u3v4w5x6",
+    "name": "Jan Levinson",
+    "location": "New York, NY",
+    "status": "naughty",
+    "desiredPresent": "Candles (from her candle company)",
+    "notes": "Ex-boss of Michael. Started a candle business. Living her best entrepreneurial life."
+  },
+  {
+    "id": "emp-y7z8a9b0",
+    "name": "Holly Flax",
+    "location": "Nashua, NH",
+    "status": "good",
+    "desiredPresent": "Matching Woody & Buzz Lightyear dolls for puppet shows",
+    "notes": "Plays Yoda to Michael's Luke. Only HR person Michael loves. They're soulmates. We ship it."
+  },
+  {
+    "id": "emp-c1d2e3f4",
+    "name": "Todd Packer",
+    "location": "Traveling Salesman",
+    "status": "naughty",
+    "desiredPresent": "Suspended corporate credit card (reinstated)",
+    "notes": "Inappropriate jokes are his specialty. Eventually got let go. Everyone was relieved."
+  },
+  {
+    "id": "emp-g5h6i7j8",
+    "name": "Roy Anderson",
+    "location": "Scranton, PA",
+    "status": "good",
+    "desiredPresent": "Anger management workbook",
+    "notes": "Ex-fianc\u00e9 of Pam. Had some conflicts with Jim. Now has gravel business. Character development: 10/10"
+  },
+  {
+    "id": "emp-k9l0m1n2",
+    "name": "Karen Filippelli",
+    "location": "Utica, NY",
+    "status": "good",
+    "desiredPresent": "Someone who's emotionally available",
+    "notes": "Dated Jim during his Stamford phase. Caught up in the Jim-Pam situation. Deserved better."
+  },
+  {
+    "id": "emp-o3p4q5r6",
+    "name": "Robert California",
+    "location": "Los Angeles, CA",
+    "status": "naughty",
+    "desiredPresent": "Fine wine collection",
+    "notes": "Talked his way into CEO position in one interview. Everything he says sounds profound and mysterious."
+  },
+  {
+    "id": "emp-s7t8u9v0",
+    "name": "Nellie Bertram",
+    "location": "Tallahassee, FL",
+    "status": "naughty",
+    "desiredPresent": "Andy's manager job (already took it)",
+    "notes": "Took Andy's job by literally sitting in his chair. Bold strategy. Somehow it worked."
+  },
+  {
+    "id": "emp-w1x2y3z4",
+    "name": "David Wallace",
+    "location": "New York, NY",
+    "status": "good",
+    "desiredPresent": "Suck It! royalties (finally)",
+    "notes": "CFO who keeps Scranton branch alive despite chaos. Invented 'Suck It!' vacuum for kids. Yes, really."
+  },
+  {
+    "id": "emp-a5b6c7d8",
+    "name": "Charles Miner",
+    "location": "Corporate",
+    "status": "naughty",
+    "desiredPresent": "Respect and authority",
+    "notes": "Made Jim run a 5K during work. Very serious about business. Soccer ball incident was unfortunate."
+  }
+]
