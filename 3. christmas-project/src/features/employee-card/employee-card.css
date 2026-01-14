@@ -4,6 +4,8 @@
   align-items: center;
   width: 100%;
   padding: var(--spacing-medium);
+  color: var(--color-text);
+  background-color: var(--color-card-header);
 }
 
 .employee-header:hover {

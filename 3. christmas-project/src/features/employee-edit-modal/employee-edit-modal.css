@@ -15,7 +15,7 @@
   width: 400px;
   max-width: 70vw;
 
-  background-color: var(--color-snow-white);
+  background-color: var(--color-card);
   border-radius: var(--border-radius);
 }
 

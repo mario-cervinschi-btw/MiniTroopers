@@ -9,7 +9,7 @@
   justify-content: space-between;
   padding: var(--spacing-medium) var(--spacing-small);
   border-radius: var(--border-radius);
-  background-color: var(--color-light-gray);
+  background-color: var(--color-card-header);
   font-size: var(--font-size-base);
   font-weight: var(--font-bold);
 }

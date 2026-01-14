@@ -1,13 +1,19 @@
 <!doctype html>
-<html lang="en">
+<html lang="en" data-theme="light">
   <head>
     <meta charset="UTF-8" />
+    <meta name="color-scheme" content="light" />
     <link rel="icon" type="image/svg+xml" href="/vite.svg" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <title>DOM DOM, să-nălțăm</title>
     <link href="src/styles/main.css" rel="stylesheet" />
   </head>
   <body class="container">
+    <div id="dark-mode-object" class="dark-mode-switch">
+      <span class="line">
+        <span id="dark-mode" class="mode"></span>
+      </span>
+    </div>
     <header class="header shadow">
       <h1>
         <i class="bi bi-gift inline-icon"></i> Santa's Naughty & Nice List

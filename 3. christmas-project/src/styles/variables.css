@@ -1,12 +1,22 @@
 :root {
+  color-scheme: light;
+
   --color-christmas-red: #c41e3a;
   --color-christmas-green: #165b33;
   --color-gold: #ffd700;
   --color-snow-white: #ffffff;
+  --color-snow-muddy: #292929;
   --color-light-gray: #f5f5f5;
   --color-dark-gray: #333333;
-  --color-border: #ddd;
   --color-shadow: rgba(0, 0, 0, 0.1);
+
+  --color-border: #ddd;
+  --color-bg: var(--color-light-gray);
+  --color-text: var(--color-dark-gray);
+  --color-text-inverted: var(--color-light-gray);
+  --color-card: var(--color-snow-white);
+  --color-card-header: var(--color-light-gray);
+  --color-default-button: var(--color-dark-gray);
 
   --spacing-small: 0.5rem;
   --spacing-medium: 1rem;
@@ -35,4 +45,18 @@
   --font-size-medium: 16px;
   --font-size-large: 24px;
   --font-size-xl: 32px;
+}
+
+[data-theme='dark'] {
+  color-scheme: light dark;
+
+  --color-christmas-red: #da2543;
+  --color-christmas-green: #208b4d;
+
+  --color-border: #3e3e3e;
+  --color-bg: var(--color-dark-gray);
+  --color-text: var(--color-light-gray);
+  --color-text-inverted: var(--color-dark-gray);
+  --color-card: var(--color-snow-muddy);
+  --color-card-header: var(--color-dark-gray);
 }

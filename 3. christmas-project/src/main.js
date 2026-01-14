@@ -8,6 +8,7 @@ import './styles/variables.css';
 import { renderEmployeeStatistics } from './features/statistics/statistics.js';
 import { addFormEventListeners } from './features/filter-form/filter-form.js';
 import { createAddEmployeeButton } from './features/pagination/pagination.js';
+import { initDarkModeSwitch } from './features/dark-mode-switch/dark-mode-switch.js';
 
 // HELPER COMMENT: Started code to show how to initialize the function from state and features
 
@@ -17,3 +18,4 @@ renderPagedEmployeeList();
 renderEmployeeStatistics();
 addFormEventListeners();
 createAddEmployeeButton();
+initDarkModeSwitch();

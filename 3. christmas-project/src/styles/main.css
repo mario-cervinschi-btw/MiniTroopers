@@ -9,7 +9,7 @@ body {
   padding: 0;
   margin: 0;
   box-sizing: border-box;
-  color: var(--color-dark-gray);
+  color: var(--color-text);
   font-family: 'Roboto', Arial, sans-serif;
 }
 
@@ -25,13 +25,13 @@ body {
   gap: var(--spacing-medium);
   min-height: 100vh;
   padding: var(--spacing-medium);
-  background-color: var(--color-light-gray);
+  background-color: var(--color-bg);
 }
 
 .header {
   grid-area: header;
   background: var(--color-christmas-green);
-  color: var(--color-snow-white);
+  color: var(--color-text-inverted);
   padding: var(--spacing-large);
   text-align: center;
   border-radius: var(--border-radius);
@@ -39,14 +39,14 @@ body {
 
 .nav {
   grid-area: nav;
-  background-color: var(--color-snow-white);
+  background-color: var(--color-card);
   padding: var(--spacing-large);
   border-radius: var(--border-radius);
 }
 
 .main {
   grid-area: main;
-  background-color: var(--color-snow-white);
+  background-color: var(--color-card);
   padding: var(--spacing-large);
   border-radius: var(--border-radius);
 }
@@ -54,7 +54,7 @@ body {
 .aside {
   height: fit-content;
   grid-area: aside;
-  background-color: var(--color-snow-white);
+  background-color: var(--color-card);
   padding: var(--spacing-large);
   border-radius: var(--border-radius);
 }
@@ -62,7 +62,7 @@ body {
 .footer {
   grid-area: footer;
   background-color: var(--color-christmas-green);
-  color: var(--color-snow-white);
+  color: var(--color-text-inverted);
   text-align: center;
   padding: var(--spacing-medium);
   border-radius: var(--border-radius);
@@ -74,13 +74,15 @@ body {
 
 button {
   cursor: pointer;
+  color: var(--color-snow-white);
+  background-color: var(--color-default-button);
   border: var(--border-size) solid var(--color-border);
   border-radius: var(--border-radius);
   padding: 8px;
 }
 
-button:disabled {
-  opacity: 0.6;
+button.disabled {
+  opacity: 0.3;
   cursor: not-allowed;
 }
 
@@ -97,7 +99,6 @@ button.fail {
 button.disabled {
   cursor: not-allowed;
   color: var(--color-snow-white);
-  background-color: var(--color-light-gray);
 }
 
 /* tablet */

@@ -5,7 +5,7 @@ aside h3 {
 .recent-employees-list {
   padding: 0px;
   list-style: none;
-  color: var(--color-dark-gray);
+  color: var(--color-text);
 }
 
 .recent-employees-list li {

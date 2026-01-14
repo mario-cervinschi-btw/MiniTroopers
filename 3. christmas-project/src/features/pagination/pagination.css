@@ -33,6 +33,7 @@
   margin: 0;
   height: 30px;
   width: 30px;
+  color: var(--color-text);
   border-radius: var(--border-radius-full);
   background-color: transparent;
 }

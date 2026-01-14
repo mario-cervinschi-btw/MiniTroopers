@@ -34,6 +34,7 @@ export function createAddEmployeeButton() {
   const addDiv = document.createElement('div');
   const addButton = document.createElement('button');
   addButton.innerText = '+';
+  addButton.setAttribute('type', 'button');
 
   const addText = document.createElement('p');
   addText.innerText = 'Add employee';
