@@ -78,14 +78,14 @@ function updatePaginationUI() {
   const currentPage = getCurrentPage();
   const maxPages = getMaxPages();
 
-  topPrev.classList.toggle('disabled', currentPage === 1);
+  topPrev.disabled = currentPage === 1;
   topPrev.classList.toggle('success', currentPage !== 1);
-  bottomPrev.classList.toggle('disabled', currentPage === 1);
+  bottomPrev.disabled = currentPage === 1;
   bottomPrev.classList.toggle('success', currentPage !== 1);
 
-  topNext.classList.toggle('disabled', currentPage === maxPages);
+  topNext.disabled = currentPage === maxPages;
   topNext.classList.toggle('success', currentPage !== maxPages);
-  bottomNext.classList.toggle('disabled', currentPage === maxPages);
+  bottomNext.disabled = currentPage === maxPages;
   bottomNext.classList.toggle('success', currentPage !== maxPages);
 
   setPageText(maxPages);

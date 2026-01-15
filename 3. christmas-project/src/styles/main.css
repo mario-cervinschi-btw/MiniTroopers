@@ -81,11 +81,6 @@ button {
   padding: 8px;
 }
 
-button.disabled {
-  opacity: 0.3;
-  cursor: not-allowed;
-}
-
 button.success {
   color: var(--color-snow-white);
   background-color: var(--color-christmas-red);
@@ -96,9 +91,10 @@ button.fail {
   background-color: var(--color-dark-gray);
 }
 
-button.disabled {
+button:disabled {
   cursor: not-allowed;
   color: var(--color-snow-white);
+  opacity: 0.3;
 }
 
 /* tablet */
