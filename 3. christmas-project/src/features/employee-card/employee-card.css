@@ -74,6 +74,10 @@ dl {
   gap: var(--spacing-small);
 }
 
+.imgResize {
+  max-width: 240px;
+}
+
 @media (max-width: 768px) {
   dl {
     gap: var(--spacing-medium);

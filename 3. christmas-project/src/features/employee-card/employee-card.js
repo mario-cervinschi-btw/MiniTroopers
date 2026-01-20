@@ -1,3 +1,4 @@
+import { EmployeeService } from '../../api/employee-service';
 import { deleteEmployee } from '../../state/state';
 import { renderEditEmployeePopUp } from '../employee-edit-modal/employee-edit-modal';
 
@@ -35,6 +36,11 @@ export function createEmployeeCard(employee, clickHandler) {
   const detailsDiv = document.createElement('div');
   detailsDiv.className = 'employee-details';
   detailsDiv.id = `details-${employee.id}`;
+
+  const img = document.createElement('img');
+
+  detailsDiv.appendChild(img);
+  img.classList.add('imgResize');
 
   const dl = document.createElement('dl');
 
@@ -90,9 +96,13 @@ export function createEmployeeCard(employee, clickHandler) {
   const header = card.querySelector('.employee-header');
   const details = card.querySelector('.employee-details');
 
-  header.addEventListener('click', () => {
+  header.addEventListener('click', async () => {
     toggleAccordion(header, details, icon);
     if (header.classList.contains('drawer-open')) {
+      const imageUrl = await EmployeeService.getEmployeeImage(employee.name);
+      if (imageUrl) {
+        img.src = imageUrl;
+      }
       if (clickHandler) {
         clickHandler(employee);
       }

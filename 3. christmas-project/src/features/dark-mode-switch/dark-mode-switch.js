@@ -13,7 +13,6 @@ const html = document.documentElement;
 
 function setTheme(theme) {
   html.setAttribute('data-theme', theme);
-  localStorage.setItem('theme', theme);
 }
 
 export function initDarkModeSwitch() {
