@@ -1,5 +1,6 @@
 export function initComic(comic) {
   const article = document.createElement('article');
+  article.classList.add('comic');
 
   const title = document.createElement('h3');
   title.id = 'comic-title';

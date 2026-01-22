@@ -62,6 +62,7 @@ function attachButtonHandlers(section) {
 
 async function loadComic(position) {
   try {
+    clearError();
     await ComicApi.getComic(position)
       .then((res) => {
         currentData = res;
@@ -79,6 +80,7 @@ async function loadComic(position) {
 
 async function loadComicOnIndex(index) {
   try {
+    clearError();
     const data = await ComicApi.getComicIndex(index);
     currentData = data;
     clearError();

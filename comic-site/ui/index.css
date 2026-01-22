@@ -1,4 +1,103 @@
+:root {
+  --warning-color: #cc3300;
+  --warninig-warm-color: #e65f32e2;
+
+  --bg-color: #96a8c8;
+  --bg-card-color: white;
+  --border-color: #071419;
+
+  --button-color: #6e7b91;
+  --button-border: #333;
+  --button-border-radius: 0.25rem;
+
+  --text-color: white;
+  --text-size-medium: 16px;
+  --text-size-big: 20px;
+  --text-size-xl: 28px;
+  --text-font-bold: 600;
+  --text-font-semibold: 500;
+
+  --border-radius: 0.75rem;
+
+  --spacing-small: 0.5rem;
+  --spacing-medium: 0.75rem;
+  --spacing-big: 1rem;
+}
+
+body {
+  margin: 0px;
+  padding: 0px;
+  box-sizing: content-box;
+  background-color: var(--bg-color);
+}
+
 #comic-image {
-  height: 400px;
+  max-width: 700px;
   width: auto;
+}
+
+#comic-title {
+  margin: 0px 0px var(--spacing-medium) 0px;
+  font-weight: var(--text-font-bold);
+  font-size: var(--text-size-xl);
+}
+
+#error-message {
+  color: var(--text-color);
+  font-weight: var(--text-font-semibold);
+  margin-top: 0px;
+  font-size: var(--text-size-big);
+  border: 2px solid var(--warning-color);
+  background-color: var(--warninig-warm-color);
+  padding: var(--spacing-medium) var(--spacing-big);
+  border-radius: var(--border-radius);
+}
+
+.card {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+
+  padding: 20px 0px;
+
+  border: 1.5px solid var(--border-color);
+  border-radius: var(--border-radius);
+  background-color: var(--bg-card-color);
+}
+
+.container {
+  display: flex;
+  flex-direction: column;
+  margin: auto;
+  padding: 20px;
+  max-width: 800px;
+}
+
+.buttons {
+  display: flex;
+  flex-direction: row;
+  gap: var(--spacing-medium);
+}
+
+.buttons > button {
+  background-color: var(--button-color);
+  border: 1.5px solid var(--button-border);
+  border-radius: var(--button-border-radius);
+  color: var(--text-color);
+  font-weight: var(--text-font-bold);
+  padding: 2px var(--spacing-medium);
+  cursor: pointer;
+}
+
+.buttons > button:disabled {
+  cursor: not-allowed;
+  opacity: 0.5;
+}
+
+.comic {
+  margin: var(--spacing-big) 0px;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
 }
