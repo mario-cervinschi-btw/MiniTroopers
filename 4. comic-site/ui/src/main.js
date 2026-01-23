@@ -1,6 +1,7 @@
 import { initComic, changeComic } from './comics/comics';
 import { initButtons } from './navigation/navigation';
 import { ComicApi } from './service/comic-api';
+import { useComicStorage } from './service/storage/comic-storage';
 
 const mainComponent = document.getElementById('main-content');
 
@@ -47,43 +48,49 @@ function attachButtonHandlers(section) {
     firstBtn.addEventListener('click', () => loadComic('first'));
   }
   if (prevBtn) {
-    prevBtn.addEventListener('click', () => loadComicOnIndex(currentData.prev));
+    prevBtn.addEventListener('click', () =>
+      loadComic(undefined, currentData.prev)
+    );
   }
   if (randomBtn) {
     randomBtn.addEventListener('click', () => loadComic('random'));
   }
   if (nextBtn) {
-    nextBtn.addEventListener('click', () => loadComicOnIndex(currentData.next));
+    nextBtn.addEventListener('click', () =>
+      loadComic(undefined, currentData.next)
+    );
   }
   if (lastBtn) {
     lastBtn.addEventListener('click', () => loadComic('latest'));
   }
 }
 
-async function loadComic(position) {
-  try {
-    clearError();
-    await ComicApi.getComic(position)
-      .then((res) => {
-        currentData = res;
-        clearError();
-        changeComic(res.comic);
-        updateButtonStates();
-      })
-      .catch((err) => {
-        showError(`Error loading comic: ${err.message || err}`);
-      });
-  } catch (error) {
-    showError(`Error loading comic: ${error.message || error}`);
+// position - undefined in case of searching by index
+async function loadComic(position, index) {
+  clearError();
+  if (index !== undefined || index !== null) {
+    const data = useComicStorage
+      .getComics()
+      ?.find((el) => el.comic.index === index);
+    if (data) {
+      console.log('Using comic storage');
+      currentData = data;
+      changeComic(data.comic);
+      updateButtonStates();
+      return;
+    }
   }
-}
 
-async function loadComicOnIndex(index) {
+  console.log('Using api to fetch');
   try {
-    clearError();
-    const data = await ComicApi.getComicIndex(index);
+    let data;
+    if (position) {
+      data = await ComicApi.getComic(position);
+    } else if (index) {
+      data = await ComicApi.getComicIndex(index);
+    }
     currentData = data;
-    clearError();
+    useComicStorage.addComicToStorage(data);
     changeComic(data.comic);
     updateButtonStates();
   } catch (error) {
