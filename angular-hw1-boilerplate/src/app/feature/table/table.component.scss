@@ -4,6 +4,12 @@
 
     max-height: 75vh;
     overflow: auto;
+
+    border: 1px solid black;
+
+    border-radius: 8px;
+
+    max-width: fit-content;
 }
 
 .table-header {
@@ -15,7 +21,6 @@
     grid-template-columns: var(--table-columns);
 
     color: white;
-    padding: 12px 8px;
     background-color: #2c3e50;
 }
 
