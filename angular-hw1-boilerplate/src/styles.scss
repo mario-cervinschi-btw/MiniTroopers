@@ -1,0 +1,30 @@
+/* You can add global styles to this file, and also import other style files */
+
+* {
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box;
+}
+
+html,
+body {
+  margin: 0;
+  padding: 0;
+  height: 100%;
+}
+
+:root {
+  /* Column widths */
+  --col-id-width: 70px;
+  --col-survived-width: 80px;
+  --col-pclass-width: 50px;
+  --col-name-width: 500px;
+  --col-sex-width: 60px;
+  --col-age-width: 60px;
+  --col-sibsp-width: 70px;
+  --col-parch-width: 70px;
+  --col-ticket-width: 180px;
+  --col-fare-width: 80px;
+  --col-cabin-width: 80px;
+  --col-embarked-width: 120px;
+}
