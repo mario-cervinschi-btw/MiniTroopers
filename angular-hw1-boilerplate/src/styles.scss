@@ -27,4 +27,8 @@ body {
   --col-fare-width: 80px;
   --col-cabin-width: 80px;
   --col-embarked-width: 120px;
+
+  --table-columns: var(--col-id-width) var(--col-survived-width) var(--col-pclass-width) var(--col-name-width)
+    var(--col-sex-width) var(--col-age-width) var(--col-sibsp-width) var(--col-parch-width) var(--col-ticket-width)
+    var(--col-fare-width) var(--col-cabin-width) var(--col-embarked-width);
 }

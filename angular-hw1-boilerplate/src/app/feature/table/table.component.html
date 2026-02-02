@@ -1,8 +1,12 @@
 <main>
   <div class="table">
-    <app-table-header></app-table-header>
-    <ul *ngFor="let passenger of passengers; index as i">
-      <app-table-row [passenger]="passenger"></app-table-row>
-    </ul>
+    <app-table-header class="table-header"></app-table-header>
+    <section class="table-body">
+      <app-table-row
+        class="table-row"
+        *ngFor="let passenger of passengers; index as i"
+        [passenger]="passenger"
+      ></app-table-row>
+    </section>
   </div>
 </main>
