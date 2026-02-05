@@ -11,7 +11,7 @@ export class TableRowComponent {
   @Input()
   public passenger!: PassengerData;
 
-  keys(): Array<any> {
+  protected keys(): Array<any> {
     return Object.entries(this.passenger);
   }
 }

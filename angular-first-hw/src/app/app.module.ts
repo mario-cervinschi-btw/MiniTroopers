@@ -1,4 +1,8 @@
-import { NgModule, provideBrowserGlobalErrorListeners, provideZonelessChangeDetection } from '@angular/core';
+import {
+  NgModule,
+  provideBrowserGlobalErrorListeners,
+  provideZonelessChangeDetection,
+} from '@angular/core';
 import { BrowserModule } from '@angular/platform-browser';
 import { RouterModule, Routes } from '@angular/router';
 import { CommonModule } from '@angular/common';
@@ -7,6 +11,9 @@ import { HeaderComponent } from './feature/passengers/components/header/header.c
 import { TableComponent } from './feature/table/table.component';
 import { TableHeaderComponent } from './feature/table/components/table-header/table-header.component';
 import { TableRowComponent } from './feature/table/components/table-row/table-row.component';
+import { SurvivedPipe } from './logic/survived-pipe';
+import { FullNameGeneratePipe } from './logic/name-pipe';
+import { CityCompletionPipe } from './logic/city-pipe';
 
 const routes: Routes = [];
 
@@ -16,12 +23,15 @@ const routes: Routes = [];
     HeaderComponent,
     TableComponent,
     TableHeaderComponent,
-    TableRowComponent
+    TableRowComponent,
   ],
   imports: [
     BrowserModule,
     CommonModule,
     RouterModule.forRoot(routes),
+    SurvivedPipe,
+    FullNameGeneratePipe,
+    CityCompletionPipe,
   ],
   providers: [provideBrowserGlobalErrorListeners(), provideZonelessChangeDetection()],
   bootstrap: [AppComponent],
