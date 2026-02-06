@@ -14,6 +14,7 @@ import { TableRowComponent } from './feature/table/components/table-row/table-ro
 import { SurvivedPipe } from './logic/survived-pipe';
 import { FullNameGeneratePipe } from './logic/name-pipe';
 import { CityCompletionPipe } from './logic/city-pipe';
+import { PassengerService } from './services/passenger.service';
 
 const routes: Routes = [];
 
@@ -33,7 +34,11 @@ const routes: Routes = [];
     FullNameGeneratePipe,
     CityCompletionPipe,
   ],
-  providers: [provideBrowserGlobalErrorListeners(), provideZonelessChangeDetection()],
+  providers: [
+    provideBrowserGlobalErrorListeners(),
+    provideZonelessChangeDetection(),
+    PassengerService,
+  ],
   bootstrap: [AppComponent],
 })
 export class AppModule {}
