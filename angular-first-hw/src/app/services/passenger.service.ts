@@ -11,6 +11,10 @@ export class PassengerService {
 
   public readonly subject = new Subject<PassengerData[]>();
 
+  public getPassengerById(id: number) {
+    return TITANIC_PASSENGERS.find((p) => p.passengerId === id);
+  }
+
   public getSubjectSubscription(): Observable<PassengerData[]> {
     return this.subject;
   }

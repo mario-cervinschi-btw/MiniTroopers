@@ -1,6 +1,7 @@
 <div
   *ngFor="let item of columns; index as i"
   class="cell"
+  [ngClass]="{ interact: item.columnName === 'Name' }"
   (click)="item.columnName === 'Name' && onClickNameHeader()"
 >
   {{ item.columnName }}

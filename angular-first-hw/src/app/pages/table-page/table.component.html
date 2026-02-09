@@ -6,6 +6,7 @@
         class="table-row"
         *ngFor="let passenger of passengers; index as i"
         [passenger]="passenger"
+        (click)="goToUserPage(passenger.passengerId)"
       ></app-table-row>
     </section>
   </div>

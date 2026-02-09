@@ -1,7 +1,7 @@
 import { Component, OnInit } from '@angular/core';
 import { PassengerData } from '../../shared/models/titanic-data.model';
 import { PassengerService } from '../../services/passenger.service';
-import { Subscription } from 'rxjs';
+import { Router } from '@angular/router';
 
 @Component({
   selector: 'app-main-table',
@@ -12,11 +12,19 @@ import { Subscription } from 'rxjs';
 export class TableComponent implements OnInit {
   protected passengers: PassengerData[] = [];
 
-  constructor(private passengerService: PassengerService) {}
+  constructor(
+    private passengerService: PassengerService,
+    private router: Router,
+  ) {}
 
   public ngOnInit(): void {
     this.initPassengerData();
     this.passengerService.setPassengerData();
+  }
+
+  public goToUserPage(id: number): void {
+    console.log('clicked');
+    this.router.navigate(['/passenger', id]);
   }
 
   private initPassengerData(): void {

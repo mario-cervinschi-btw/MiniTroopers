@@ -1,0 +1,28 @@
+<article class="card flex-center">
+  <header class="title flex-center">
+    <h2>{{ passenger.name }}</h2>
+    <h4>Passenger #{{ passenger.passengerId }}</h4>
+  </header>
+  <section class="info flex-center">
+    <div class="category">
+      <h3 class="category-title">Personal Information</h3>
+      <div></div>
+      <div class="content-cell">
+        <p>Survived:</p>
+        <p>{{ passenger.survived | alive }}</p>
+      </div>
+      <div class="content-cell">
+        <p>Age:</p>
+        <p>{{ passenger.age }}</p>
+      </div>
+      <div class="content-cell">
+        <p>Sex:</p>
+        <p>{{ passenger.sex }}</p>
+      </div>
+      <div class="content-cell">
+        <p>Class:</p>
+        <p>{{ passenger.pclass }}</p>
+      </div>
+    </div>
+  </section>
+</article>
