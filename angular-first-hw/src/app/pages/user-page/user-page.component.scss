@@ -5,12 +5,23 @@
     justify-content: center;
 }
 
-.title {
-    color: white;
-    background-color: #2c3e50;
+.card {
+    border-radius: 8px;
+    width: 624px;
+    max-width: 100%;
+    margin: 0 auto;
+    box-shadow: 0px 2px 8px rgb(188, 188, 188);
 }
 
-.category {
-    display: grid;
-    grid-template-columns: 1fr 1fr;
+header {
+    border-radius: 8px 8px 0px 0px;
+    width: 100%;
+    color: white;
+    background-color: #2c3e50;
+    padding: 32px 0px;
+}
+
+app-data-container,
+.info {
+    width: 100%;
 }

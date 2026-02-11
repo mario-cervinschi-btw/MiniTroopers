@@ -17,6 +17,7 @@ import { CityCompletionPipe } from './logic/city-pipe';
 import { PassengerService } from './services/passenger.service';
 import { AppRoutingModule } from './app-routing.module';
 import { UserPageComponent } from './pages/user-page/user-page.component';
+import { DataContainerComponent } from './feature/passengers/components/data-container/data-container.component';
 
 @NgModule({
   declarations: [
@@ -26,6 +27,7 @@ import { UserPageComponent } from './pages/user-page/user-page.component';
     TableHeaderComponent,
     TableRowComponent,
     UserPageComponent,
+    DataContainerComponent,
   ],
   imports: [
     BrowserModule,
