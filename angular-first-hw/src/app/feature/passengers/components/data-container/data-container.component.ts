@@ -1,4 +1,5 @@
 import { Component, Input } from '@angular/core';
+import { PassengerDataProfileSectionCell } from '../../../../shared/models/passenger-data-profile';
 
 @Component({
   selector: 'app-data-container',
@@ -8,15 +9,5 @@ import { Component, Input } from '@angular/core';
 })
 export class DataContainerComponent {
   @Input() title!: string;
-  @Input() cell1Title!: string;
-  @Input() cell1Data!: string;
-
-  @Input() cell2Title!: string;
-  @Input() cell2Data!: string;
-
-  @Input() cell3Title!: string;
-  @Input() cell3Data!: string;
-
-  @Input() cell4Title!: string;
-  @Input() cell4Data!: string;
+  @Input() cells!: PassengerDataProfileSectionCell[];
 }

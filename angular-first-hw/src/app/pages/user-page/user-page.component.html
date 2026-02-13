@@ -1,41 +1,19 @@
-<article class="card flex-center">
-  <header class="flex-center">
-    <h2>{{ passenger.name }}</h2>
-    <h4>Passenger #{{ passenger.passengerId }}</h4>
-  </header>
-  <section class="info flex-center">
-    <app-data-container
-      [title]="'Personal Information'"
-      [cell1Title]="'Survived:'"
-      [cell1Data]="passenger.survived | alive"
-      [cell2Title]="'Sex:'"
-      [cell2Data]="passenger.sex"
-      [cell3Title]="'Age:'"
-      [cell3Data]="passenger.age + ''"
-      [cell4Title]="'Class:'"
-      [cell4Data]="passenger.pclass + ''"
-    ></app-data-container>
+<article class="container">
+  <button type="button" class="back-button" (click)="goBackToTable()"><- Back to Passengers</button>
 
-    <app-data-container
-      [title]="'Family Information'"
-      [cell1Title]="'Siblings/spouses aboard:'"
-      [cell1Data]="passenger.sibsp + ''"
-      [cell2Title]="'Parents/children aboard:'"
-      [cell2Data]="passenger.parch + ''"
-      [cell3Title]="'Total family members:'"
-      [cell3Data]="passenger.sibsp + passenger.parch + ''"
-    ></app-data-container>
+  <div *ngIf="!(passenger$ | async)" class="card flex-center">Loading passenger..</div>
 
-    <app-data-container
-      [title]="'Ticket Information'"
-      [cell1Title]="'Ticket number:'"
-      [cell1Data]="passenger.ticket"
-      [cell2Title]="'Fare:'"
-      [cell2Data]="(passenger.fare | currency: 'GBP') ?? 'Unknown'"
-      [cell3Title]="'Cabin:'"
-      [cell3Data]="(passenger.cabin === '' ? 'Not Assigned' : passenger.cabin) ?? 'Invalid'"
-      [cell4Title]="'Embarked:'"
-      [cell4Data]="passenger.embarked | fullcity"
-    ></app-data-container>
-  </section>
+  <div *ngIf="passenger$ | async as passenger" class="card flex-center">
+    <header class="flex-center">
+      <h2>{{ passenger.name }}</h2>
+      <h4>Passenger #{{ passengerId }}</h4>
+    </header>
+    <section class="info flex-center">
+      <app-data-container
+        *ngFor="let passengerSection of passenger.sections"
+        [title]="passengerSection.title"
+        [cells]="passengerSection.cells"
+      ></app-data-container>
+    </section>
+  </div>
 </article>

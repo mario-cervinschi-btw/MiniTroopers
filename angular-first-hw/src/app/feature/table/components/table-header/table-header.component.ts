@@ -16,7 +16,7 @@ export class TableHeaderComponent {
   public constructor(private passengerService: PassengerService) {}
 
   protected onClickNameHeader(): void {
-    this.passengerService.setPassengerData();
+    this.passengerService.getPassengers();
     this.nameSortStrategyHeader = this.passengerService.getCurrentSortStrategy();
   }
 }

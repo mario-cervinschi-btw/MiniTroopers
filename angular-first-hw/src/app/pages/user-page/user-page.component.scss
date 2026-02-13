@@ -1,3 +1,9 @@
+.container {
+    width: 624px;
+    max-width: 100%;
+    margin: 0 auto;
+}
+
 .flex-center {
     display: flex;
     flex-direction: column;
@@ -7,10 +13,17 @@
 
 .card {
     border-radius: 8px;
-    width: 624px;
-    max-width: 100%;
-    margin: 0 auto;
     box-shadow: 0px 2px 8px rgb(188, 188, 188);
+}
+
+.back-button {
+    padding: 12px 24px;
+    border: 2px solid #2c3e50;
+    border-radius: 8px;
+    background-color: transparent;
+    color: #2c3e50;
+    font-weight: 600;
+    margin-bottom: 24px;
 }
 
 header {

@@ -2,9 +2,10 @@
   <div class="table">
     <app-table-header class="table-header"></app-table-header>
     <section class="table-body">
+      <section *ngIf="isLoading">Loading...</section>
       <app-table-row
         class="table-row"
-        *ngFor="let passenger of passengers; index as i"
+        *ngFor="let passenger of passengers$ | async; index as i"
         [passenger]="passenger"
         (click)="goToUserPage(passenger.passengerId)"
       ></app-table-row>

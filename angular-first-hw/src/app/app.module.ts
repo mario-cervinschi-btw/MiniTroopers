@@ -5,7 +5,7 @@ import {
 } from '@angular/core';
 import { BrowserModule } from '@angular/platform-browser';
 import { RouterModule, Routes } from '@angular/router';
-import { CommonModule } from '@angular/common';
+import { CommonModule, CurrencyPipe } from '@angular/common';
 import { AppComponent } from './app.component';
 import { HeaderComponent } from './feature/passengers/components/header/header.component';
 import { TableComponent } from './pages/table-page/table.component';
@@ -32,15 +32,19 @@ import { DataContainerComponent } from './feature/passengers/components/data-con
   imports: [
     BrowserModule,
     CommonModule,
+    AppRoutingModule,
     SurvivedPipe,
     FullNameGeneratePipe,
     CityCompletionPipe,
-    AppRoutingModule,
   ],
   providers: [
     provideBrowserGlobalErrorListeners(),
     provideZonelessChangeDetection(),
     PassengerService,
+    SurvivedPipe,
+    FullNameGeneratePipe,
+    CityCompletionPipe,
+    CurrencyPipe,
   ],
   bootstrap: [AppComponent],
 })

@@ -1,7 +1,9 @@
 import { Component, Input, OnInit } from '@angular/core';
 import { PassengerData } from '../../shared/models/titanic-data.model';
-import { ActivatedRoute } from '@angular/router';
+import { ActivatedRoute, Router } from '@angular/router';
 import { PassengerService } from '../../services/passenger.service';
+import { delay, Observable } from 'rxjs';
+import { PassengerDataProfile } from '../../shared/models/passenger-data-profile';
 
 @Component({
   selector: 'app-user-page',
@@ -10,17 +12,23 @@ import { PassengerService } from '../../services/passenger.service';
   standalone: false,
 })
 export class UserPageComponent implements OnInit {
-  protected passenger!: PassengerData;
+  protected passenger$!: Observable<PassengerDataProfile>;
+  protected passengerId: number | null = null;
 
   constructor(
     private route: ActivatedRoute,
+    private router: Router,
     private passengerService: PassengerService,
   ) {}
 
   ngOnInit(): void {
     this.route.params.subscribe((params) => {
-      const passengerId = +params['id'];
-      this.passenger = this.passengerService.getPassengerById(passengerId)!;
+      this.passengerId = +params['id'];
+      this.passenger$ = this.passengerService.getPassengerById(this.passengerId).pipe(delay(2500));
     });
+  }
+
+  protected goBackToTable(): void {
+    this.router.navigate(['/']);
   }
 }

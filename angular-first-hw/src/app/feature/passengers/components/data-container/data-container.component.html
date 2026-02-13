@@ -1,20 +1,8 @@
 <div class="category">
   <h3 class="category-title">{{ title }}</h3>
   <div></div>
-  <div class="content-cell">
-    <p>{{ cell1Title }}</p>
-    <p>{{ cell1Data }}</p>
-  </div>
-  <div class="content-cell">
-    <p>{{ cell2Title }}</p>
-    <p>{{ cell2Data }}</p>
-  </div>
-  <div class="content-cell">
-    <p>{{ cell3Title }}</p>
-    <p>{{ cell3Data }}</p>
-  </div>
-  <div class="content-cell">
-    <p>{{ cell4Title }}</p>
-    <p>{{ cell4Data }}</p>
+  <div *ngFor="let cell of cells" class="content-cell">
+    <p>{{ cell.title }}</p>
+    <p>{{ cell.data }}</p>
   </div>
 </div>
