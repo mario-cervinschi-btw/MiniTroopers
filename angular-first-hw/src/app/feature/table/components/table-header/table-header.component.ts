@@ -13,10 +13,12 @@ export class TableHeaderComponent {
   protected readonly columns: TableHeaderColumn[] = TABLE_HEADER_COLUMN_DATA;
   protected nameSortStrategyHeader: String = '';
 
-  public constructor(private passengerService: PassengerService) {}
+  public constructor(private passengerService: PassengerService) {
+    this.nameSortStrategyHeader = this.passengerService.getCurrentSortStrategy();
+  }
 
   protected onClickNameHeader(): void {
-    this.passengerService.getPassengers();
+    this.passengerService.sortPassengers();
     this.nameSortStrategyHeader = this.passengerService.getCurrentSortStrategy();
   }
 }

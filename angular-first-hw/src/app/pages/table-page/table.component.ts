@@ -2,7 +2,7 @@ import { Component, OnInit } from '@angular/core';
 import { PassengerData } from '../../shared/models/titanic-data.model';
 import { PassengerService } from '../../services/passenger.service';
 import { Router } from '@angular/router';
-import { delay, map, Observable, of, switchMap, tap } from 'rxjs';
+import { debounceTime, delay, map, Observable, of, switchMap, tap } from 'rxjs';
 
 @Component({
   selector: 'app-main-table',
@@ -22,10 +22,10 @@ export class TableComponent implements OnInit {
   public ngOnInit(): void {
     this.passengers$ = this.passengerService.passengerSubject$.pipe(
       tap(() => (this.isLoading = true)),
-      delay(2500),
-      // switchMap((v) => of(v)),
+      debounceTime(2500),
       tap(() => (this.isLoading = false)),
     );
+    this.passengerService.setPassengersByPage('FIRST');
   }
 
   public goToUserPage(id: number): void {

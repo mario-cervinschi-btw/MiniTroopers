@@ -18,6 +18,7 @@ import { PassengerService } from './services/passenger.service';
 import { AppRoutingModule } from './app-routing.module';
 import { UserPageComponent } from './pages/user-page/user-page.component';
 import { DataContainerComponent } from './feature/passengers/components/data-container/data-container.component';
+import { PaginationComponent } from './feature/table/components/pagination/pagination.component';
 
 @NgModule({
   declarations: [
@@ -28,6 +29,7 @@ import { DataContainerComponent } from './feature/passengers/components/data-con
     TableRowComponent,
     UserPageComponent,
     DataContainerComponent,
+    PaginationComponent,
   ],
   imports: [
     BrowserModule,
