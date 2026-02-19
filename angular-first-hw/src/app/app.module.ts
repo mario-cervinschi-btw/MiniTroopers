@@ -22,6 +22,7 @@ import { StatisticsOverviewComponent } from './pages/statistics-overview/statist
 import { CustomStatisticComponent } from './shared/components/custom-statistic/custom-statistic.component';
 import { StatisticsService } from './services/statistics.service';
 import { TitleHeadingComponent } from './shared/components/title-heading/title-heading.component';
+import { SidebarComponent } from './shared/layout/sidebar/sidebar.component';
 
 @NgModule({
   declarations: [
@@ -36,6 +37,7 @@ import { TitleHeadingComponent } from './shared/components/title-heading/title-h
     StatisticsOverviewComponent,
     CustomStatisticComponent,
     TitleHeadingComponent,
+    SidebarComponent,
   ],
   imports: [
     BrowserModule,

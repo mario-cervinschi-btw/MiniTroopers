@@ -1,0 +1,9 @@
+<section class="sidebar">
+  <a
+    *ngFor="let route of navItems"
+    [routerLink]="route.route"
+    [routerLinkActive]="'active-link'"
+    [routerLinkActiveOptions]="{ exact: true }"
+    >{{ route.icon }}</a
+  >
+</section>
