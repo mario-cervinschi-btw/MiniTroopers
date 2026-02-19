@@ -6,23 +6,6 @@
     grid-template-columns: 1fr 1fr;
 }
 
-.category-title {
-    display: flex;
-    align-items: center;
-    color: #3b5565;
-    font-weight: 600;
-    font-size: 16px;
-}
-
-.category-title::before {
-    content: "";
-    width: 3px;
-    height: 18px;
-    display: inline-block;
-    background-color: #3b5565;
-    margin-right: 6px;
-}
-
 .content-cell p:first-child {
     color: #707374;
     font-weight: 600;

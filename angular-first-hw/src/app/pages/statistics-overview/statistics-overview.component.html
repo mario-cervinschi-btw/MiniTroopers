@@ -1,0 +1,16 @@
+<article class="container">
+  <h2>Titanic Statistics</h2>
+  <section
+    *ngFor="let stat of (this.statisticsService.getStatistics() | async)?.data"
+    class="statistic-category"
+  >
+    <app-title-heading [title]="stat.title" [titleSize]="24"></app-title-heading>
+    <div class="statistic-cards">
+      <app-custom-statistic
+        *ngFor="let categoryCard of stat.data"
+        [statisticCardData]="categoryCard.data"
+        [statisticCardTitle]="categoryCard.title"
+      ></app-custom-statistic>
+    </div>
+  </section>
+</article>

@@ -1,5 +1,5 @@
 <div class="category">
-  <h3 class="category-title">{{ title }}</h3>
+  <app-title-heading [title]="title"></app-title-heading>
   <div></div>
   <div *ngFor="let cell of cells" class="content-cell">
     <p>{{ cell.title }}</p>

@@ -4,21 +4,24 @@ import {
   provideZonelessChangeDetection,
 } from '@angular/core';
 import { BrowserModule } from '@angular/platform-browser';
-import { RouterModule, Routes } from '@angular/router';
 import { CommonModule, CurrencyPipe } from '@angular/common';
 import { AppComponent } from './app.component';
-import { HeaderComponent } from './feature/passengers/components/header/header.component';
+import { HeaderComponent } from './shared/layout/header/header.component';
 import { TableComponent } from './pages/table-page/table.component';
-import { TableHeaderComponent } from './feature/table/components/table-header/table-header.component';
-import { TableRowComponent } from './feature/table/components/table-row/table-row.component';
-import { SurvivedPipe } from './logic/survived-pipe';
-import { FullNameGeneratePipe } from './logic/name-pipe';
-import { CityCompletionPipe } from './logic/city-pipe';
+import { TableHeaderComponent } from './pages/table-page/components/table-header/table-header.component';
+import { TableRowComponent } from './pages/table-page/components/table-row/table-row.component';
+import { SurvivedPipe } from './pipes/survived-pipe';
+import { FullNameGeneratePipe } from './pipes/name-pipe';
+import { CityCompletionPipe } from './pipes/city-pipe';
 import { PassengerService } from './services/passenger.service';
 import { AppRoutingModule } from './app-routing.module';
 import { UserPageComponent } from './pages/user-page/user-page.component';
-import { DataContainerComponent } from './feature/passengers/components/data-container/data-container.component';
-import { PaginationComponent } from './feature/table/components/pagination/pagination.component';
+import { DataContainerComponent } from './pages/user-page/components/data-container/data-container.component';
+import { PaginationComponent } from './shared/components/pagination/pagination.component';
+import { StatisticsOverviewComponent } from './pages/statistics-overview/statistics-overview.component';
+import { CustomStatisticComponent } from './shared/components/custom-statistic/custom-statistic.component';
+import { StatisticsService } from './services/statistics.service';
+import { TitleHeadingComponent } from './shared/components/title-heading/title-heading.component';
 
 @NgModule({
   declarations: [
@@ -30,6 +33,9 @@ import { PaginationComponent } from './feature/table/components/pagination/pagin
     UserPageComponent,
     DataContainerComponent,
     PaginationComponent,
+    StatisticsOverviewComponent,
+    CustomStatisticComponent,
+    TitleHeadingComponent,
   ],
   imports: [
     BrowserModule,
@@ -43,6 +49,7 @@ import { PaginationComponent } from './feature/table/components/pagination/pagin
     provideBrowserGlobalErrorListeners(),
     provideZonelessChangeDetection(),
     PassengerService,
+    StatisticsService,
     SurvivedPipe,
     FullNameGeneratePipe,
     CityCompletionPipe,

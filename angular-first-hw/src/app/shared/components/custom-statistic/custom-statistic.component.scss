@@ -1,0 +1,38 @@
+.statistic-card {
+    border-radius: 8px;
+    box-shadow: 0px 2px 8px rgb(188, 188, 188);
+    width: 200px;
+
+    padding: 24px 12px;
+
+    border-left: 4px solid #2c3e50;
+
+    .statistic-title {
+        overflow: hidden;
+        white-space: nowrap;
+        text-overflow: ellipsis;
+
+        color: #707374;
+
+        text-transform: uppercase;
+        font-weight: 600;
+
+        font-size: 12px;
+
+        padding: 0px 12px;
+    }
+
+    .statistic-data {
+        overflow: hidden;
+        white-space: nowrap;
+        text-overflow: ellipsis;
+
+        color: #2c3e50;
+
+        font-weight: 700;
+
+        font-size: 32px;
+
+        padding: 4px 12px;
+    }
+}

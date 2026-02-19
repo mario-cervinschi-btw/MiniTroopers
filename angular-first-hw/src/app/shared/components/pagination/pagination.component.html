@@ -1,0 +1,11 @@
+<button class="fill" type="button" (click)="onFirst()" [disabled]="currentPage === 1">First</button>
+<button class="fill" type="button" (click)="onPrevious()" [disabled]="currentPage === 1">
+  Previous
+</button>
+<span>Page {{ this.currentPage }} of {{ this.maxPages }}</span>
+<button class="fill" type="button" (click)="onNext()" [disabled]="currentPage === maxPages">
+  Next
+</button>
+<button class="fill" type="button" (click)="onLast()" [disabled]="currentPage === maxPages">
+  Last
+</button>

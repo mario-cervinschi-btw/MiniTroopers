@@ -1,0 +1,15 @@
+.title {
+    display: flex;
+    align-items: center;
+    color: #3b5565;
+    font-weight: 600;
+}
+
+.title::before {
+    content: "";
+    width: 0.2em;
+    height: 1.1em;
+    display: inline-block;
+    background-color: #3b5565;
+    margin-right: 0.4em;
+}

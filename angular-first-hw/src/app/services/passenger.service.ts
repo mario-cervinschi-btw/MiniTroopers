@@ -6,8 +6,8 @@ import {
   defaultPassengerProfile,
   PassengerDataProfile,
 } from '../shared/models/passenger-data-profile';
-import { SurvivedPipe } from '../logic/survived-pipe';
-import { CityCompletionPipe } from '../logic/city-pipe';
+import { SurvivedPipe } from '../pipes/survived-pipe';
+import { CityCompletionPipe } from '../pipes/city-pipe';
 import { CurrencyPipe } from '@angular/common';
 
 @Injectable({
@@ -56,10 +56,7 @@ export class PassengerService {
   public sortPassengers(): void {
     if (this.sortStrategy === 'DESC') {
       this.sortStrategy = '';
-      this.currentPassengers = TITANIC_PASSENGERS.slice(
-        this.currentPage$.value * this.MAX_DATA_PER_PAGE,
-        (this.currentPage$.value + 1) * this.MAX_DATA_PER_PAGE,
-      );
+      this.currentPassengers = TITANIC_PASSENGERS;
     } else if (this.sortStrategy === '') {
       const sortedAsc = [...TITANIC_PASSENGERS].sort((a, b) => {
         if (a.name.split(',')[0] < b.name.split(',')[0]) {
@@ -71,10 +68,7 @@ export class PassengerService {
         return 0;
       });
       this.sortStrategy = 'ASC';
-      this.currentPassengers = sortedAsc.slice(
-        this.currentPage$.value * this.MAX_DATA_PER_PAGE,
-        (this.currentPage$.value + 1) * this.MAX_DATA_PER_PAGE,
-      );
+      this.currentPassengers = sortedAsc;
     } else if (this.sortStrategy === 'ASC') {
       const sortedDesc = [...TITANIC_PASSENGERS].sort((a, b) => {
         if (a.name.split(',')[0] < b.name.split(',')[0]) {
@@ -86,10 +80,7 @@ export class PassengerService {
         return 0;
       });
       this.sortStrategy = 'DESC';
-      this.currentPassengers = sortedDesc.slice(
-        this.currentPage$.value * this.MAX_DATA_PER_PAGE,
-        (this.currentPage$.value + 1) * this.MAX_DATA_PER_PAGE,
-      );
+      this.currentPassengers = sortedDesc;
     }
 
     this.setPassengersByPage('FIRST');
