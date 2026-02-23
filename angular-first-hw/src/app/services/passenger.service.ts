@@ -35,7 +35,7 @@ export class PassengerService {
         this.currentPage$.next(this.currentPage$.value - 1);
         break;
       case 'FIRST':
-        this.currentPage$.next(0);
+        this.currentPage$.next(1);
         break;
       case 'LAST':
         this.currentPage$.next(this.maxPages - 1);
@@ -47,8 +47,8 @@ export class PassengerService {
 
     this.passengerSubject$.next(
       this.currentPassengers.slice(
+        (this.currentPage$.value - 1) * this.MAX_DATA_PER_PAGE,
         this.currentPage$.value * this.MAX_DATA_PER_PAGE,
-        (this.currentPage$.value + 1) * this.MAX_DATA_PER_PAGE,
       ),
     );
   }

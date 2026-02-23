@@ -1,6 +1,5 @@
 import { Component, OnInit } from '@angular/core';
 import { PassengerService } from '../../../services/passenger.service';
-import { debounceTime } from 'rxjs';
 
 @Component({
   selector: 'app-pagination',
@@ -10,14 +9,10 @@ import { debounceTime } from 'rxjs';
 })
 export class PaginationComponent implements OnInit {
   protected maxPages: number = 0;
-  protected currentPage: number = 0;
 
-  constructor(private userService: PassengerService) {}
+  constructor(protected userService: PassengerService) {}
 
   ngOnInit(): void {
-    this.userService.currentPage$.pipe(debounceTime(2500)).subscribe((next) => {
-      this.currentPage = next + 1;
-    });
     this.maxPages = this.userService.maxPages;
   }
 

@@ -1,11 +1,33 @@
-<button class="fill" type="button" (click)="onFirst()" [disabled]="currentPage === 1">First</button>
-<button class="fill" type="button" (click)="onPrevious()" [disabled]="currentPage === 1">
+<button
+  class="fill"
+  type="button"
+  (click)="onFirst()"
+  [disabled]="(this.userService.currentPage$ | async) === 1"
+>
+  First
+</button>
+<button
+  class="fill"
+  type="button"
+  (click)="onPrevious()"
+  [disabled]="(this.userService.currentPage$ | async) === 1"
+>
   Previous
 </button>
-<span>Page {{ this.currentPage }} of {{ this.maxPages }}</span>
-<button class="fill" type="button" (click)="onNext()" [disabled]="currentPage === maxPages">
+<span>Page {{ this.userService.currentPage$ | async }} of {{ this.maxPages }}</span>
+<button
+  class="fill"
+  type="button"
+  (click)="onNext()"
+  [disabled]="(this.userService.currentPage$ | async) === maxPages"
+>
   Next
 </button>
-<button class="fill" type="button" (click)="onLast()" [disabled]="currentPage === maxPages">
+<button
+  class="fill"
+  type="button"
+  (click)="onLast()"
+  [disabled]="(this.userService.currentPage$ | async) === maxPages"
+>
   Last
 </button>

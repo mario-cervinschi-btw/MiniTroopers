@@ -1,0 +1,12 @@
+:host {
+  display: block;
+  height: 100vh;
+  background: var(--mat-sys-surface-container-low);
+}
+
+.wrapper-container {
+  display: block;
+  margin: 0 auto;
+  padding: 24px 1rem;
+  max-width: 1200px;
+}

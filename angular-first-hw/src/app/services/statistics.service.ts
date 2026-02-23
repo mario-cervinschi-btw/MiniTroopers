@@ -116,7 +116,6 @@ export class StatisticsService {
       title: 'General Overview',
       data: dataCategory1,
     };
-
     const category2: StatisticCategory = {
       title: 'Gender Statistics',
       data: dataCategory2,
