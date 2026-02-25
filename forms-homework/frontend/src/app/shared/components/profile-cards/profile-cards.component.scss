@@ -1,0 +1,45 @@
+p {
+    margin: 0;
+}
+
+p.title {
+    font-weight: 600;
+}
+
+p.subheading {
+    color: var(--mat-sys-secondary);
+    font-size: 12px;
+}
+
+.title + .subheading-wrapper {
+    margin-top: 2px;
+}
+
+.subheading-wrapper + .content-wrapper,
+.subheading-wrapper + .title,
+.content-wrapper + .subheading-wrapper {
+    margin-top: 8px;
+}
+
+.card-section {
+    box-sizing: border-box;
+    padding: 12px 0px;
+}
+
+.content:not(:last-child) {
+    margin: 4px 0px;
+}
+
+.subheading-wrapper,
+.content-wrapper {
+    display: flex;
+    align-items: center;
+    gap: 0.25rem;
+}
+
+.field-icon {
+    color: var(--mat-sys-secondary);
+    font-size: 14px;
+    width: 14px;
+    height: 14px;
+}

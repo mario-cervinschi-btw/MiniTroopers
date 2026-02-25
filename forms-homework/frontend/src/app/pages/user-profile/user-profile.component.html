@@ -1,0 +1,28 @@
+<app-wrapper>
+  @if (isLoadingUser) {
+    <mat-spinner class="center"></mat-spinner>
+  } @else {
+    <div class="spacing">
+      <app-profile-cards
+        [cardTitle]="'About'"
+        [data]="buildAboutData()[0]"
+        [config]="buildAboutData()[1]"
+      ></app-profile-cards>
+      <app-profile-cards
+        [cardTitle]="'Experience'"
+        [data]="buildExperienceData()[0]"
+        [config]="buildExperienceData()[1]"
+      ></app-profile-cards>
+      <app-profile-cards
+        [cardTitle]="'Education'"
+        [data]="buildEducationData()[0]"
+        [config]="buildEducationData()[1]"
+      ></app-profile-cards>
+      <app-profile-cards
+        [cardTitle]="'Skills'"
+        [data]="buildSkillsData()[0]"
+        [config]="buildSkillsData()[1]"
+      ></app-profile-cards>
+    </div>
+  }
+</app-wrapper>

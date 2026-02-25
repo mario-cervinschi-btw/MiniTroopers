@@ -1,6 +1,6 @@
 import { HttpClient } from '@angular/common/http';
 import { inject, Injectable } from '@angular/core';
-import { Observable } from 'rxjs';
+import { delay, Observable, timeout, timer } from 'rxjs';
 import { User } from '../models/user.model';
 import { environment } from '../../../environments/environment';
 
@@ -37,7 +37,7 @@ export class UsersService {
    */
   public getUserById(id: number): Observable<User> {
     const url = `${this.usersURL}/${id}`;
-    return this.httpClient.get<User>(url);
+    return this.httpClient.get<User>(url).pipe(delay(2000));
   }
 
   /**
