@@ -23,6 +23,10 @@ p.subheading {
 
 .card-section {
     box-sizing: border-box;
+    padding-top: 12px;
+}
+
+.card-section:not(:last-child) {
     padding: 12px 0px;
 }
 

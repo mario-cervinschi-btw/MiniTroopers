@@ -1,8 +1,14 @@
 <app-wrapper>
   @if (isLoadingUser) {
     <mat-spinner class="center"></mat-spinner>
+  } @else if (!isLoadingUser && !currentUser) {
+    <h1>User not found</h1>
   } @else {
     <div class="spacing">
+      <app-profile-cards
+        [data]="buildSummaryData()[0]"
+        [config]="buildSummaryData()[1]"
+      ></app-profile-cards>
       <app-profile-cards
         [cardTitle]="'About'"
         [data]="buildAboutData()[0]"

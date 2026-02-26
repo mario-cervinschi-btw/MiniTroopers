@@ -3,7 +3,9 @@
     <mat-card-title>{{ cardTitle }}</mat-card-title>
   </mat-card-header>
   <mat-card-content>
-    @for (content of data; track $index) {
+    <!-- <app-avatar [firstName]="this.userFirstName" [lastName]="this.userLastName" [size]="48"> -->
+    <!-- </app-avatar> -->
+    @for (content of data; let last = $last; track $index) {
       <section class="card-section">
         @for (item of getEntries(content); track item[0]) {
           @if (isSubtitle(item[0])) {
@@ -26,12 +28,19 @@
               @if (getIcon(item[0])) {
                 <mat-icon class="field-icon">{{ getIcon(item[0]) }}</mat-icon>
               }
-              <p class="content">{{ item[1] }}</p>
+              <p
+                class="content"
+                [style]="isLink(item[0]) ? { color: 'var(--mat-sys-primary)' } : {}"
+              >
+                {{ item[1] }}
+              </p>
             </div>
           }
         }
       </section>
-      <mat-divider></mat-divider>
+      @if (!last) {
+        <mat-divider></mat-divider>
+      }
     }
   </mat-card-content>
 </mat-card>

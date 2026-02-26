@@ -3,12 +3,14 @@ import { MatCardModule } from '@angular/material/card';
 import { MatDividerModule } from '@angular/material/divider';
 import { MatIconModule } from '@angular/material/icon';
 import { MatChipsModule } from '@angular/material/chips';
+import { AvatarComponent } from '../avatar/avatar.component';
 
 export interface CardConfig {
   key: string;
   isShowcase?: boolean;
   isTitle?: boolean;
   isSubtitle?: boolean;
+  isLink?: boolean;
   icon?: string;
 }
 
@@ -18,7 +20,7 @@ export interface CardItem {
 
 @Component({
   selector: 'app-profile-cards',
-  imports: [MatCardModule, MatDividerModule, MatIconModule, MatChipsModule],
+  imports: [MatCardModule, MatDividerModule, MatIconModule, MatChipsModule, AvatarComponent],
   templateUrl: './profile-cards.component.html',
   styleUrl: './profile-cards.component.scss',
 })
@@ -29,6 +31,10 @@ export class ProfileCardsComponent {
   public data: CardItem[] = [];
   @Input()
   public config: CardConfig[] = [];
+  @Input()
+  public userFirstName: string = '';
+  @Input()
+  public userLastName: string = '';
 
   getEntries(data: any) {
     return Object.entries(data);
@@ -44,6 +50,10 @@ export class ProfileCardsComponent {
 
   protected isShowcase(field: any): boolean {
     return this.config.find((p) => p.key === field)?.isShowcase ?? false;
+  }
+
+  protected isLink(field: any): boolean {
+    return this.config.find((p) => p.key === field)?.isLink ?? false;
   }
 
   protected getIcon(field: any): string | undefined {

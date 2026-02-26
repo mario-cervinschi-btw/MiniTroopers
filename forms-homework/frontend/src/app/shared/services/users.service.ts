@@ -51,6 +51,6 @@ export class UsersService {
 
   /** Return the "current" logged-in user (first user for demo purposes). */
   public currentUser(): Observable<User> {
-    return this.getUserById(1);
+    return this.getUserById(1).pipe(delay(2000));
   }
 }

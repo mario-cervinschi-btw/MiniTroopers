@@ -2,7 +2,7 @@ import { Component, inject } from '@angular/core';
 import { UsersService } from '../../shared/services/users.service';
 import { User } from '../../shared/models/user.model';
 import { ActivatedRoute } from '@angular/router';
-import { tap } from 'rxjs';
+import { finalize, tap } from 'rxjs';
 import { MatProgressSpinnerModule } from '@angular/material/progress-spinner';
 import { WrapperComponent } from '../../shared/components/wrapper/wrapper.component';
 import {
@@ -29,7 +29,7 @@ export class UserProfileComponent {
     this.isLoadingUser = true;
     this.userService
       .getUserById(currentUserId)
-      .pipe(tap((_) => (this.isLoadingUser = false)))
+      .pipe(finalize(() => (this.isLoadingUser = false)))
       .subscribe((next) => {
         console.log(next);
         this.currentUser = next;
@@ -102,6 +102,29 @@ export class UserProfileComponent {
     ];
 
     const dataConfig: CardConfig[] = [{ key: 'skills', isShowcase: true }];
+
+    return [cardData, dataConfig];
+  }
+
+  protected buildSummaryData(): [CardItem[], CardConfig[]] {
+    const cardData: CardItem[] = [];
+
+    const cardItem1: CardItem = {};
+
+    cardData.push(cardItem1);
+
+    const cardItem2: CardItem = {
+      email: this.currentUser.email,
+      phone: this.currentUser.phone,
+      website: this.currentUser.website,
+    };
+
+    cardData.push(cardItem2);
+
+    const dataConfig: CardConfig[] = [
+      { key: 'email', isLink: true, icon: 'mail' },
+      { key: 'website', isLink: true, icon: 'link' },
+    ];
 
     return [cardData, dataConfig];
   }

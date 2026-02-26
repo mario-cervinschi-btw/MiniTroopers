@@ -1,3 +1,12 @@
-<div class="header__title">LinkedOut</div>
+<div class="header__title" [routerLink]="['/']">LinkedOut</div>
 <div class="header__actions">Add your action dropdown here</div>
-<app-avatar></app-avatar>
+<button matIconButton [matMenuTriggerFor]="menu" aria-label="Menu button">
+  <mat-icon>menu</mat-icon>
+</button>
+<mat-menu #menu="matMenu">
+  <button mat-menu-item>
+    <mat-icon>settings</mat-icon>
+    <span [routerLink]="['/settings']">Settings</span>
+  </button>
+</mat-menu>
+<!-- <app-avatar></app-avatar> -->
