@@ -60,7 +60,8 @@
         <h2>About</h2>
         <mat-form-field class="form-container__span2" appearance="outline">
           <mat-label>About</mat-label>
-          <textarea matInput formControlName="about"></textarea>
+          <textarea matInput formControlName="about" #about></textarea>
+          <mat-error>{{ about.validationMessage }}</mat-error>
         </mat-form-field>
       </div>
     </app-wrapper>

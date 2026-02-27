@@ -10,10 +10,16 @@ import {
   CardItem,
   ProfileCardsComponent,
 } from '../../shared/components/profile-cards/profile-cards.component';
+import { UserProfileCardComponent } from '../../shared/components/user-profile-card/user-profile-card.component';
 
 @Component({
   selector: 'app-user-profile',
-  imports: [MatProgressSpinnerModule, WrapperComponent, ProfileCardsComponent],
+  imports: [
+    MatProgressSpinnerModule,
+    WrapperComponent,
+    ProfileCardsComponent,
+    UserProfileCardComponent,
+  ],
   templateUrl: './user-profile.component.html',
   styleUrl: './user-profile.component.scss',
 })
@@ -109,7 +115,9 @@ export class UserProfileComponent {
   protected buildSummaryData(): [CardItem[], CardConfig[]] {
     const cardData: CardItem[] = [];
 
-    const cardItem1: CardItem = {};
+    const cardItem1: CardItem = {
+      profile: [],
+    };
 
     cardData.push(cardItem1);
 
@@ -124,6 +132,7 @@ export class UserProfileComponent {
     const dataConfig: CardConfig[] = [
       { key: 'email', isLink: true, icon: 'mail' },
       { key: 'website', isLink: true, icon: 'link' },
+      { key: 'profile', isSummary: true },
     ];
 
     return [cardData, dataConfig];

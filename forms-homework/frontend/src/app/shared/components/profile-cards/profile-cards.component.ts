@@ -4,6 +4,8 @@ import { MatDividerModule } from '@angular/material/divider';
 import { MatIconModule } from '@angular/material/icon';
 import { MatChipsModule } from '@angular/material/chips';
 import { AvatarComponent } from '../avatar/avatar.component';
+import { UserProfileComponent } from '../../../pages/user-profile/user-profile.component';
+import { UserProfileCardComponent } from '../user-profile-card/user-profile-card.component';
 
 export interface CardConfig {
   key: string;
@@ -11,6 +13,7 @@ export interface CardConfig {
   isTitle?: boolean;
   isSubtitle?: boolean;
   isLink?: boolean;
+  isSummary?: boolean;
   icon?: string;
 }
 
@@ -20,7 +23,7 @@ export interface CardItem {
 
 @Component({
   selector: 'app-profile-cards',
-  imports: [MatCardModule, MatDividerModule, MatIconModule, MatChipsModule, AvatarComponent],
+  imports: [MatCardModule, MatDividerModule, MatIconModule, MatChipsModule],
   templateUrl: './profile-cards.component.html',
   styleUrl: './profile-cards.component.scss',
 })
@@ -31,10 +34,6 @@ export class ProfileCardsComponent {
   public data: CardItem[] = [];
   @Input()
   public config: CardConfig[] = [];
-  @Input()
-  public userFirstName: string = '';
-  @Input()
-  public userLastName: string = '';
 
   getEntries(data: any) {
     return Object.entries(data);
@@ -50,6 +49,10 @@ export class ProfileCardsComponent {
 
   protected isShowcase(field: any): boolean {
     return this.config.find((p) => p.key === field)?.isShowcase ?? false;
+  }
+
+  protected isSummary(field: any): boolean {
+    return this.config.find((p) => p.key === field)?.isSummary ?? false;
   }
 
   protected isLink(field: any): boolean {

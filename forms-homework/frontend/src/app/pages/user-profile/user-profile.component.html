@@ -5,10 +5,7 @@
     <h1>User not found</h1>
   } @else {
     <div class="spacing">
-      <app-profile-cards
-        [data]="buildSummaryData()[0]"
-        [config]="buildSummaryData()[1]"
-      ></app-profile-cards>
+      <app-user-profile-card> </app-user-profile-card>
       <app-profile-cards
         [cardTitle]="'About'"
         [data]="buildAboutData()[0]"

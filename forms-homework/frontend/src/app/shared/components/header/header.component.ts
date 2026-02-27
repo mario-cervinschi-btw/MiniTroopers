@@ -1,7 +1,6 @@
 import { Component, inject } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { UsersService } from '../../services/users.service';
-import { AvatarComponent } from '../avatar/avatar.component';
 import { MatToolbarModule } from '@angular/material/toolbar';
 import { MatIconModule } from '@angular/material/icon';
 import { MatMenuModule } from '@angular/material/menu';
@@ -12,7 +11,6 @@ import { MatButtonModule } from '@angular/material/button';
   selector: 'app-header',
   imports: [
     CommonModule,
-    AvatarComponent,
     MatToolbarModule,
     MatIconModule,
     MatMenuModule,

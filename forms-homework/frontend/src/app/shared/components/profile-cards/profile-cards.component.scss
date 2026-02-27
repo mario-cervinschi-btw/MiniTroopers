@@ -47,3 +47,13 @@ p.subheading {
     width: 14px;
     height: 14px;
 }
+
+.profile {
+    display: grid;
+    grid-template-columns: auto 1fr;
+}
+
+.profile-avatar {
+    margin: 0px 8px;
+    background-color: white;
+}

@@ -1,0 +1,63 @@
+app-avatar {
+    position: absolute;
+    top: 64px;
+    border-radius: 50%;
+    padding: 4px;
+    background-color: white;
+    box-shadow: 0px 2px 4px 1.5px rgba(108, 108, 108, 0.2);
+}
+
+p,
+h2 {
+    margin: 0;
+}
+
+p {
+    color: var(--mat-sys-secondary);
+}
+
+p.subheading {
+    font-size: 12px;
+    display: flex;
+    align-items: center;
+    gap: 0.25rem;
+}
+
+.profile-header__content {
+    height: fit-content;
+}
+
+.profile-header__background {
+    border-top-left-radius: 12px;
+    border-top-right-radius: 12px;
+    height: 100px;
+    background-color: blue;
+}
+
+.profile-header__content_text {
+    margin-left: 110px;
+    padding: 12px 0;
+}
+
+.default-color {
+    color: var(--mat-sys-secondary);
+}
+
+.card-section {
+    display: flex;
+    flex-direction: row;
+    column-gap: 16px;
+    flex-wrap: wrap;
+    box-sizing: border-box;
+    padding-top: 12px;
+}
+
+.blue {
+    color: blue;
+}
+
+.field-icon {
+    font-size: 14px;
+    width: 14px;
+    height: 14px;
+}
