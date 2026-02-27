@@ -3,9 +3,6 @@ import { MatCardModule } from '@angular/material/card';
 import { MatDividerModule } from '@angular/material/divider';
 import { MatIconModule } from '@angular/material/icon';
 import { MatChipsModule } from '@angular/material/chips';
-import { AvatarComponent } from '../avatar/avatar.component';
-import { UserProfileComponent } from '../../../pages/user-profile/user-profile.component';
-import { UserProfileCardComponent } from '../user-profile-card/user-profile-card.component';
 
 export interface CardConfig {
   key: string;

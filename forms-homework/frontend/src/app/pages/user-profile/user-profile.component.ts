@@ -11,6 +11,7 @@ import {
   ProfileCardsComponent,
 } from '../../shared/components/profile-cards/profile-cards.component';
 import { UserProfileCardComponent } from '../../shared/components/user-profile-card/user-profile-card.component';
+import { DatePipe } from '@angular/common';
 
 @Component({
   selector: 'app-user-profile',
@@ -20,12 +21,15 @@ import { UserProfileCardComponent } from '../../shared/components/user-profile-c
     ProfileCardsComponent,
     UserProfileCardComponent,
   ],
+  providers: [DatePipe],
   templateUrl: './user-profile.component.html',
   styleUrl: './user-profile.component.scss',
 })
 export class UserProfileComponent {
   private readonly userService: UsersService = inject(UsersService);
   private readonly route: ActivatedRoute = inject(ActivatedRoute);
+
+  private readonly datePipe: DatePipe = inject(DatePipe);
 
   protected currentUser!: User;
   protected isLoadingUser: boolean = false;
@@ -69,7 +73,9 @@ export class UserProfileComponent {
     const cardData: CardItem[] = [
       {
         about: this.currentUser.about,
-        dob: this.currentUser.dateOfBirth,
+        dob: this.currentUser.dateOfBirth
+          ? this.datePipe.transform(this.currentUser.dateOfBirth, 'MMM d, y')
+          : null,
       },
     ];
 

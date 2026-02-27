@@ -1,24 +1,23 @@
 <mat-card appearance="outlined">
   <div class="profile-header__background"></div>
   <mat-card-content class="profile-header__content">
-    <app-avatar firstName="Mihai" lastName="Ion" [size]="84"></app-avatar>
+    <app-avatar [firstName]="firstName" [lastName]="lastName" [size]="100"></app-avatar>
     <section class="profile-header__content_text">
-      <h2>Mihai Ion</h2>
-      <p class="subheading">FE Developer | TS Enthusiast</p>
+      <h2>{{ firstName }} {{ lastName }}</h2>
+      <p class="subheading">{{ headline }}</p>
       <p class="subheading">
-        <mat-icon class="field-icon default-color">location_on</mat-icon>Cluj-Napoca, RO
+        <mat-icon class="field-icon default-color">location_on</mat-icon>{{ location }}
       </p>
       <p class="subheading blue">
-        <mat-icon class="field-icon">groups</mat-icon> <strong>54</strong> connections
+        <mat-icon class="field-icon">groups</mat-icon>
+        <strong>{{ connections }}</strong> connections
       </p>
     </section>
     <mat-divider></mat-divider>
     <section class="card-section">
-      <p class="subheading blue"><mat-icon class="field-icon">mail</mat-icon> mihaidum@gmail.com</p>
-      <p class="subheading">+40 744 444 444</p>
-      <p class="subheading blue">
-        <mat-icon class="field-icon">link</mat-icon> https://dsadsds.com
-      </p>
+      <p class="blue"><mat-icon class="field-icon">mail</mat-icon> {{ email }}</p>
+      <p><mat-icon class="field-icon">call</mat-icon>{{ phone }}</p>
+      <p class="blue"><mat-icon class="field-icon">link</mat-icon> {{ website }}</p>
     </section>
   </mat-card-content>
 </mat-card>

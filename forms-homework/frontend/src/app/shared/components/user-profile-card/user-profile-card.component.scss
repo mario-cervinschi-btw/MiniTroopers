@@ -1,6 +1,6 @@
 app-avatar {
     position: absolute;
-    top: 64px;
+    top: 120px;
     border-radius: 50%;
     padding: 4px;
     background-color: white;
@@ -13,14 +13,14 @@ h2 {
 }
 
 p {
-    color: var(--mat-sys-secondary);
-}
-
-p.subheading {
-    font-size: 12px;
     display: flex;
     align-items: center;
     gap: 0.25rem;
+}
+
+p.subheading {
+    color: var(--mat-sys-secondary);
+    font-size: 12px;
 }
 
 .profile-header__content {
@@ -30,12 +30,12 @@ p.subheading {
 .profile-header__background {
     border-top-left-radius: 12px;
     border-top-right-radius: 12px;
-    height: 100px;
-    background-color: blue;
+    height: 160px;
+    background: linear-gradient(to right, var(--primary-blue), var(--primary-dark-blue));
 }
 
 .profile-header__content_text {
-    margin-left: 110px;
+    margin-left: 122px;
     padding: 12px 0;
 }
 
@@ -53,7 +53,7 @@ p.subheading {
 }
 
 .blue {
-    color: blue;
+    color: var(--primary-blue);
 }
 
 .field-icon {
