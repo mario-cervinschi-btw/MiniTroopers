@@ -4,9 +4,9 @@
   <mat-icon>menu</mat-icon>
 </button>
 <mat-menu #menu="matMenu">
-  <button mat-menu-item>
+  <button mat-menu-item [routerLink]="['/settings']">
     <mat-icon>settings</mat-icon>
-    <span [routerLink]="['/settings']">Settings</span>
+    <span>Settings</span>
   </button>
 </mat-menu>
 <!-- <app-avatar></app-avatar> -->

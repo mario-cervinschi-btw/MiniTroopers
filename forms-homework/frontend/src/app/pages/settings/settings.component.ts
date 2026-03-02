@@ -11,6 +11,7 @@ import { catchError, finalize, tap, throwError } from 'rxjs';
 import { MatProgressBarModule } from '@angular/material/progress-bar';
 import { MatButtonModule } from '@angular/material/button';
 import { User } from '../../shared/models/user.model';
+import { websiteValidator } from '../../shared/validators/website-validator';
 
 @Component({
   selector: 'app-settings',
@@ -46,7 +47,7 @@ export class SettingsComponent {
     contactForm: new FormGroup({
       email: new FormControl('', [Validators.email, Validators.required]),
       phone: new FormControl(''),
-      website: new FormControl(''),
+      website: new FormControl('', [websiteValidator]),
     }),
     aboutForm: new FormGroup({
       about: new FormControl('', [Validators.minLength(20)]),
