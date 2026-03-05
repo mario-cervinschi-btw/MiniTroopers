@@ -65,11 +65,20 @@
         </mat-form-field>
       </div>
     </app-wrapper>
-    <button matButton="tonal" type="submit" [disabled]="isLoading || !settingsForm.valid">
-      Update profile
-    </button>
-    @if (message) {
-      <p>{{ message }}</p>
-    }
+    <section class="buttons-section">
+      <button
+        appSaveForm
+        [saveMessage]="message"
+        [openSnackBar]="snackBarOpen"
+        matButton="tonal"
+        type="submit"
+        [disabled]="isLoading || (!settingsForm.valid && !settingsForm.pristine)"
+      >
+        Update profile
+      </button>
+      @if (this.settingsForm.invalid || this.settingsForm.pristine) {
+        <button matIconButton appSettingsInfo type="button"><mat-icon>info</mat-icon></button>
+      }
+    </section>
   </form>
 </app-wrapper>

@@ -3,6 +3,7 @@ import { MatCardModule } from '@angular/material/card';
 import { MatDividerModule } from '@angular/material/divider';
 import { MatIconModule } from '@angular/material/icon';
 import { MatChipsModule } from '@angular/material/chips';
+import { ChipColorsDirective } from '../../directives/chip-colors.directive';
 
 export interface CardConfig {
   key: string;
@@ -20,7 +21,7 @@ export interface CardItem {
 
 @Component({
   selector: 'app-profile-cards',
-  imports: [MatCardModule, MatDividerModule, MatIconModule, MatChipsModule],
+  imports: [MatCardModule, MatDividerModule, MatIconModule, MatChipsModule, ChipColorsDirective],
   templateUrl: './profile-cards.component.html',
   styleUrl: './profile-cards.component.scss',
 })

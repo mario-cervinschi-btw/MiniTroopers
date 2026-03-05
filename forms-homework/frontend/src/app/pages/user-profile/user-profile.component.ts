@@ -12,6 +12,7 @@ import {
 } from '../../shared/components/profile-cards/profile-cards.component';
 import { UserProfileCardComponent } from '../../shared/components/user-profile-card/user-profile-card.component';
 import { DatePipe } from '@angular/common';
+import { IfCurrentUserDirective } from '../../shared/directives/if-current-user.directive';
 
 @Component({
   selector: 'app-user-profile',
@@ -20,6 +21,7 @@ import { DatePipe } from '@angular/common';
     WrapperComponent,
     ProfileCardsComponent,
     UserProfileCardComponent,
+    IfCurrentUserDirective,
   ],
   providers: [DatePipe],
   templateUrl: './user-profile.component.html',
@@ -142,5 +144,9 @@ export class UserProfileComponent {
     ];
 
     return [cardData, dataConfig];
+  }
+
+  protected changeLoadingState(event: any) {
+    console.log(event);
   }
 }

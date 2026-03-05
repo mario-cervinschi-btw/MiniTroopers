@@ -15,7 +15,9 @@
     <!-- Headline Column -->
     <ng-container matColumnDef="headline">
       <th mat-header-cell *matHeaderCellDef>Headline</th>
-      <td mat-cell *matCellDef="let user">{{ user.headline }}</td>
+      <td mat-cell *matCellDef="let user">
+        <mat-icon tech-icons [headline]="user.headline"></mat-icon>{{ user.headline }}
+      </td>
     </ng-container>
 
     <!-- Location Column -->

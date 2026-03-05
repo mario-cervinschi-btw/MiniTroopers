@@ -4,7 +4,7 @@
   } @else if (!isLoadingUser && !currentUser) {
     <h1>User not found</h1>
   } @else {
-    <div class="spacing">
+    <div class="spacing" *appIfCurrentUser="currentUser.id">
       <app-user-profile-card
         [firstName]="currentUser.firstName"
         [lastName]="currentUser.lastName"

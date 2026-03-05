@@ -8,6 +8,8 @@ export class HighlightDirective {
 
   @Input({ required: true }) highlight: string = '';
 
+  @HostBinding('style.background') backgroundColor: string = '';
+
   @HostListener('mouseenter') onEnter() {
     this.setBackgroundColor('magenta');
   }
@@ -16,11 +18,13 @@ export class HighlightDirective {
     this.setBackgroundColor('');
   }
 
-  @HostBinding('style.background') backgroundColor: string;
-
   private setBackgroundColor(color: string) {
     if (this.highlight.toLowerCase().includes('angular')) {
-      this.element.nativeElement.style.backgroundColor = color;
+      // without hostbinding
+      // this.element.nativeElement.style.backgroundColor = color;
+
+      // with hostbinding
+      this.backgroundColor = color;
     }
   }
 }

@@ -35,6 +35,8 @@ p.subheading {
 }
 
 .profile-header__content_text {
+    display: grid;
+    grid-template-columns: 1fr auto;
     margin-left: 122px;
     padding: 12px 0;
 }

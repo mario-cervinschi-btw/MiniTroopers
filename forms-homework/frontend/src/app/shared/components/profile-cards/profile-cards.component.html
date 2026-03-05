@@ -18,7 +18,7 @@
           } @else if (isShowcase(item[0])) {
             <mat-chip-set aria-label="User skills">
               @for (chip of getShowcaseArray(item[1]); track $index) {
-                <mat-chip>{{ chip }}</mat-chip>
+                <mat-chip appChipColors>{{ chip }}</mat-chip>
               }
             </mat-chip-set>
           } @else {
