@@ -12,6 +12,8 @@ import {
 } from '../../shared/components/profile-cards/profile-cards.component';
 import { UserProfileCardComponent } from '../../shared/components/user-profile-card/user-profile-card.component';
 import { DatePipe } from '@angular/common';
+import { IfCurrentUserDirective } from '../../shared/directives/if-current-user.directive';
+import { takeUntilDestroyed } from '@angular/core/rxjs-interop';
 
 @Component({
   selector: 'app-user-profile',
@@ -20,6 +22,7 @@ import { DatePipe } from '@angular/common';
     WrapperComponent,
     ProfileCardsComponent,
     UserProfileCardComponent,
+    IfCurrentUserDirective,
   ],
   providers: [DatePipe],
   templateUrl: './user-profile.component.html',
@@ -32,7 +35,13 @@ export class UserProfileComponent {
   private readonly datePipe: DatePipe = inject(DatePipe);
 
   protected currentUser!: User;
+
   protected isLoadingUser: boolean = false;
+  protected isLoadingConnectedUser: boolean = false;
+
+  protected changeLoadingState(event: any) {
+    this.isLoadingConnectedUser = event;
+  }
 
   ngOnInit() {
     const currentUserId = this.route.snapshot.params['id'];

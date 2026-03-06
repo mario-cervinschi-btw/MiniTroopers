@@ -1,10 +1,14 @@
-import { Component, inject } from '@angular/core';
+import { Component, DestroyRef, inject } from '@angular/core';
 import { WrapperComponent } from '../../shared/components/wrapper/wrapper.component';
 import { MatTableModule } from '@angular/material/table';
 import { UsersService } from '../../shared/services/users.service';
 import { AvatarComponent } from '../../shared/components/avatar/avatar.component';
 import { map } from 'rxjs';
 import { Router, RouterModule } from '@angular/router';
+import { HighlightDirective } from '../../shared/directives/highlight.directive';
+import { MatIcon } from '@angular/material/icon';
+import { TechIconsDirective } from '../../shared/directives/tech-icons.directive';
+import { takeUntilDestroyed } from '@angular/core/rxjs-interop';
 
 interface TableUser {
   id: number;
@@ -17,7 +21,15 @@ interface TableUser {
 
 @Component({
   selector: 'app-network-table',
-  imports: [WrapperComponent, MatTableModule, AvatarComponent, RouterModule],
+  imports: [
+    WrapperComponent,
+    MatTableModule,
+    AvatarComponent,
+    RouterModule,
+    HighlightDirective,
+    TechIconsDirective,
+    MatIcon,
+  ],
   templateUrl: './network-table.component.html',
   styleUrl: './network-table.component.scss',
 })

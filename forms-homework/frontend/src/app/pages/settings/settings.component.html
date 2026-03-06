@@ -44,7 +44,7 @@
         <mat-form-field appearance="outline">
           <mat-label>Email</mat-label>
           <input matInput formControlName="email" #email />
-          <mat-error>{{ email.validationMessage }}</mat-error>
+          <mat-error>Please type a valid email.</mat-error>
         </mat-form-field>
         <mat-form-field appearance="outline">
           <mat-label>Phone</mat-label>
@@ -52,24 +52,39 @@
         </mat-form-field>
         <mat-form-field class="form-container__span2" appearance="outline">
           <mat-label>Website</mat-label>
-          <input matInput formControlName="website" />
-        </mat-form-field></div
-    ></app-wrapper>
+          <input matInput formControlName="website" #website />
+          <mat-error>Please type a valid website URL or leave blank.</mat-error>
+        </mat-form-field>
+      </div></app-wrapper
+    >
     <app-wrapper
       ><div class="form-container" formGroupName="aboutForm">
         <h2>About</h2>
         <mat-form-field class="form-container__span2" appearance="outline">
           <mat-label>About</mat-label>
           <textarea matInput formControlName="about" #about></textarea>
-          <mat-error>{{ about.validationMessage }}</mat-error>
+          <mat-error>Please type at least 20 characters or leave blank.</mat-error>
         </mat-form-field>
       </div>
     </app-wrapper>
-    <button matButton="tonal" type="submit" [disabled]="isLoading || !settingsForm.valid">
-      Update profile
-    </button>
-    @if (message) {
-      <p>{{ message }}</p>
-    }
+    <section class="buttons-section">
+      <button
+        [appSaveForm]="message"
+        matButton="tonal"
+        type="submit"
+        [disabled]="isLoading || settingsForm.invalid || settingsForm.pristine"
+      >
+        Update profile
+      </button>
+      @if (this.settingsForm.invalid || this.settingsForm.pristine) {
+        <button
+          matIconButton
+          [appSettingsInfo]="this.settingsForm.pristine ? 'No fields modified yet.' : null"
+          type="button"
+        >
+          <mat-icon>info</mat-icon>
+        </button>
+      }
+    </section>
   </form>
 </app-wrapper>
