@@ -54,7 +54,6 @@ export class NetworkTableComponent {
             headline: u.headline,
           })),
         ),
-        takeUntilDestroyed(),
       )
       .subscribe((next) => {
         this.usersAvailable = next;

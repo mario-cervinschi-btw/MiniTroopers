@@ -48,10 +48,7 @@ export class UserProfileComponent {
     this.isLoadingUser = true;
     this.userService
       .getUserById(currentUserId)
-      .pipe(
-        takeUntilDestroyed(),
-        finalize(() => (this.isLoadingUser = false)),
-      )
+      .pipe(finalize(() => (this.isLoadingUser = false)))
       .subscribe((next) => {
         console.log(next);
         this.currentUser = next;

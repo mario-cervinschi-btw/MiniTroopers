@@ -65,7 +65,6 @@ export class SettingsComponent {
     this.userService
       .currentUser()
       .pipe(
-        takeUntilDestroyed(),
         finalize(() => {
           this.isLoading = false;
         }),
@@ -107,7 +106,6 @@ export class SettingsComponent {
         tap((_) => {
           this.snackBarOpen = true;
         }),
-        takeUntilDestroyed(),
         catchError((err) => {
           return throwError(() => err);
         }),
