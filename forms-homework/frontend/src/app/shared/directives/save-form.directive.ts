@@ -1,25 +1,24 @@
-import { Directive, inject, Input } from '@angular/core';
+import { Directive, inject, Input, SimpleChanges, OnChanges } from '@angular/core';
 import { MatSnackBar } from '@angular/material/snack-bar';
 
 @Directive({
   selector: '[appSaveForm]',
+  // host: {
+  // '(click)': 'openSnack()',
+  // },
 })
-export class SaveFormDirective {
-  @Input() saveMessage: string = '';
-
-  @Input() openSnackBar: boolean = false;
+export class SaveFormDirective implements OnChanges {
+  @Input() appSaveForm: string = 'N/A';
 
   private snackBar = inject(MatSnackBar);
 
-  ngOnChanges() {
-    if (this.openSnackBar) {
+  ngOnChanges(changes: SimpleChanges) {
+    if (changes['appSaveForm'] && !changes['appSaveForm'].firstChange) {
       this.openSnack();
-      // this.openSnackBar = false;
-      this.saveMessage = '';
     }
   }
 
   openSnack() {
-    this.snackBar.open(this.saveMessage, 'Dismiss');
+    this.snackBar.open(this.appSaveForm, 'Dismiss');
   }
 }

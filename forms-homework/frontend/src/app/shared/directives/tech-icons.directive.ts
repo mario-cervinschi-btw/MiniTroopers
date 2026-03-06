@@ -5,12 +5,12 @@ import { MatIcon } from '@angular/material/icon';
   selector: '[tech-icons]',
   standalone: true,
   host: {
-    '[style.backgroundColor]': 'bg_color',
+    '[style.color]': 'color',
   },
 })
 export class TechIconsDirective {
   @Input({ required: true }) headline: string = '';
-  protected bg_color: string = '';
+  protected color: string = '';
 
   private matIcon = inject(MatIcon, { self: true });
 
@@ -31,7 +31,7 @@ export class TechIconsDirective {
     this.techIcons.forEach((ti) => {
       if (this.headline.toLowerCase().includes(ti.keyword)) {
         this.matIcon.svgIcon = ti.name;
-        this.bg_color = ti.color;
+        this.color = ti.color;
       }
     });
   }

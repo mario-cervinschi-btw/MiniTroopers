@@ -8,7 +8,7 @@ import {
   ViewContainerRef,
 } from '@angular/core';
 import { UsersService } from '../services/users.service';
-import { tap } from 'rxjs';
+import { finalize, tap } from 'rxjs';
 import { Router } from '@angular/router';
 
 @Directive({
@@ -17,13 +17,14 @@ import { Router } from '@angular/router';
 export class IfCurrentUserDirective {
   private templateRef = inject(TemplateRef);
   private viewContainerRef = inject(ViewContainerRef);
-  private userService = inject(UsersService);
 
+  private userService = inject(UsersService);
   private router = inject(Router);
 
   private currentUserId!: number;
 
   @Input() set appIfCurrentUser(id: number) {
+    this.setLoading.emit(true);
     this.viewContainerRef.clear();
     this.userService
       .currentUser()
@@ -37,7 +38,12 @@ export class IfCurrentUserDirective {
             this.router.navigate(['/']);
           }
         }),
+        finalize(() => {
+          this.setLoading.emit(false);
+        }),
       )
       .subscribe();
   }
+
+  @Output() setLoading = new EventEmitter<boolean>();
 }

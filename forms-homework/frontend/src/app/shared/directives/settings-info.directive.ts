@@ -4,11 +4,12 @@ import { MatSnackBar } from '@angular/material/snack-bar';
 @Directive({
   selector: '[appSettingsInfo]',
   host: {
-    '(click)': 'openSnackBar("Please fill in all (required) fields correctly.", "Dismiss")',
+    '(click)':
+      'openSnackBar(appSettingsInfo ?? "Please fill in all (required) fields correctly.", "Dismiss")',
   },
 })
 export class SettingsInfoDirective {
-  @Input() appSettingsInfo: string = '';
+  @Input() appSettingsInfo: string | null = null;
 
   private snackBar = inject(MatSnackBar);
 

@@ -1,4 +1,4 @@
-import { Component, inject } from '@angular/core';
+import { Component, DestroyRef, inject } from '@angular/core';
 import { WrapperComponent } from '../../shared/components/wrapper/wrapper.component';
 import { MatTableModule } from '@angular/material/table';
 import { UsersService } from '../../shared/services/users.service';
@@ -8,6 +8,7 @@ import { Router, RouterModule } from '@angular/router';
 import { HighlightDirective } from '../../shared/directives/highlight.directive';
 import { MatIcon } from '@angular/material/icon';
 import { TechIconsDirective } from '../../shared/directives/tech-icons.directive';
+import { takeUntilDestroyed } from '@angular/core/rxjs-interop';
 
 interface TableUser {
   id: number;
@@ -53,6 +54,7 @@ export class NetworkTableComponent {
             headline: u.headline,
           })),
         ),
+        takeUntilDestroyed(),
       )
       .subscribe((next) => {
         this.usersAvailable = next;

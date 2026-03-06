@@ -14,6 +14,7 @@ import { User } from '../../shared/models/user.model';
 import { websiteValidator } from '../../shared/validators/website-validator';
 import { SettingsInfoDirective } from '../../shared/directives/settings-info.directive';
 import { SaveFormDirective } from '../../shared/directives/save-form.directive';
+import { takeUntilDestroyed } from '@angular/core/rxjs-interop';
 
 @Component({
   selector: 'app-settings',
@@ -64,6 +65,7 @@ export class SettingsComponent {
     this.userService
       .currentUser()
       .pipe(
+        takeUntilDestroyed(),
         finalize(() => {
           this.isLoading = false;
         }),
@@ -105,13 +107,12 @@ export class SettingsComponent {
         tap((_) => {
           this.snackBarOpen = true;
         }),
-        // timeout(2000),
+        takeUntilDestroyed(),
         catchError((err) => {
           return throwError(() => err);
         }),
         finalize(() => {
           this.isLoading = false;
-          // this.snackBarOpen = false;
         }),
       )
       .subscribe({
