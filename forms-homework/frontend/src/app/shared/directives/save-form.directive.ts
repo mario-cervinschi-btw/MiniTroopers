@@ -3,9 +3,6 @@ import { MatSnackBar } from '@angular/material/snack-bar';
 
 @Directive({
   selector: '[appSaveForm]',
-  // host: {
-  // '(click)': 'openSnack()',
-  // },
 })
 export class SaveFormDirective implements OnChanges {
   @Input() appSaveForm: string = 'N/A';

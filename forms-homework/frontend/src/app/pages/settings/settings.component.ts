@@ -1,4 +1,4 @@
-import { Component, inject } from '@angular/core';
+import { Component, DestroyRef, inject } from '@angular/core';
 import { WrapperComponent } from '../../shared/components/wrapper/wrapper.component';
 import { FormControl, FormGroup, ReactiveFormsModule, Validators } from '@angular/forms';
 import { MatFormFieldModule } from '@angular/material/form-field';
@@ -36,10 +36,12 @@ import { takeUntilDestroyed } from '@angular/core/rxjs-interop';
 })
 export class SettingsComponent {
   private readonly userService: UsersService = inject(UsersService);
+  private readonly destroyRef = inject(DestroyRef);
+
   private user?: User;
+
   protected isLoading: boolean = false;
   protected message: string = '';
-  protected snackBarOpen: boolean = false;
 
   settingsForm = new FormGroup({
     profileForm: new FormGroup({
@@ -65,6 +67,7 @@ export class SettingsComponent {
     this.userService
       .currentUser()
       .pipe(
+        takeUntilDestroyed(this.destroyRef),
         finalize(() => {
           this.isLoading = false;
         }),
@@ -103,9 +106,7 @@ export class SettingsComponent {
     this.userService
       .updateUser(this.user)
       .pipe(
-        tap((_) => {
-          this.snackBarOpen = true;
-        }),
+        takeUntilDestroyed(this.destroyRef),
         catchError((err) => {
           return throwError(() => err);
         }),

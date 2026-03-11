@@ -4,6 +4,7 @@ import { ActivatedRoute, Router } from '@angular/router';
 import { PassengerService } from '../../services/passenger.service';
 import { delay, Observable } from 'rxjs';
 import { PassengerDataProfile } from '../../shared/models/passenger-data-profile';
+import { takeUntilDestroyed } from '@angular/core/rxjs-interop';
 
 @Component({
   selector: 'app-user-page',
@@ -22,7 +23,7 @@ export class UserPageComponent implements OnInit {
   ) {}
 
   ngOnInit(): void {
-    this.route.params.subscribe((params) => {
+    this.route.params.pipe(takeUntilDestroyed()).subscribe((params) => {
       this.passengerId = +params['id'];
       this.passenger$ = this.passengerService.getPassengerById(this.passengerId).pipe(delay(2500));
     });

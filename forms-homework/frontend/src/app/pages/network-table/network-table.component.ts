@@ -34,6 +34,7 @@ interface TableUser {
   styleUrl: './network-table.component.scss',
 })
 export class NetworkTableComponent {
+  private readonly destroyRef = inject(DestroyRef);
   private readonly router: Router = inject(Router);
 
   protected readonly userService: UsersService = inject(UsersService);
@@ -54,6 +55,7 @@ export class NetworkTableComponent {
             headline: u.headline,
           })),
         ),
+        takeUntilDestroyed(this.destroyRef),
       )
       .subscribe((next) => {
         this.usersAvailable = next;

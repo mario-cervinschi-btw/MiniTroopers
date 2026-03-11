@@ -1,4 +1,5 @@
 import {
+  DestroyRef,
   Directive,
   EventEmitter,
   inject,
@@ -10,16 +11,18 @@ import {
 import { UsersService } from '../services/users.service';
 import { finalize, tap } from 'rxjs';
 import { Router } from '@angular/router';
+import { takeUntilDestroyed } from '@angular/core/rxjs-interop';
 
 @Directive({
   selector: '[appIfCurrentUser]',
 })
 export class IfCurrentUserDirective {
-  private templateRef = inject(TemplateRef);
-  private viewContainerRef = inject(ViewContainerRef);
+  private readonly destroyRef = inject(DestroyRef);
+  private readonly templateRef = inject(TemplateRef);
+  private readonly viewContainerRef = inject(ViewContainerRef);
 
-  private userService = inject(UsersService);
-  private router = inject(Router);
+  private readonly userService = inject(UsersService);
+  private readonly router = inject(Router);
 
   private currentUserId!: number;
 
@@ -29,6 +32,7 @@ export class IfCurrentUserDirective {
     this.userService
       .currentUser()
       .pipe(
+        takeUntilDestroyed(this.destroyRef),
         tap((val) => {
           this.currentUserId = val.id;
 
