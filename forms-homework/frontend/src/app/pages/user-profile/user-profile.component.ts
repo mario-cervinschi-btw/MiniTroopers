@@ -1,8 +1,8 @@
-import { Component, inject } from '@angular/core';
+import { Component, DestroyRef, inject } from '@angular/core';
 import { UsersService } from '../../shared/services/users.service';
 import { User } from '../../shared/models/user.model';
 import { ActivatedRoute } from '@angular/router';
-import { finalize, tap } from 'rxjs';
+import { asyncScheduler, BehaviorSubject, finalize, observeOn } from 'rxjs';
 import { MatProgressSpinnerModule } from '@angular/material/progress-spinner';
 import { WrapperComponent } from '../../shared/components/wrapper/wrapper.component';
 import {
@@ -11,7 +11,7 @@ import {
   ProfileCardsComponent,
 } from '../../shared/components/profile-cards/profile-cards.component';
 import { UserProfileCardComponent } from '../../shared/components/user-profile-card/user-profile-card.component';
-import { DatePipe } from '@angular/common';
+import { AsyncPipe, DatePipe } from '@angular/common';
 import { IfCurrentUserDirective } from '../../shared/directives/if-current-user.directive';
 import { takeUntilDestroyed } from '@angular/core/rxjs-interop';
 
@@ -23,6 +23,7 @@ import { takeUntilDestroyed } from '@angular/core/rxjs-interop';
     ProfileCardsComponent,
     UserProfileCardComponent,
     IfCurrentUserDirective,
+    AsyncPipe,
   ],
   providers: [DatePipe],
   templateUrl: './user-profile.component.html',
@@ -31,16 +32,20 @@ import { takeUntilDestroyed } from '@angular/core/rxjs-interop';
 export class UserProfileComponent {
   private readonly userService: UsersService = inject(UsersService);
   private readonly route: ActivatedRoute = inject(ActivatedRoute);
-
+  private readonly destroyRef = inject(DestroyRef);
   private readonly datePipe: DatePipe = inject(DatePipe);
 
   protected currentUser!: User;
 
   protected isLoadingUser: boolean = false;
-  protected isLoadingConnectedUser: boolean = false;
+
+  private readonly loadingSubject = new BehaviorSubject<boolean>(false);
+  protected readonly isLoadingConnectedUser$ = this.loadingSubject
+    .asObservable()
+    .pipe(observeOn(asyncScheduler));
 
   protected changeLoadingState(event: any) {
-    this.isLoadingConnectedUser = event;
+    this.loadingSubject.next(event);
   }
 
   ngOnInit() {
@@ -48,7 +53,10 @@ export class UserProfileComponent {
     this.isLoadingUser = true;
     this.userService
       .getUserById(currentUserId)
-      .pipe(finalize(() => (this.isLoadingUser = false)))
+      .pipe(
+        takeUntilDestroyed(this.destroyRef),
+        finalize(() => (this.isLoadingUser = false)),
+      )
       .subscribe((next) => {
         console.log(next);
         this.currentUser = next;
