@@ -29,8 +29,6 @@ export class IfCurrentUserDirective {
   private currentUserId?: number;
 
   @Input() set appIfCurrentUser(id: number) {
-    this.setLoading.emit(true);
-
     this.authFacade.currentUser$
       .pipe(
         takeUntilDestroyed(this.destroyRef),
@@ -43,31 +41,7 @@ export class IfCurrentUserDirective {
             this.router.navigate(['/']);
           }
         }),
-        finalize(() => {
-          this.setLoading.emit(false);
-        }),
       )
       .subscribe();
   }
-  // this.userService
-  //   .currentUser()
-  //   .pipe(
-  //     takeUntilDestroyed(this.destroyRef),
-  //     tap((val) => {
-  //       this.currentUserId = val.id;
-
-  //       if (id == this.currentUserId) {
-  //         this.viewContainerRef.createEmbeddedView(this.templateRef);
-  //       } else {
-  //         this.router.navigate(['/']);
-  //       }
-  //     }),
-  //     finalize(() => {
-  //       this.setLoading.emit(false);
-  //     }),
-  //   )
-  //   .subscribe();
-  // }
-
-  @Output() setLoading = new EventEmitter<boolean>();
 }

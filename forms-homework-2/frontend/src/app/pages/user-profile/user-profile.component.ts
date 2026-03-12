@@ -2,7 +2,7 @@ import { Component, DestroyRef, inject } from '@angular/core';
 import { UsersService } from '../../shared/services/users.service';
 import { User } from '../../shared/models/user.model';
 import { ActivatedRoute } from '@angular/router';
-import { asyncScheduler, BehaviorSubject, finalize, observeOn } from 'rxjs';
+import { asyncScheduler, BehaviorSubject, finalize, observeOn, take, tap } from 'rxjs';
 import { MatProgressSpinnerModule } from '@angular/material/progress-spinner';
 import { WrapperComponent } from '../../shared/components/wrapper/wrapper.component';
 import {
@@ -14,6 +14,7 @@ import { UserProfileCardComponent } from '../../shared/components/user-profile-c
 import { AsyncPipe, DatePipe } from '@angular/common';
 import { IfCurrentUserDirective } from '../../shared/directives/if-current-user.directive';
 import { takeUntilDestroyed } from '@angular/core/rxjs-interop';
+import { AuthFacade } from '../../shared/store/auth/auth.facade';
 
 @Component({
   selector: 'app-user-profile',
@@ -23,7 +24,6 @@ import { takeUntilDestroyed } from '@angular/core/rxjs-interop';
     ProfileCardsComponent,
     UserProfileCardComponent,
     IfCurrentUserDirective,
-    AsyncPipe,
   ],
   providers: [DatePipe],
   templateUrl: './user-profile.component.html',
@@ -39,15 +39,6 @@ export class UserProfileComponent {
 
   protected isLoadingUser: boolean = false;
 
-  private readonly loadingSubject = new BehaviorSubject<boolean>(false);
-  protected readonly isLoadingConnectedUser$ = this.loadingSubject
-    .asObservable()
-    .pipe(observeOn(asyncScheduler));
-
-  protected changeLoadingState(event: any) {
-    this.loadingSubject.next(event);
-  }
-
   ngOnInit() {
     const currentUserId = this.route.snapshot.params['id'];
     this.isLoadingUser = true;
@@ -55,27 +46,37 @@ export class UserProfileComponent {
       .getUserById(currentUserId)
       .pipe(
         takeUntilDestroyed(this.destroyRef),
-        finalize(() => (this.isLoadingUser = false)),
+        tap((_) => (this.isLoadingUser = false)),
       )
       .subscribe((next) => {
-        console.log(next);
-        this.currentUser = next;
+        // console.log(next);
+        if (next) {
+          this.currentUser = next;
+        }
       });
   }
 
   protected buildExperienceData(): [CardItem[], CardConfig[]] {
     const cardData: CardItem[] = [];
 
-    this.currentUser.experience.forEach((e) => {
-      const experienceField: CardItem = {
-        title: e.title,
-        workPlace: e.company + ' * ' + e.location,
-        duration: e.startDate + ' - ' + e.endDate,
-        description: e.description,
-      };
+    this.currentUser?.experience
+      .sort((a, b) => {
+        return (a.endDate ?? 'PRESENT') < (b.endDate ?? 'PRESENT')
+          ? 1
+          : (a.endDate ?? 'PRESENT') > (b.endDate ?? 'PRESENT')
+            ? -1
+            : 0;
+      })
+      .forEach((e) => {
+        const experienceField: CardItem = {
+          title: e.title,
+          workPlace: e.company.name + ' • ' + e.location,
+          duration: e.startDate + ' - ' + (e.endDate ?? 'PRESENT'),
+          description: e.description,
+        };
 
-      cardData.push(experienceField);
-    });
+        cardData.push(experienceField);
+      });
 
     const dataConfig: CardConfig[] = [
       { key: 'title', isTitle: true },
@@ -89,8 +90,8 @@ export class UserProfileComponent {
   protected buildAboutData(): [CardItem[], CardConfig[]] {
     const cardData: CardItem[] = [
       {
-        about: this.currentUser.about,
-        dob: this.currentUser.dateOfBirth
+        about: this.currentUser?.about,
+        dob: this.currentUser?.dateOfBirth
           ? this.datePipe.transform(this.currentUser.dateOfBirth, 'MMM d, y')
           : null,
       },
@@ -104,7 +105,7 @@ export class UserProfileComponent {
   protected buildEducationData(): [CardItem[], CardConfig[]] {
     const cardData: CardItem[] = [];
 
-    this.currentUser.education.forEach((e) => {
+    this.currentUser?.education.forEach((e) => {
       const educationField: CardItem = {
         title: e.institution,
         study: e.degree + ', ' + e.fieldOfStudy,
@@ -124,9 +125,15 @@ export class UserProfileComponent {
   }
 
   protected buildSkillsData(): [CardItem[], CardConfig[]] {
+    const skillsArray: string[] = [];
+
+    this.currentUser?.skills.forEach((s) => {
+      skillsArray.push(s.name);
+    });
+
     const cardData: CardItem[] = [
       {
-        skills: this.currentUser.skills,
+        skills: skillsArray,
       },
     ];
 
@@ -145,9 +152,9 @@ export class UserProfileComponent {
     cardData.push(cardItem1);
 
     const cardItem2: CardItem = {
-      email: this.currentUser.email,
-      phone: this.currentUser.phone,
-      website: this.currentUser.website,
+      email: this.currentUser?.email,
+      phone: this.currentUser?.phone,
+      website: this.currentUser?.website,
     };
 
     cardData.push(cardItem2);

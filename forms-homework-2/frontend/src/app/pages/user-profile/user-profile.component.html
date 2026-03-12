@@ -4,10 +4,7 @@
   } @else if (!isLoadingUser && !currentUser) {
     <h1>User not found</h1>
   } @else {
-    @if (this.isLoadingConnectedUser$ | async) {
-      <mat-spinner class="center"></mat-spinner>
-    }
-    <ng-template [appIfCurrentUser]="currentUser.id" (setLoading)="changeLoadingState($event)">
+    <ng-template [appIfCurrentUser]="currentUser.id">
       <div class="spacing">
         <app-user-profile-card
           [firstName]="currentUser.firstName"
