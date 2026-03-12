@@ -6,4 +6,13 @@ export const AUTH_FEATURE_KEY = 'auth';
 export const selectAuthState = createFeatureSelector<AuthState>(AUTH_FEATURE_KEY);
 
 export const selectCurrentUser = createSelector(selectAuthState, (s) => s.currentUser);
-export const selectAuthLoading = createSelector(selectAuthState, (s) => s.loading);
+export const selectLoadingCurrentUser = createSelector(
+  selectAuthState,
+  (s) => s.loadingCurrentUser,
+);
+export const selectLoadingUpdateCurrentUser = createSelector(
+  selectAuthState,
+  (s) => s.loadingUpdateCurrentUser,
+);
+
+export const selectErrorUpdateCurrentUser = createSelector(selectAuthState, (s) => s.error);

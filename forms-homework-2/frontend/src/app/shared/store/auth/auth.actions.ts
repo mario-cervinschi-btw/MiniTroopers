@@ -17,3 +17,13 @@ export const updateCurrentUser = createAction(
   '[Auth] Update Current User',
   props<{ user: User }>(),
 );
+
+export const updateCurrentUserSuccess = createAction(
+  '[Auth] Update Current User Success',
+  props<{ user: User }>(),
+);
+
+export const updateCurrentUserFailure = createAction(
+  '[Auth] Update Current User Failure',
+  props<{ error: string }>(),
+);

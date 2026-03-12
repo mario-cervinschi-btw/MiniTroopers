@@ -7,7 +7,7 @@ import { MatInputModule } from '@angular/material/input';
 import { MatDatepickerModule } from '@angular/material/datepicker';
 import { provideNativeDateAdapter } from '@angular/material/core';
 import { UsersService } from '../../shared/services/users.service';
-import { catchError, debounce, finalize, tap, throwError, timeout } from 'rxjs';
+import { filter, pairwise, tap } from 'rxjs';
 import { MatProgressBarModule } from '@angular/material/progress-bar';
 import { MatButtonModule } from '@angular/material/button';
 import { User } from '../../shared/models/user.model';
@@ -15,8 +15,6 @@ import { websiteValidator } from '../../shared/validators/website-validator';
 import { SettingsInfoDirective } from '../../shared/directives/settings-info.directive';
 import { SaveFormDirective } from '../../shared/directives/save-form.directive';
 import { takeUntilDestroyed } from '@angular/core/rxjs-interop';
-import { authReducer } from '../../shared/store/auth/auth.reducer';
-import { selectCurrentUser } from '../../shared/store/auth/auth.selectors';
 import { AuthFacade } from '../../shared/store/auth/auth.facade';
 
 @Component({
@@ -44,8 +42,8 @@ export class SettingsComponent {
   private readonly authFacade = inject(AuthFacade);
 
   private user: User | null = null;
-
   protected isLoading: boolean = false;
+
   protected message: string = '';
 
   settingsForm = new FormGroup({
@@ -68,21 +66,36 @@ export class SettingsComponent {
   });
 
   ngOnInit() {
-    this.isLoading = true;
-    this.authFacade.currentUser$
+    this.authFacade.currentUser$.pipe(takeUntilDestroyed(this.destroyRef)).subscribe((user) => {
+      this.user = user;
+      Object.keys(this.settingsForm.controls).forEach((key) => {
+        const group = this.settingsForm.get(key) as FormGroup;
+
+        if (user) {
+          group.patchValue(user);
+        }
+      });
+    });
+
+    this.authFacade.loadingCurrentUser$
       .pipe(
         takeUntilDestroyed(this.destroyRef),
-        finalize(() => {
-          this.isLoading = false;
-        }),
+        tap((val) => (this.isLoading = val)),
       )
-      .subscribe((user) => {
-        this.user = user;
-        // Object.keys(this.settingsForm.controls).forEach((key) => {
-        //   const group = this.settingsForm.get(key) as FormGroup;
+      .subscribe();
 
-        //   group.patchValue(user);
-        // });
+    this.authFacade.loadingUpdateCurrentUser$
+      .pipe(
+        takeUntilDestroyed(this.destroyRef),
+        pairwise(),
+        filter(([prev, curr]) => prev === true && curr === false),
+      )
+      .subscribe(() => {
+        this.authFacade.errorUpdateCurrentUser$.pipe().subscribe((error) => {
+          this.message = error || 'Updated Successfully';
+
+          setTimeout(() => (this.message = ''), 100);
+        });
       });
   }
 
@@ -104,27 +117,6 @@ export class SettingsComponent {
       ...sanitized,
     };
 
-    this.message = '';
-    this.isLoading = true;
-
-    // this.userService
-    //   .updateUser(this.user)
-    //   .pipe(
-    //     takeUntilDestroyed(this.destroyRef),
-    //     catchError((err) => {
-    //       return throwError(() => err);
-    //     }),
-    //     finalize(() => {
-    //       this.isLoading = false;
-    //     }),
-    //   )
-    //   .subscribe({
-    //     next: () => {
-    //       this.message = 'Successful update';
-    //     },
-    //     error: (err) => {
-    //       this.message = err?.error?.message ?? 'An error occurred';
-    //     },
-    //   });
+    this.authFacade.updateUser(this.user);
   }
 }

@@ -49,7 +49,7 @@ export class UserProfileComponent {
         tap((_) => (this.isLoadingUser = false)),
       )
       .subscribe((next) => {
-        // console.log(next);
+        console.log(next);
         if (next) {
           this.currentUser = next;
         }

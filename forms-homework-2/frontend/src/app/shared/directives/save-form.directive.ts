@@ -10,7 +10,8 @@ export class SaveFormDirective implements OnChanges {
   private snackBar = inject(MatSnackBar);
 
   ngOnChanges(changes: SimpleChanges) {
-    if (changes['appSaveForm'] && !changes['appSaveForm'].firstChange) {
+    const current = changes['appSaveForm']?.currentValue;
+    if (current) {
       this.openSnack();
     }
   }
