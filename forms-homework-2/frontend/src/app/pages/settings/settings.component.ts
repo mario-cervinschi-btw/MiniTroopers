@@ -36,7 +36,6 @@ import { AuthFacade } from '../../shared/store/auth/auth.facade';
   styleUrl: './settings.component.scss',
 })
 export class SettingsComponent {
-  private readonly userService: UsersService = inject(UsersService);
   private readonly destroyRef = inject(DestroyRef);
 
   private readonly authFacade = inject(AuthFacade);

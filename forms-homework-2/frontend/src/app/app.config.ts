@@ -15,6 +15,9 @@ import { provideStoreDevtools } from '@ngrx/store-devtools';
 import { AUTH_FEATURE_KEY } from './shared/store/auth/auth.selectors';
 import { authReducer } from './shared/store/auth/auth.reducer';
 import { AuthEffects } from './shared/store/auth/auth.effects';
+import { TABLE_PREF_KEY } from './shared/store/user-table/user-table.selector';
+import { userTableReducer } from './shared/store/user-table/user-table.reducer';
+import { UserTableEffects } from './shared/store/user-table/user-table.effects';
 
 export const appConfig: ApplicationConfig = {
   providers: [
@@ -25,8 +28,9 @@ export const appConfig: ApplicationConfig = {
     provideHttpClient(),
     provideStore({
       [AUTH_FEATURE_KEY]: authReducer,
+      [TABLE_PREF_KEY]: userTableReducer,
     }),
-    provideEffects(AuthEffects),
+    provideEffects(AuthEffects, UserTableEffects),
     provideStoreDevtools({ maxAge: 25, logOnly: !isDevMode() }),
   ],
 };

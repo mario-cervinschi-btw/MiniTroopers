@@ -1,5 +1,8 @@
 <h1>Network</h1>
 <app-wrapper>
+  @if (this.loadingUsers) {
+    <mat-progress-bar mode="indeterminate"></mat-progress-bar>
+  }
   <table mat-table [dataSource]="usersAvailable" class="mat-elevation-z8">
     <!-- Name Column -->
     <ng-container matColumnDef="name">
@@ -41,7 +44,8 @@
     ></tr>
   </table>
   <mat-paginator
-    [length]="200"
+    [length]="totalUsers"
+    [pageSize]="itemsPerPage"
     [pageSizeOptions]="[10, 50, 100]"
     (page)="handlePageEvent($event)"
     aria-label="Select page"

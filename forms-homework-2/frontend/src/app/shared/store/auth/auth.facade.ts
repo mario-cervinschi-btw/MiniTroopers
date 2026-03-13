@@ -8,6 +8,7 @@ import {
   selectLoadingUpdateCurrentUser,
 } from './auth.selectors';
 import { User } from '../../models/user.model';
+import { loadUserTablePreferences } from '../user-table/user-table.actions';
 
 @Injectable({ providedIn: 'root' })
 export class AuthFacade {

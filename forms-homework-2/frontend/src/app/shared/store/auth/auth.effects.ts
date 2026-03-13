@@ -11,6 +11,7 @@ import {
   updateCurrentUserSuccess,
 } from './auth.actions';
 import { UsersService } from '../../services/users.service';
+import { loadUserTableFailure, loadUserTableSuccess } from '../user-table/user-table.actions';
 
 @Injectable()
 export class AuthEffects {
@@ -22,11 +23,21 @@ export class AuthEffects {
       ofType(loadCurrentUser),
       switchMap(() =>
         this.usersService.getAllUsers({ limit: 1 }).pipe(
-          map((response) => {
+          switchMap((response) => {
             const user = response.data[0];
-            return user
-              ? loadCurrentUserSuccess({ user })
-              : loadCurrentUserFailure({ error: 'No user found' });
+            if (user) {
+              return of(
+                loadCurrentUserSuccess({ user }),
+                loadUserTableSuccess({ preferences: user.tablePreferences }),
+              );
+            } else {
+              return of(
+                loadCurrentUserFailure({ error: 'No user found' }),
+                loadUserTableFailure({
+                  error: 'Error on loading user preferences. Try again later.',
+                }),
+              );
+            }
           }),
           catchError((err) =>
             of(loadCurrentUserFailure({ error: err?.message ?? 'Unknown error' })),
