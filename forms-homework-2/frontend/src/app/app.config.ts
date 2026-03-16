@@ -18,6 +18,9 @@ import { AuthEffects } from './shared/store/auth/auth.effects';
 import { TABLE_PREF_KEY } from './shared/store/user-table/user-table.selector';
 import { userTableReducer } from './shared/store/user-table/user-table.reducer';
 import { UserTableEffects } from './shared/store/user-table/user-table.effects';
+import { UI_KEY } from './shared/store/ui/ui.selector';
+import { uiReducer } from './shared/store/ui/ui.reducer';
+import { UiEffects } from './shared/store/ui/ui.effects';
 
 export const appConfig: ApplicationConfig = {
   providers: [
@@ -29,8 +32,9 @@ export const appConfig: ApplicationConfig = {
     provideStore({
       [AUTH_FEATURE_KEY]: authReducer,
       [TABLE_PREF_KEY]: userTableReducer,
+      [UI_KEY]: uiReducer,
     }),
-    provideEffects(AuthEffects, UserTableEffects),
+    provideEffects(AuthEffects, UserTableEffects, UiEffects),
     provideStoreDevtools({ maxAge: 25, logOnly: !isDevMode() }),
   ],
 };

@@ -6,13 +6,8 @@ import {
   selectUsers,
   selectUsersPrefereces,
 } from './user-table.selector';
-import {
-  loadUsers,
-  loadUserTablePreferences,
-  updateUserTablePreferences,
-} from './user-table.actions';
-import { AuthFacade } from '../auth/auth.facade';
-import { catchError, map, of, switchMap, withLatestFrom } from 'rxjs';
+import { loadUsers, updateUserTablePreferences } from './user-table.actions';
+import { of, switchMap } from 'rxjs';
 import { TablePreferences } from '../../models/table-preferences.model';
 
 @Injectable({ providedIn: 'root' })

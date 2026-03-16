@@ -76,6 +76,8 @@ export class NetworkTableComponent {
   protected loadingUsers: boolean = false;
 
   ngOnInit() {
+    this.userTableFacade.init();
+
     this.userTableFacade.users$
       .pipe(
         tap((res) => {
@@ -154,7 +156,7 @@ export class NetworkTableComponent {
     clearTimeout(this.filterDebounce);
     this.filterDebounce = setTimeout(() => {
       this.userTableFacade.updateUserPreference(this.tablePreferences);
-    }, 2000);
+    }, 500);
   }
 
   onRowClick(row: TableUser): void {

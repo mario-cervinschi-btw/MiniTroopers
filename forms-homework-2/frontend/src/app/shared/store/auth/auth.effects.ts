@@ -12,6 +12,7 @@ import {
 } from './auth.actions';
 import { UsersService } from '../../services/users.service';
 import { loadUserTableFailure, loadUserTableSuccess } from '../user-table/user-table.actions';
+import { loadTheme } from '../ui/ui.actions';
 
 @Injectable()
 export class AuthEffects {
@@ -29,6 +30,7 @@ export class AuthEffects {
               return of(
                 loadCurrentUserSuccess({ user }),
                 loadUserTableSuccess({ preferences: user.tablePreferences }),
+                loadTheme({ isDarkTheme: user.isDarkTheme }),
               );
             } else {
               return of(
