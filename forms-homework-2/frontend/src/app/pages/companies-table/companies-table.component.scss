@@ -1,0 +1,17 @@
+.name-cell {
+    display: flex;
+    flex-direction: row;
+    align-items: center;
+    gap: 0.75rem;
+}
+
+a {
+    color: blue;
+    &:hover {
+        cursor: pointer;
+    }
+}
+
+mat-icon {
+    margin-right: 12px;
+}
