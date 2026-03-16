@@ -3,6 +3,15 @@
   @if (this.loadingUsers) {
     <mat-progress-bar mode="indeterminate"></mat-progress-bar>
   }
+  <mat-form-field>
+    <mat-label>Search</mat-label>
+    <input
+      matInput
+      [(ngModel)]="searchValue"
+      (keyup)="applyFilter($event)"
+      placeholder="Ex. Ion Popescu"
+    />
+  </mat-form-field>
   <table mat-table [dataSource]="usersAvailable" class="mat-elevation-z8">
     <!-- Name Column -->
     <ng-container matColumnDef="name">
@@ -46,6 +55,7 @@
   <mat-paginator
     [length]="totalUsers"
     [pageSize]="itemsPerPage"
+    [pageIndex]="pageIndex"
     [pageSizeOptions]="[10, 50, 100]"
     (page)="handlePageEvent($event)"
     aria-label="Select page"

@@ -17,7 +17,7 @@ export const loadUserTableFailure = createAction(
 
 export const loadUsers = createAction(
   '[User Table] Loading Users',
-  props<{ page: number; limit: number }>(),
+  props<{ page: number; limit: number; search: string }>(),
 );
 
 export const loadUsersSuccess = createAction(
@@ -27,5 +27,20 @@ export const loadUsersSuccess = createAction(
 
 export const loadUsersFailure = createAction(
   '[User Table] Loading Users Failure',
+  props<{ error: string }>(),
+);
+
+export const updateUserTablePreferences = createAction(
+  '[User Table] Update User Table Preferences',
+  props<{ preferences: TablePreferences | null }>(),
+);
+
+export const updateUserTablePreferencesSuccess = createAction(
+  '[User Table] Update User Table Preferences Success',
+  props<{ preferences: TablePreferences | null }>(),
+);
+
+export const updateUserTablePreferencesFailure = createAction(
+  '[User Table] Update User Table Preferences Failure',
   props<{ error: string }>(),
 );

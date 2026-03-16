@@ -7,6 +7,9 @@ import {
   loadUsers,
   loadUsersFailure,
   loadUsersSuccess,
+  updateUserTablePreferences,
+  updateUserTablePreferencesSuccess,
+  updateUserTablePreferencesFailure,
 } from './user-table.actions';
 
 export const userTableReducer = createReducer(
@@ -46,5 +49,24 @@ export const userTableReducer = createReducer(
     ...state,
     loadingUsers: false,
     error,
+  })),
+
+  on(updateUserTablePreferences, (state) => ({
+    ...state,
+    loadingTablePreferences: true,
+    error: null,
+  })),
+
+  on(updateUserTablePreferencesSuccess, (state, { preferences }) => ({
+    ...state,
+    userTablePreferences: preferences,
+    loadingTablePreferences: false,
+  })),
+
+  on(updateUserTablePreferencesFailure, (state, { error }) => ({
+    ...state,
+    // userTablePreferences: pref,
+    loadingTablePreferences: false,
+    error: error,
   })),
 );

@@ -6,15 +6,18 @@ import {
   selectUsers,
   selectUsersPrefereces,
 } from './user-table.selector';
-import { loadUsers, loadUserTablePreferences } from './user-table.actions';
+import {
+  loadUsers,
+  loadUserTablePreferences,
+  updateUserTablePreferences,
+} from './user-table.actions';
 import { AuthFacade } from '../auth/auth.facade';
 import { catchError, map, of, switchMap, withLatestFrom } from 'rxjs';
+import { TablePreferences } from '../../models/table-preferences.model';
 
 @Injectable({ providedIn: 'root' })
 export class UserTableFacade {
   private readonly store = inject(Store);
-
-  private readonly authFacade = inject(AuthFacade);
 
   readonly users$ = this.store.select(selectUsers);
   readonly loadingUsers$ = this.store.select(selectLoadingUsers);
@@ -26,13 +29,23 @@ export class UserTableFacade {
     this.tablePrefences$
       .pipe(
         switchMap((pref) => {
-          return pref ? of(pref.pagination) : of({ pageNumber: 1, pageSize: 10 });
+          return pref
+            ? of({
+                pageNumber: pref.pagination.pageNumber,
+                pageSize: pref.pagination.pageSize,
+                searchFilter: pref.searchFilter,
+              })
+            : of({ pageNumber: 1, pageSize: 10, searchFilter: '' });
         }),
       )
       .subscribe((pref) => {
-        this.store.dispatch(loadUsers({ page: pref.pageNumber, limit: pref.pageSize }));
+        this.store.dispatch(
+          loadUsers({ page: pref.pageNumber, limit: pref.pageSize, search: pref.searchFilter }),
+        );
       });
   }
 
-  updateUserPreference() {}
+  updateUserPreference(pref: TablePreferences) {
+    this.store.dispatch(updateUserTablePreferences({ preferences: pref }));
+  }
 }
