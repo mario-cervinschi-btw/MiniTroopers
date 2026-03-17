@@ -1,6 +1,6 @@
-<h1>Companies</h1>
+<h1>Jobs</h1>
 <app-wrapper>
-  @if (this.loadingCompanies) {
+  @if (this.loadingJobs) {
     <mat-progress-bar mode="indeterminate"></mat-progress-bar>
   }
   <mat-form-field>
@@ -9,16 +9,20 @@
       matInput
       [(ngModel)]="searchValue"
       (keyup)="applyFilter($event)"
-      placeholder="Ex. Ion Popescu"
+      placeholder="Search jobs"
     />
   </mat-form-field>
-  <table mat-table [dataSource]="companiesAvailable" class="mat-elevation-z8">
+  <table mat-table [dataSource]="jobsAvailable" class="mat-elevation-z8">
     <!-- Company Column -->
-    <ng-container matColumnDef="company">
-      <th mat-header-cell *matHeaderCellDef>Company</th>
-      <td mat-cell *matCellDef="let comp">
+    <ng-container matColumnDef="job">
+      <th mat-header-cell *matHeaderCellDef>Job</th>
+      <td mat-cell *matCellDef="let job">
         <div class="name-cell">
-          <mat-icon>corporate_fare</mat-icon> <strong>{{ comp.name }}</strong>
+          <mat-icon>corporate_fare</mat-icon>
+          <div class="column">
+            <strong>{{ job.title }}</strong>
+            {{ job.company.name }}
+          </div>
         </div>
       </td>
     </ng-container>
@@ -26,30 +30,30 @@
     <!-- Location Column -->
     <ng-container matColumnDef="location">
       <th mat-header-cell *matHeaderCellDef>Location</th>
-      <td mat-cell *matCellDef="let comp">
-        {{ comp.location }}
+      <td mat-cell *matCellDef="let job">
+        {{ job.location }}
       </td>
     </ng-container>
 
     <!-- Website Column -->
-    <ng-container matColumnDef="website">
-      <th mat-header-cell *matHeaderCellDef>Website</th>
-      <td mat-cell *matCellDef="let comp">
-        <a [href]="comp.website" target="_blank">{{ comp.website }}</a>
+    <ng-container matColumnDef="type">
+      <th mat-header-cell *matHeaderCellDef>Type</th>
+      <td mat-cell *matCellDef="let job">
+        {{ job.type }}
       </td>
     </ng-container>
 
     <!-- Open Jobs Column -->
-    <ng-container matColumnDef="open_jobs">
-      <th mat-header-cell *matHeaderCellDef>Open Jobs</th>
-      <td mat-cell *matCellDef="let comp">{{ comp.jobsCount }}</td>
+    <ng-container matColumnDef="posted">
+      <th mat-header-cell *matHeaderCellDef>Posted</th>
+      <td mat-cell *matCellDef="let job">{{ job.createdAt | date }}</td>
     </ng-container>
 
     <tr mat-header-row *matHeaderRowDef="displayedColumns"></tr>
     <tr mat-row *matRowDef="let row; columns: displayedColumns"></tr>
   </table>
   <mat-paginator
-    [length]="totalCompanies"
+    [length]="totalJobs"
     [pageSize]="itemsPerPage"
     [pageIndex]="pageIndex"
     [pageSizeOptions]="[10, 50, 100]"

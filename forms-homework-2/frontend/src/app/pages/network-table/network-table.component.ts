@@ -16,7 +16,6 @@ import { TablePreferences } from '../../shared/models/table-preferences.model';
 import { MatFormField, MatLabel } from '@angular/material/form-field';
 import { MatInputModule } from '@angular/material/input';
 import { FormsModule } from '@angular/forms';
-import { ScrollingModule } from '@angular/cdk/scrolling';
 
 interface TableUser {
   id: number;
@@ -43,7 +42,6 @@ interface TableUser {
     MatLabel,
     MatInputModule,
     FormsModule,
-    ScrollingModule,
   ],
   templateUrl: './network-table.component.html',
   styleUrl: './network-table.component.scss',
