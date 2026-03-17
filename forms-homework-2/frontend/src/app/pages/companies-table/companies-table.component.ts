@@ -65,7 +65,7 @@ export class CompaniesTableComponent {
       .pipe(
         takeUntilDestroyed(this.destroyRef),
         switchMap((val) =>
-          this.companyService.getAll({ search: val }).pipe(
+          this.companyService.getAll({ search: val, limit: this.itemsPerPage }).pipe(
             takeUntilDestroyed(this.destroyRef),
             finalize(() => (this.loadingCompanies = false)),
           ),
@@ -80,10 +80,12 @@ export class CompaniesTableComponent {
       .pipe(
         takeUntilDestroyed(this.destroyRef),
         switchMap((val) =>
-          this.companyService.getAll({ page: val, search: this.searchValue }).pipe(
-            takeUntilDestroyed(this.destroyRef),
-            finalize(() => (this.loadingCompanies = false)),
-          ),
+          this.companyService
+            .getAll({ page: val, search: this.searchValue, limit: this.itemsPerPage })
+            .pipe(
+              takeUntilDestroyed(this.destroyRef),
+              finalize(() => (this.loadingCompanies = false)),
+            ),
         ),
       )
       .subscribe((val) => {

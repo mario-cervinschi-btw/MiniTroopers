@@ -13,3 +13,8 @@
 mat-icon {
     margin-right: 12px;
 }
+
+.table-section {
+    height: calc(100vh - 346px);
+    overflow-y: auto;
+}

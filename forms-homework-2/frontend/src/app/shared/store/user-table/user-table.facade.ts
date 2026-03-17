@@ -7,8 +7,9 @@ import {
   selectUsersPrefereces,
 } from './user-table.selector';
 import { loadUsers, updateUserTablePreferences } from './user-table.actions';
-import { of, switchMap } from 'rxjs';
+import { first, map, of, switchMap } from 'rxjs';
 import { TablePreferences } from '../../models/table-preferences.model';
+import { takeUntilDestroyed } from '@angular/core/rxjs-interop';
 
 @Injectable({ providedIn: 'root' })
 export class UserTableFacade {
@@ -23,14 +24,15 @@ export class UserTableFacade {
   init(): void {
     this.tablePrefences$
       .pipe(
-        switchMap((pref) => {
+        // first(),
+        map((pref) => {
           return pref
-            ? of({
+            ? {
                 pageNumber: pref.pagination.pageNumber,
                 pageSize: pref.pagination.pageSize,
                 searchFilter: pref.searchFilter,
-              })
-            : of({ pageNumber: 1, pageSize: 10, searchFilter: '' });
+              }
+            : { pageNumber: 1, pageSize: 10, searchFilter: '' };
         }),
       )
       .subscribe((pref) => {
