@@ -38,6 +38,18 @@ export class UserProfileComponent implements OnInit {
 
   protected isLoadingUser: boolean = false;
 
+  protected aboutData: CardItem[] = [];
+  protected aboutConfig: CardConfig[] = [];
+
+  protected experienceData: CardItem[] = [];
+  protected experienceConfig: CardConfig[] = [];
+
+  protected educationData: CardItem[] = [];
+  protected educationConfig: CardConfig[] = [];
+
+  protected skillsData: CardItem[] = [];
+  protected skillsConfig: CardConfig[] = [];
+
   ngOnInit() {
     const currentUserId = this.route.snapshot.params['id'];
     this.isLoadingUser = true;
@@ -51,11 +63,15 @@ export class UserProfileComponent implements OnInit {
         console.log(next);
         if (next) {
           this.currentUser = next;
+          this.buildExperienceData();
+          this.buildAboutData();
+          this.buildEducationData();
+          this.buildSkillsData();
         }
       });
   }
 
-  protected buildExperienceData(): [CardItem[], CardConfig[]] {
+  private buildExperienceData(): void {
     const cardData: CardItem[] = [];
 
     this.currentUser?.experience
@@ -83,10 +99,11 @@ export class UserProfileComponent implements OnInit {
       { key: 'duration', isSubtitle: true },
     ];
 
-    return [cardData, dataConfig];
+    this.experienceData = cardData;
+    this.experienceConfig = dataConfig;
   }
 
-  protected buildAboutData(): [CardItem[], CardConfig[]] {
+  private buildAboutData(): void {
     const cardData: CardItem[] = [
       {
         about: this.currentUser?.about,
@@ -98,10 +115,11 @@ export class UserProfileComponent implements OnInit {
 
     const dataConfig: CardConfig[] = [{ key: 'dob', isSubtitle: true, icon: 'cake' }];
 
-    return [cardData, dataConfig];
+    this.aboutData = cardData;
+    this.aboutConfig = dataConfig;
   }
 
-  protected buildEducationData(): [CardItem[], CardConfig[]] {
+  private buildEducationData(): void {
     const cardData: CardItem[] = [];
 
     this.currentUser?.education.forEach((e) => {
@@ -120,10 +138,11 @@ export class UserProfileComponent implements OnInit {
       { key: 'duration', isSubtitle: true },
     ];
 
-    return [cardData, dataConfig];
+    this.educationData = cardData;
+    this.educationConfig = dataConfig;
   }
 
-  protected buildSkillsData(): [CardItem[], CardConfig[]] {
+  private buildSkillsData(): void {
     const skillsArray: string[] = [];
 
     this.currentUser?.skills.forEach((s) => {
@@ -138,32 +157,7 @@ export class UserProfileComponent implements OnInit {
 
     const dataConfig: CardConfig[] = [{ key: 'skills', isShowcase: true }];
 
-    return [cardData, dataConfig];
-  }
-
-  protected buildSummaryData(): [CardItem[], CardConfig[]] {
-    const cardData: CardItem[] = [];
-
-    const cardItem1: CardItem = {
-      profile: [],
-    };
-
-    cardData.push(cardItem1);
-
-    const cardItem2: CardItem = {
-      email: this.currentUser?.email,
-      phone: this.currentUser?.phone,
-      website: this.currentUser?.website,
-    };
-
-    cardData.push(cardItem2);
-
-    const dataConfig: CardConfig[] = [
-      { key: 'email', isLink: true, icon: 'mail' },
-      { key: 'website', isLink: true, icon: 'link' },
-      { key: 'profile', isSummary: true },
-    ];
-
-    return [cardData, dataConfig];
+    this.skillsData = cardData;
+    this.skillsConfig = dataConfig;
   }
 }
