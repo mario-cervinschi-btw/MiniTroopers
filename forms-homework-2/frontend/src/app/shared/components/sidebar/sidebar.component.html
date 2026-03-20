@@ -1,0 +1,60 @@
+<aside class="sidebar" [class.expanded]="sidebarExpanded">
+  <nav>
+    <a mat-button routerLink="/">
+      <mat-icon>home</mat-icon>
+      @if (sidebarExpanded) {
+        <span class="label">Network</span>
+      }
+    </a>
+
+    <a mat-button routerLink="/companies">
+      <mat-icon>corporate_fare</mat-icon>
+      @if (sidebarExpanded) {
+        <span class="label">Companies</span>
+      }
+    </a>
+
+    <a mat-button routerLink="/jobs">
+      <mat-icon>work</mat-icon>
+      @if (sidebarExpanded) {
+        <span class="label">Jobs</span>
+      }
+    </a>
+
+    <a mat-button routerLink="/settings">
+      <mat-icon>settings</mat-icon>
+      @if (sidebarExpanded) {
+        <span class="label">Settings</span>
+      }
+    </a>
+
+    <a mat-button (click)="navigateToCurrentUser()">
+      <mat-icon>person</mat-icon>
+      @if (sidebarExpanded) {
+        <span class="label">My Profile</span>
+      }
+    </a>
+  </nav>
+
+  <section class="bottom-section">
+    <mat-divider></mat-divider>
+    @if (this.currentUser) {
+      <div class="connected-card">
+        <app-avatar
+          [firstName]="this.currentUser.firstName"
+          [lastName]="this.currentUser.lastName"
+        ></app-avatar>
+        @if (sidebarExpanded) {
+          <div class="connected-card__description">
+            <strong>{{ this.currentUser.firstName }} {{ this.currentUser.lastName }}</strong>
+            <p>{{ this.currentUser.headline }}</p>
+          </div>
+        }
+      </div>
+    }
+
+    <button class="toggle-btn" (click)="toggleSidebar()">
+      <mat-icon>{{ sidebarExpanded ? 'chevron_left' : 'chevron_right' }}</mat-icon>
+    </button>
+  </section>
+</aside>

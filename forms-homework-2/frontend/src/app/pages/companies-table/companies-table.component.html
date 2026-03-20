@@ -42,7 +42,9 @@
     <!-- Open Jobs Column -->
     <ng-container matColumnDef="open_jobs">
       <th mat-header-cell *matHeaderCellDef>Open Jobs</th>
-      <td mat-cell *matCellDef="let comp">{{ comp.jobsCount }}</td>
+      <td mat-cell *matCellDef="let comp">
+        <span class="border-cell">{{ comp.jobsCount }}</span>
+      </td>
     </ng-container>
 
     <tr mat-header-row *matHeaderRowDef="displayedColumns"></tr>

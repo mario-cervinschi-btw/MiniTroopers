@@ -35,7 +35,7 @@ export class UserProfileComponent {
   private readonly destroyRef = inject(DestroyRef);
   private readonly datePipe: DatePipe = inject(DatePipe);
 
-  protected currentUser!: User;
+  protected currentUser: User | null = null;
 
   protected isLoadingUser: boolean = false;
 

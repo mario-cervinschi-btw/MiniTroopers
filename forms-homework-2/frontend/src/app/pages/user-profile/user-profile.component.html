@@ -4,38 +4,38 @@
   } @else if (!isLoadingUser && !currentUser) {
     <h1>User not found</h1>
   } @else {
-    <ng-template [appIfCurrentUser]="currentUser.id">
+    <ng-template [appIfCurrentUser]="currentUser!.id">
       <div class="spacing">
         <app-user-profile-card
-          [firstName]="currentUser.firstName"
-          [lastName]="currentUser.lastName"
-          [headline]="currentUser.headline"
-          [location]="currentUser.location"
-          [connections]="currentUser.connections"
-          [email]="currentUser.email"
-          [phone]="currentUser.phone"
-          [website]="currentUser.website"
+          [firstName]="currentUser!.firstName"
+          [lastName]="currentUser!.lastName"
+          [headline]="currentUser!.headline"
+          [location]="currentUser!.location"
+          [connections]="currentUser!.connections"
+          [email]="currentUser!.email"
+          [phone]="currentUser!.phone"
+          [website]="currentUser!.website"
         >
         </app-user-profile-card>
         <app-profile-cards
           [cardTitle]="'About'"
-          [data]="buildAboutData()[0]"
-          [config]="buildAboutData()[1]"
+          [data]="buildAboutData()![0]"
+          [config]="buildAboutData()![1]"
         ></app-profile-cards>
         <app-profile-cards
           [cardTitle]="'Experience'"
-          [data]="buildExperienceData()[0]"
-          [config]="buildExperienceData()[1]"
+          [data]="buildExperienceData()![0]"
+          [config]="buildExperienceData()![1]"
         ></app-profile-cards>
         <app-profile-cards
           [cardTitle]="'Education'"
-          [data]="buildEducationData()[0]"
-          [config]="buildEducationData()[1]"
+          [data]="buildEducationData()![0]"
+          [config]="buildEducationData()![1]"
         ></app-profile-cards>
         <app-profile-cards
           [cardTitle]="'Skills'"
-          [data]="buildSkillsData()[0]"
-          [config]="buildSkillsData()[1]"
+          [data]="buildSkillsData()![0]"
+          [config]="buildSkillsData()![1]"
         ></app-profile-cards></div
     ></ng-template>
   }

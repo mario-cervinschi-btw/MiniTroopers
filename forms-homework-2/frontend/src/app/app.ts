@@ -8,18 +8,11 @@ import { MatSidenavModule } from '@angular/material/sidenav';
 import { MatAnchor } from '@angular/material/button';
 import { MatIcon } from '@angular/material/icon';
 import { WrapperComponent } from './shared/components/wrapper/wrapper.component';
+import { SidebarComponent } from './shared/components/sidebar/sidebar.component';
 
 @Component({
   selector: 'app-root',
-  imports: [
-    RouterOutlet,
-    HeaderComponent,
-    MatSidenavModule,
-    MatAnchor,
-    MatIcon,
-    WrapperComponent,
-    RouterLinkWithHref,
-  ],
+  imports: [RouterOutlet, HeaderComponent, MatSidenavModule, WrapperComponent, SidebarComponent],
   templateUrl: './app.html',
   styleUrl: './app.scss',
 })
@@ -28,12 +21,6 @@ export class App implements OnInit {
   private readonly uiFacade = inject(UiFacade);
 
   protected readonly title = signal('forms-homework-project');
-
-  sidebarExpanded = false;
-
-  toggleSidebar() {
-    this.sidebarExpanded = !this.sidebarExpanded;
-  }
 
   ngOnInit(): void {
     this.authFacade.init();

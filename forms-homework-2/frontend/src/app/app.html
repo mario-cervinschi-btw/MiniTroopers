@@ -1,48 +1,6 @@
 <app-header></app-header>
 <div class="layout">
-  <aside class="sidebar" [class.expanded]="sidebarExpanded">
-    <nav>
-      <a mat-button routerLink="/">
-        <mat-icon>home</mat-icon>
-        @if (sidebarExpanded) {
-          <span class="label">Network</span>
-        }
-      </a>
-
-      <a mat-button routerLink="/companies">
-        <mat-icon>work</mat-icon>
-        @if (sidebarExpanded) {
-          <span class="label">Companies</span>
-        }
-      </a>
-
-      <a mat-button routerLink="/jobs">
-        <mat-icon>bar_chart</mat-icon>
-        @if (sidebarExpanded) {
-          <span class="label">Jobs</span>
-        }
-      </a>
-
-      <a mat-button routerLink="/settings">
-        <mat-icon>settings</mat-icon>
-        @if (sidebarExpanded) {
-          <span class="label">Settings</span>
-        }
-      </a>
-
-      <a mat-button routerLink="/profile">
-        <mat-icon>bar_chart</mat-icon>
-        @if (sidebarExpanded) {
-          <span class="label">My Profile</span>
-        }
-      </a>
-    </nav>
-
-    <button class="toggle-btn" (click)="toggleSidebar()">
-      <mat-icon>{{ sidebarExpanded ? 'chevron_left' : 'chevron_right' }}</mat-icon>
-    </button>
-  </aside>
-
+  <app-sidebar></app-sidebar>
   <main class="content">
     <app-wrapper>
       <router-outlet></router-outlet>
