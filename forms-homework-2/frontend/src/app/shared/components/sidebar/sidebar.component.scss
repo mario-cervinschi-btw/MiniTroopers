@@ -1,4 +1,5 @@
 .sidebar {
+    border-right: 1px solid var(--mat-divider-color, var(--mat-sys-outline-variant));
     margin-top: 1rem;
     width: 72px;
     transition: width 0.2s ease;
@@ -14,6 +15,14 @@
     & nav a {
         justify-content: left;
     }
+    & .toggle-btn {
+        margin-right: 0px;
+        margin-left: auto;
+    }
+}
+
+.active-route {
+    background-color: rgb(0, 0, 0, 0.1);
 }
 
 .sidebar .toggle-btn {
@@ -22,21 +31,19 @@
     cursor: pointer;
     border: transparent;
     background: transparent;
+    margin: 0 auto;
 }
 
 .sidebar nav a {
     display: flex;
     justify-content: center;
     align-items: center;
-    padding: 1rem;
-    color: black;
     text-decoration: none;
     border-radius: 0.4rem;
     margin: 0.4rem;
-}
-
-.sidebar nav a:hover {
-    background: rgba(255, 255, 255, 0.12);
+    .mat-icon {
+        margin: 0px;
+    }
 }
 
 .sidebar nav a .label {
@@ -47,8 +54,7 @@
     display: flex;
     flex-direction: column;
     gap: 12px;
-    margin: 24px 0px;
-    margin-left: 12px;
+    margin: 0px 0.75rem;
 }
 
 .connected-card {
@@ -57,6 +63,7 @@
     justify-content: center;
     align-items: center;
     gap: 0.5rem;
+    cursor: pointer;
 
     .connected-card__description {
         display: flex;
@@ -65,7 +72,7 @@
             color: grey;
             font-size: 10px;
             margin: 0;
-            max-width: 160px;
+            max-width: 140px;
             text-overflow: ellipsis;
             overflow: hidden;
             white-space: nowrap;

@@ -2,7 +2,7 @@
 <div class="header__actions">Add your action dropdown here</div>
 <div class="header__right">
   <mat-icon class="cursor_pointer" (click)="handleDarkMode()">
-    @if (this.uiFacade.isDarkTheme$ | async) {
+    @if (uiFacade.isDarkTheme$ | async) {
       light_mode
     } @else {
       dark_mode

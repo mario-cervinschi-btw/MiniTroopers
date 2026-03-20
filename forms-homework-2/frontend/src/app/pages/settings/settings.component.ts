@@ -44,7 +44,7 @@ export class SettingsComponent implements OnInit {
 
   protected message: string = '';
 
-  settingsForm = new FormGroup({
+  protected readonly settingsForm = new FormGroup({
     profileForm: new FormGroup({
       firstName: new FormControl('', Validators.required),
       lastName: new FormControl('', Validators.required),

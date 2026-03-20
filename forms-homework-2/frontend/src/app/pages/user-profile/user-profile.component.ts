@@ -2,7 +2,7 @@ import { Component, DestroyRef, inject, OnInit } from '@angular/core';
 import { UsersService } from '../../shared/services/users.service';
 import { User } from '../../shared/models/user.model';
 import { ActivatedRoute } from '@angular/router';
-import { tap } from 'rxjs';
+import { finalize } from 'rxjs';
 import { MatProgressSpinnerModule } from '@angular/material/progress-spinner';
 import { WrapperComponent } from '../../shared/components/wrapper/wrapper.component';
 import {
@@ -57,10 +57,9 @@ export class UserProfileComponent implements OnInit {
       .getUserById(currentUserId)
       .pipe(
         takeUntilDestroyed(this.destroyRef),
-        tap((_) => (this.isLoadingUser = false)),
+        finalize(() => (this.isLoadingUser = false)),
       )
       .subscribe((next) => {
-        console.log(next);
         if (next) {
           this.currentUser = next;
           this.buildExperienceData();

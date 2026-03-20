@@ -3,18 +3,18 @@
     <mat-spinner class="center"></mat-spinner>
   } @else if (!isLoadingUser && !currentUser) {
     <h1>User not found</h1>
-  } @else {
-    <ng-template [appIfCurrentUser]="currentUser!.id">
+  } @else if (currentUser) {
+    <ng-template [appIfCurrentUser]="currentUser.id">
       <div class="spacing">
         <app-user-profile-card
-          [firstName]="currentUser!.firstName"
-          [lastName]="currentUser!.lastName"
-          [headline]="currentUser!.headline"
-          [location]="currentUser!.location"
-          [connections]="currentUser!.connections"
-          [email]="currentUser!.email"
-          [phone]="currentUser!.phone"
-          [website]="currentUser!.website"
+          [firstName]="currentUser.firstName"
+          [lastName]="currentUser.lastName"
+          [headline]="currentUser.headline"
+          [location]="currentUser.location"
+          [connections]="currentUser.connections"
+          [email]="currentUser.email"
+          [phone]="currentUser.phone"
+          [website]="currentUser.website"
         >
         </app-user-profile-card>
         <app-profile-cards

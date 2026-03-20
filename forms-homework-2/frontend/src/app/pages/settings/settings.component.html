@@ -1,7 +1,7 @@
 <h1>Settings</h1>
 
 <app-wrapper>
-  @if (this.isLoading) {
+  @if (isLoading) {
     <mat-progress-bar mode="indeterminate"></mat-progress-bar>
   }
   <form [formGroup]="settingsForm" (ngSubmit)="onSubmit()">
@@ -76,10 +76,10 @@
       >
         Update profile
       </button>
-      @if (this.settingsForm.invalid || this.settingsForm.pristine) {
+      @if (settingsForm.invalid || settingsForm.pristine) {
         <button
           matIconButton
-          [appSettingsInfo]="this.settingsForm.pristine ? 'No fields modified yet.' : null"
+          [appSettingsInfo]="settingsForm.pristine ? 'No fields modified yet.' : null"
           type="button"
         >
           <mat-icon>info</mat-icon>

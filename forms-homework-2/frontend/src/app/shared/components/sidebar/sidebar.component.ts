@@ -1,7 +1,7 @@
 import { Component, DestroyRef, inject, OnInit } from '@angular/core';
 import { MatIcon } from '@angular/material/icon';
 import { MatAnchor } from '@angular/material/button';
-import { Router, RouterLink } from '@angular/router';
+import { RouterLink, RouterLinkActive } from '@angular/router';
 import { AuthFacade } from '../../store/auth/auth.facade';
 import { tap } from 'rxjs';
 import { User } from '../../models/user.model';
@@ -11,14 +11,12 @@ import { MatDivider } from '@angular/material/divider';
 
 @Component({
   selector: 'app-sidebar',
-  imports: [MatIcon, MatAnchor, RouterLink, AvatarComponent, MatDivider],
+  imports: [MatIcon, MatAnchor, RouterLink, AvatarComponent, MatDivider, RouterLinkActive],
   templateUrl: './sidebar.component.html',
   styleUrl: './sidebar.component.scss',
 })
 export class SidebarComponent implements OnInit {
   private readonly authFacade = inject(AuthFacade);
-  private readonly router = inject(Router);
-
   private readonly destroyRef = inject(DestroyRef);
 
   protected currentUser: User | null = null;
@@ -35,10 +33,6 @@ export class SidebarComponent implements OnInit {
         takeUntilDestroyed(this.destroyRef),
       )
       .subscribe();
-  }
-
-  navigateToCurrentUser() {
-    if (this.currentUser) this.router.navigate(['profile', this.currentUser.id]);
   }
 
   toggleSidebar() {
