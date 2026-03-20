@@ -1,8 +1,8 @@
-import { Component, DestroyRef, inject } from '@angular/core';
+import { Component, DestroyRef, inject, OnInit } from '@angular/core';
 import { UsersService } from '../../shared/services/users.service';
 import { User } from '../../shared/models/user.model';
 import { ActivatedRoute } from '@angular/router';
-import { asyncScheduler, BehaviorSubject, finalize, observeOn, take, tap } from 'rxjs';
+import { tap } from 'rxjs';
 import { MatProgressSpinnerModule } from '@angular/material/progress-spinner';
 import { WrapperComponent } from '../../shared/components/wrapper/wrapper.component';
 import {
@@ -11,10 +11,9 @@ import {
   ProfileCardsComponent,
 } from '../../shared/components/profile-cards/profile-cards.component';
 import { UserProfileCardComponent } from '../../shared/components/user-profile-card/user-profile-card.component';
-import { AsyncPipe, DatePipe } from '@angular/common';
+import { DatePipe } from '@angular/common';
 import { IfCurrentUserDirective } from '../../shared/directives/if-current-user.directive';
 import { takeUntilDestroyed } from '@angular/core/rxjs-interop';
-import { AuthFacade } from '../../shared/store/auth/auth.facade';
 
 @Component({
   selector: 'app-user-profile',
@@ -29,7 +28,7 @@ import { AuthFacade } from '../../shared/store/auth/auth.facade';
   templateUrl: './user-profile.component.html',
   styleUrl: './user-profile.component.scss',
 })
-export class UserProfileComponent {
+export class UserProfileComponent implements OnInit {
   private readonly userService: UsersService = inject(UsersService);
   private readonly route: ActivatedRoute = inject(ActivatedRoute);
   private readonly destroyRef = inject(DestroyRef);

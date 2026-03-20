@@ -1,4 +1,4 @@
-import { Component, DestroyRef, inject } from '@angular/core';
+import { Component, DestroyRef, inject, OnInit } from '@angular/core';
 import { WrapperComponent } from '../../shared/components/wrapper/wrapper.component';
 import { MatProgressBar } from '@angular/material/progress-bar';
 import { MatFormField, MatLabel } from '@angular/material/form-field';
@@ -11,7 +11,6 @@ import { FormsModule } from '@angular/forms';
 import { BehaviorSubject, finalize, Subject, switchMap } from 'rxjs';
 import { CompaniesService } from '../../shared/services/company.service';
 import { takeUntilDestroyed } from '@angular/core/rxjs-interop';
-import { RouterLink } from '@angular/router';
 
 @Component({
   selector: 'app-companies-table',
@@ -29,7 +28,7 @@ import { RouterLink } from '@angular/router';
   templateUrl: './companies-table.component.html',
   styleUrl: './companies-table.component.scss',
 })
-export class CompaniesTableComponent {
+export class CompaniesTableComponent implements OnInit {
   private readonly destroyRef = inject(DestroyRef);
   private readonly currentPage$ = new Subject<number>();
   private readonly itemsPerPage$ = new Subject<number>();
@@ -46,7 +45,7 @@ export class CompaniesTableComponent {
   protected companiesAvailable: Company[] = [];
   protected loadingCompanies: boolean = false;
 
-  private searchValue$ = new BehaviorSubject<string>('');
+  private readonly searchValue$ = new BehaviorSubject<string>('');
   protected searchValue: string = '';
 
   ngOnInit() {

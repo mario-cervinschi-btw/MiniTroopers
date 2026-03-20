@@ -1,15 +1,5 @@
-import {
-  DestroyRef,
-  Directive,
-  EventEmitter,
-  inject,
-  Input,
-  Output,
-  TemplateRef,
-  ViewContainerRef,
-} from '@angular/core';
-import { UsersService } from '../services/users.service';
-import { finalize, tap } from 'rxjs';
+import { DestroyRef, Directive, inject, Input, TemplateRef, ViewContainerRef } from '@angular/core';
+import { tap } from 'rxjs';
 import { Router } from '@angular/router';
 import { takeUntilDestroyed } from '@angular/core/rxjs-interop';
 import { AuthFacade } from '../store/auth/auth.facade';

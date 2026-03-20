@@ -37,7 +37,7 @@ export class UserProfileCardComponent {
   @Input()
   public website?: string;
 
-  private router = inject(Router);
+  private readonly router = inject(Router);
 
   protected onSettingsClick() {
     this.router.navigate(['/settings']);

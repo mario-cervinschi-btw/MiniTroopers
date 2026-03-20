@@ -4,7 +4,7 @@ import { Directive, ElementRef, HostBinding, HostListener, inject, Input } from 
   selector: '[highlight]',
 })
 export class HighlightDirective {
-  private element = inject(ElementRef);
+  private readonly element = inject(ElementRef);
 
   @Input({ required: true }) highlight: string = '';
 

@@ -7,7 +7,7 @@ import { MatSnackBar } from '@angular/material/snack-bar';
 export class SaveFormDirective implements OnChanges {
   @Input() appSaveForm: string = 'N/A';
 
-  private snackBar = inject(MatSnackBar);
+  private readonly snackBar = inject(MatSnackBar);
 
   ngOnChanges(changes: SimpleChanges) {
     const current = changes['appSaveForm']?.currentValue;

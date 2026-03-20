@@ -11,7 +11,7 @@ import { MatSnackBar } from '@angular/material/snack-bar';
 export class SettingsInfoDirective {
   @Input() appSettingsInfo: string | null = null;
 
-  private snackBar = inject(MatSnackBar);
+  private readonly snackBar = inject(MatSnackBar);
 
   openSnackBar(message: string, action: string) {
     this.snackBar.open(message, action);

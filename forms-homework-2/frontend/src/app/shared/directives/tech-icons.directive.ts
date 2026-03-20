@@ -1,4 +1,4 @@
-import { Directive, inject, Input } from '@angular/core';
+import { Directive, inject, Input, OnInit } from '@angular/core';
 import { MatIcon } from '@angular/material/icon';
 
 @Directive({
@@ -8,11 +8,11 @@ import { MatIcon } from '@angular/material/icon';
     '[style.color]': 'color',
   },
 })
-export class TechIconsDirective {
+export class TechIconsDirective implements OnInit {
   @Input({ required: true }) headline: string = '';
   protected color: string = '';
 
-  private matIcon = inject(MatIcon, { self: true });
+  private readonly matIcon = inject(MatIcon, { self: true });
 
   private readonly techIcons = [
     { keyword: 'angular', name: 'angular-custom', color: 'red' },
@@ -35,6 +35,4 @@ export class TechIconsDirective {
       }
     });
   }
-
-  constructor() {}
 }

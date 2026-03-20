@@ -1,9 +1,9 @@
-import { Component, DestroyRef, inject } from '@angular/core';
+import { Component, DestroyRef, inject, OnInit } from '@angular/core';
 import { MatIcon } from '@angular/material/icon';
 import { MatAnchor } from '@angular/material/button';
 import { Router, RouterLink } from '@angular/router';
 import { AuthFacade } from '../../store/auth/auth.facade';
-import { first, tap } from 'rxjs';
+import { tap } from 'rxjs';
 import { User } from '../../models/user.model';
 import { takeUntilDestroyed } from '@angular/core/rxjs-interop';
 import { AvatarComponent } from '../avatar/avatar.component';
@@ -15,7 +15,7 @@ import { MatDivider } from '@angular/material/divider';
   templateUrl: './sidebar.component.html',
   styleUrl: './sidebar.component.scss',
 })
-export class SidebarComponent {
+export class SidebarComponent implements OnInit {
   private readonly authFacade = inject(AuthFacade);
   private readonly router = inject(Router);
 
@@ -23,7 +23,7 @@ export class SidebarComponent {
 
   protected currentUser: User | null = null;
 
-  sidebarExpanded = false;
+  protected sidebarExpanded: boolean = false;
 
   ngOnInit() {
     this.authFacade.currentUser$
