@@ -1,8 +1,12 @@
 import { Routes } from '@angular/router';
+import { LoginComponent } from './pages/login/login.component';
+import { MainLayoutComponent } from './shared/components/main-layout/main-layout.component';
+import { RegisterComponent } from './pages/register/register.component';
 
 export const routes: Routes = [
   {
     path: '',
+    component: MainLayoutComponent,
     children: [
       {
         path: '',
@@ -37,6 +41,21 @@ export const routes: Routes = [
         title: 'Jobs',
         loadComponent: () =>
           import('./pages/jobs-table/jobs-table.component').then((j) => j.JobsTableComponent),
+      },
+    ],
+  },
+  {
+    path: '',
+    children: [
+      {
+        path: 'login',
+        component: LoginComponent,
+        title: 'Login',
+      },
+      {
+        path: 'register',
+        component: RegisterComponent,
+        title: 'Register',
       },
     ],
   },

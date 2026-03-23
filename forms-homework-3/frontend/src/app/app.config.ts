@@ -3,6 +3,8 @@ import {
   provideBrowserGlobalErrorListeners,
   provideZoneChangeDetection,
   isDevMode,
+  provideAppInitializer,
+  inject,
 } from '@angular/core';
 import { provideRouter } from '@angular/router';
 
@@ -21,6 +23,8 @@ import { UserTableEffects } from './shared/store/user-table/user-table.effects';
 import { UI_KEY } from './shared/store/ui/ui.selector';
 import { uiReducer } from './shared/store/ui/ui.reducer';
 import { UiEffects } from './shared/store/ui/ui.effects';
+import { AuthFacade } from './shared/store/auth/auth.facade';
+import { filter, take } from 'rxjs';
 
 export const appConfig: ApplicationConfig = {
   providers: [
@@ -36,5 +40,15 @@ export const appConfig: ApplicationConfig = {
     }),
     provideEffects(AuthEffects, UserTableEffects, UiEffects),
     provideStoreDevtools({ maxAge: 25, logOnly: !isDevMode() }),
+    provideAppInitializer(() => {
+      const authFacade = inject(AuthFacade);
+
+      authFacade.init();
+
+      // return authFacade.isAuthInitialized$.pipe(
+      //   filter((isAuthInitialized: boolean) => isAuthInitialized === true),
+      //   take(1),
+      // );
+    }),
   ],
 };

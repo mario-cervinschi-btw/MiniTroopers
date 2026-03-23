@@ -1,0 +1,32 @@
+<form [formGroup]="loginForm" (ngSubmit)="onSubmit()">
+  <app-wrapper>
+    <div class="alignment">
+      <h2>Login</h2>
+      <div class="form-container">
+        <mat-form-field appearance="outline">
+          <mat-label>Enter your email</mat-label>
+          <input matInput formControlName="email" />
+          <mat-error>Email is required.</mat-error>
+        </mat-form-field>
+        <mat-form-field appearance="outline">
+          <mat-label>Enter your password</mat-label>
+          <input matInput formControlName="password" [type]="hide ? 'password' : 'text'" />
+          <button
+            matIconButton
+            matSuffix
+            (click)="clickEvent($event)"
+            [attr.aria-label]="'Hide password'"
+            [attr.aria-pressed]="hide"
+          >
+            <mat-icon>{{ hide ? 'visibility_off' : 'visibility' }}</mat-icon>
+          </button>
+          <mat-error>Password is required.</mat-error>
+        </mat-form-field>
+      </div>
+      <section class="buttons-section">
+        <button matButton="filled" type="submit" [disabled]="disabledLogin">Login</button>
+        <button matButton="outlined" type="button" (click)="onRegisterClick()">Register</button>
+      </section>
+    </div>
+  </app-wrapper>
+</form>
