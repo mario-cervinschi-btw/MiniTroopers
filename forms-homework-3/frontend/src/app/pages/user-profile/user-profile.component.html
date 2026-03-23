@@ -1,0 +1,42 @@
+<app-wrapper>
+  @if (isLoadingUser) {
+    <mat-spinner class="center"></mat-spinner>
+  } @else if (!isLoadingUser && !currentUser) {
+    <h1>User not found</h1>
+  } @else if (currentUser) {
+    <ng-template [appIfCurrentUser]="currentUser.id">
+      <div class="spacing">
+        <app-user-profile-card
+          [firstName]="currentUser.firstName"
+          [lastName]="currentUser.lastName"
+          [headline]="currentUser.headline"
+          [location]="currentUser.location"
+          [connections]="currentUser.connections"
+          [email]="currentUser.email"
+          [phone]="currentUser.phone"
+          [website]="currentUser.website"
+        >
+        </app-user-profile-card>
+        <app-profile-cards
+          [cardTitle]="'About'"
+          [data]="aboutData"
+          [config]="aboutConfig"
+        ></app-profile-cards>
+        <app-profile-cards
+          [cardTitle]="'Experience'"
+          [data]="experienceData"
+          [config]="experienceConfig"
+        ></app-profile-cards>
+        <app-profile-cards
+          [cardTitle]="'Education'"
+          [data]="educationData"
+          [config]="educationConfig"
+        ></app-profile-cards>
+        <app-profile-cards
+          [cardTitle]="'Skills'"
+          [data]="skillsData"
+          [config]="skillsConfig"
+        ></app-profile-cards></div
+    ></ng-template>
+  }
+</app-wrapper>

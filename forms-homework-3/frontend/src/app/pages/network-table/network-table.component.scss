@@ -1,0 +1,20 @@
+.mat-mdc-row:hover {
+    background-color: rgb(177, 177, 177);
+    cursor: pointer;
+}
+
+.name-cell {
+    display: flex;
+    flex-direction: row;
+    align-items: center;
+    gap: 0.75rem;
+}
+
+mat-icon {
+    margin-right: 12px;
+}
+
+.table-section {
+    height: calc(100vh - 346px);
+    overflow-y: auto;
+}

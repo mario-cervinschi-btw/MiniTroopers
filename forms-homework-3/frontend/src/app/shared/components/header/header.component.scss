@@ -1,0 +1,28 @@
+:host {
+  --header-side-padding: 10px;
+
+  display: flex;
+  flex: 1;
+  justify-content: space-between;
+  align-items: center;
+  background: var(--mat-sys-surface-container-high);
+  height: var(--header-height);
+  padding: 0 var(--header-side-padding);
+
+  .header__title {
+    font-size: 1.5rem;
+    font-weight: bold;
+    cursor: pointer;
+  }
+
+  .cursor_pointer {
+    cursor: pointer;
+  }
+
+  .header__right {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    gap: 1rem;
+  }
+}

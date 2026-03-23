@@ -1,0 +1,65 @@
+<aside class="sidebar" [class.expanded]="sidebarExpanded">
+  <nav>
+    <a
+      mat-button
+      routerLink="/"
+      [routerLinkActive]="['active-route']"
+      [routerLinkActiveOptions]="{ exact: true }"
+    >
+      <mat-icon>home</mat-icon>
+      @if (sidebarExpanded) {
+        <span class="label">Network</span>
+      }
+    </a>
+
+    <a mat-button routerLink="/companies" [routerLinkActive]="['active-route']">
+      <mat-icon>corporate_fare</mat-icon>
+      @if (sidebarExpanded) {
+        <span class="label">Companies</span>
+      }
+    </a>
+
+    <a mat-button routerLink="/jobs" [routerLinkActive]="['active-route']">
+      <mat-icon>work</mat-icon>
+      @if (sidebarExpanded) {
+        <span class="label">Jobs</span>
+      }
+    </a>
+
+    <a mat-button routerLink="/settings" [routerLinkActive]="['active-route']">
+      <mat-icon>settings</mat-icon>
+      @if (sidebarExpanded) {
+        <span class="label">Settings</span>
+      }
+    </a>
+
+    <a mat-button [routerLink]="['profile', currentUser?.id]" [routerLinkActive]="['active-route']">
+      <mat-icon>person</mat-icon>
+      @if (sidebarExpanded) {
+        <span class="label">My Profile</span>
+      }
+    </a>
+  </nav>
+
+  <section class="bottom-section">
+    <mat-divider></mat-divider>
+    @if (currentUser) {
+      <div class="connected-card" [routerLink]="['profile', currentUser.id]">
+        <app-avatar
+          [firstName]="currentUser.firstName"
+          [lastName]="currentUser.lastName"
+        ></app-avatar>
+        @if (sidebarExpanded) {
+          <div class="connected-card__description">
+            <strong>{{ currentUser.firstName }} {{ currentUser.lastName }}</strong>
+            <p>{{ currentUser.headline }}</p>
+          </div>
+        }
+      </div>
+    }
+
+    <button class="toggle-btn" (click)="toggleSidebar()">
+      <mat-icon>{{ sidebarExpanded ? 'chevron_left' : 'chevron_right' }}</mat-icon>
+    </button>
+  </section>
+</aside>

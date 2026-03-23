@@ -1,0 +1,64 @@
+<h1>Jobs</h1>
+<app-wrapper>
+  @if (loadingJobs) {
+    <mat-progress-bar mode="indeterminate"></mat-progress-bar>
+  }
+  <mat-form-field>
+    <mat-label>Search</mat-label>
+    <input
+      matInput
+      [(ngModel)]="searchValue"
+      (keyup)="applyFilter($event)"
+      placeholder="Search jobs"
+    />
+  </mat-form-field>
+  <table mat-table [dataSource]="jobsAvailable" class="mat-elevation-z8">
+    <!-- Company Column -->
+    <ng-container matColumnDef="job">
+      <th mat-header-cell *matHeaderCellDef>Job</th>
+      <td mat-cell *matCellDef="let job">
+        <div class="name-cell">
+          <mat-icon>corporate_fare</mat-icon>
+          <div class="column">
+            <strong>{{ job.title }}</strong>
+            {{ job.company.name }}
+          </div>
+        </div>
+      </td>
+    </ng-container>
+
+    <!-- Location Column -->
+    <ng-container matColumnDef="location">
+      <th mat-header-cell *matHeaderCellDef>Location</th>
+      <td mat-cell *matCellDef="let job">
+        {{ job.location }}
+      </td>
+    </ng-container>
+
+    <!-- Website Column -->
+    <ng-container matColumnDef="type">
+      <th mat-header-cell *matHeaderCellDef>Type</th>
+      <td mat-cell *matCellDef="let job">
+        <span class="border-cell">{{ job.type }}</span>
+      </td>
+    </ng-container>
+
+    <!-- Open Jobs Column -->
+    <ng-container matColumnDef="posted">
+      <th mat-header-cell *matHeaderCellDef>Posted</th>
+      <td mat-cell *matCellDef="let job">{{ job.createdAt | date }}</td>
+    </ng-container>
+
+    <tr mat-header-row *matHeaderRowDef="displayedColumns"></tr>
+    <tr mat-row *matRowDef="let row; columns: displayedColumns"></tr>
+  </table>
+  <mat-paginator
+    [length]="totalJobs"
+    [pageSize]="itemsPerPage"
+    [pageIndex]="pageIndex"
+    [pageSizeOptions]="[10, 50, 100]"
+    (page)="handlePageEvent($event)"
+    aria-label="Select page"
+  >
+  </mat-paginator>
+</app-wrapper>
