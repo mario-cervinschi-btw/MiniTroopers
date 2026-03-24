@@ -12,6 +12,9 @@ import { MatAnchor, MatButtonModule } from '@angular/material/button';
 import { MatInputModule } from '@angular/material/input';
 import { MatIcon } from '@angular/material/icon';
 import { Router } from '@angular/router';
+import { AuthCredentials, AuthService } from '../../core/services/auth.service';
+import { takeUntilDestroyed } from '@angular/core/rxjs-interop';
+import { catchError, tap } from 'rxjs';
 
 @Component({
   selector: 'app-login',
@@ -32,6 +35,9 @@ export class LoginComponent {
   private readonly destroyRef = inject(DestroyRef);
   private readonly router = inject(Router);
 
+  private readonly authService = inject(AuthService);
+
+  protected errorMessage: string | null = null;
   protected hide: boolean = true;
   protected readonly loginForm = new FormGroup({
     email: new FormControl('', [Validators.required, Validators.email]),
@@ -52,6 +58,19 @@ export class LoginComponent {
   }
 
   onSubmit() {
-    console.log(this.loginForm.value);
+    this.errorMessage = null;
+    const credentials: AuthCredentials = {
+      email: this.loginForm.value.email!,
+      password: this.loginForm.value.password!,
+    };
+
+    this.authService
+      .auth(credentials)
+      .pipe(
+        takeUntilDestroyed(this.destroyRef),
+        tap((token) => this.authService.setSessionToken(token.accessToken)),
+        catchError((err) => (this.errorMessage = err.error.message)),
+      )
+      .subscribe();
   }
 }

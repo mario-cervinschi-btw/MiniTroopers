@@ -1,9 +1,12 @@
 import { createReducer, on } from '@ngrx/store';
 import { initialAuthState } from './auth.state';
 import {
+  authTokenFailure,
+  checkAuthToken,
   loadCurrentUser,
   loadCurrentUserFailure,
   loadCurrentUserSuccess,
+  loginSuccess,
   updateCurrentUser,
   updateCurrentUserFailure,
   updateCurrentUserSuccess,
@@ -11,6 +14,10 @@ import {
 
 export const authReducer = createReducer(
   initialAuthState,
+
+  on(checkAuthToken, (state) => ({ ...state, error: null })),
+
+  on(authTokenFailure, (state, { error }) => ({ ...state, isAuthenticated: false, error: error })),
 
   on(loadCurrentUser, (state) => ({ ...state, loadingCurrentUser: true, error: null })),
 
@@ -39,5 +46,12 @@ export const authReducer = createReducer(
     ...state,
     loadingUpdateCurrentUser: false,
     error,
+  })),
+
+  on(loginSuccess, (state, { user }) => ({
+    ...state,
+    loadingCurrentUser: false,
+    isAuthenticated: true,
+    currentUser: user,
   })),
 );

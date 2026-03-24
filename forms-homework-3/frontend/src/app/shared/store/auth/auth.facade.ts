@@ -1,6 +1,6 @@
 import { Injectable, inject } from '@angular/core';
 import { Store } from '@ngrx/store';
-import { loadCurrentUser, updateCurrentUser } from './auth.actions';
+import { checkAuthToken, loadCurrentUser, updateCurrentUser } from './auth.actions';
 import {
   selectCurrentUser,
   selectErrorUpdateCurrentUser,
@@ -21,7 +21,8 @@ export class AuthFacade {
   readonly errorUpdateCurrentUser$ = this.store.select(selectErrorUpdateCurrentUser);
 
   init(): void {
-    this.store.dispatch(loadCurrentUser());
+    console.log('init auth facade');
+    this.store.dispatch(checkAuthToken());
   }
 
   updateUser(user: User): void {

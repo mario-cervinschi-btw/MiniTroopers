@@ -27,6 +27,9 @@
         <button matButton="filled" type="submit" [disabled]="disabledLogin">Login</button>
         <button matButton="outlined" type="button" (click)="onRegisterClick()">Register</button>
       </section>
+      @if (errorMessage) {
+        <mat-error>{{ errorMessage }}</mat-error>
+      }
     </div>
   </app-wrapper>
 </form>

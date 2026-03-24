@@ -1,8 +1,10 @@
 import { Injectable, inject } from '@angular/core';
 import { Actions, createEffect, ofType } from '@ngrx/effects';
 import { of } from 'rxjs';
-import { catchError, map, switchMap } from 'rxjs/operators';
+import { catchError, map, switchMap, take, tap } from 'rxjs/operators';
 import {
+  authTokenFailure,
+  checkAuthToken,
   loadCurrentUser,
   loadCurrentUserFailure,
   loadCurrentUserSuccess,
@@ -13,11 +15,28 @@ import {
 import { UsersService } from '../../services/users.service';
 import { loadUserTableFailure, loadUserTableSuccess } from '../user-table/user-table.actions';
 import { loadTheme } from '../ui/ui.actions';
+import { AuthService } from '../../../core/services/auth.service';
 
 @Injectable()
 export class AuthEffects {
   private readonly actions$ = inject(Actions);
   private readonly usersService = inject(UsersService);
+  private readonly authService = inject(AuthService);
+
+  checkAuthStatus$ = createEffect(() =>
+    this.actions$.pipe(
+      ofType(checkAuthToken),
+      take(1),
+      switchMap(() => {
+        const id = this.authService.verifyTokenValidity();
+        if (id) {
+          return of();
+        } else {
+          return of(authTokenFailure({ error: 'Invalid token' }));
+        }
+      }),
+    ),
+  );
 
   loadCurrentUser$ = createEffect(() =>
     this.actions$.pipe(
