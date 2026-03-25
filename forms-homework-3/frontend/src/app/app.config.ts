@@ -9,7 +9,7 @@ import {
 import { provideRouter } from '@angular/router';
 
 import { routes } from './app.routes';
-import { provideHttpClient } from '@angular/common/http';
+import { provideHttpClient, withInterceptors } from '@angular/common/http';
 import { provideCustomIcons } from './shared/providers/icon-registry.service';
 import { provideStore } from '@ngrx/store';
 import { provideEffects } from '@ngrx/effects';
@@ -24,7 +24,10 @@ import { UI_KEY } from './shared/store/ui/ui.selector';
 import { uiReducer } from './shared/store/ui/ui.reducer';
 import { UiEffects } from './shared/store/ui/ui.effects';
 import { AuthFacade } from './shared/store/auth/auth.facade';
-import { filter, take } from 'rxjs';
+import { filter, take, tap } from 'rxjs';
+import { AuthService } from './core/services/auth.service';
+import { loadCurrentUser } from './shared/store/auth/auth.actions';
+import { authInterceptor } from './core/interceptors/authInterceptor';
 
 export const appConfig: ApplicationConfig = {
   providers: [
@@ -32,7 +35,7 @@ export const appConfig: ApplicationConfig = {
     provideBrowserGlobalErrorListeners(),
     provideZoneChangeDetection({ eventCoalescing: true }),
     provideRouter(routes),
-    provideHttpClient(),
+    provideHttpClient(withInterceptors([authInterceptor])),
     provideStore({
       [AUTH_FEATURE_KEY]: authReducer,
       [TABLE_PREF_KEY]: userTableReducer,
@@ -42,13 +45,14 @@ export const appConfig: ApplicationConfig = {
     provideStoreDevtools({ maxAge: 25, logOnly: !isDevMode() }),
     provideAppInitializer(() => {
       const authFacade = inject(AuthFacade);
+      const authService = inject(AuthService);
 
       authFacade.init();
 
-      // return authFacade.isAuthInitialized$.pipe(
-      //   filter((isAuthInitialized: boolean) => isAuthInitialized === true),
-      //   take(1),
-      // );
+      return authFacade.isAuthInitialized$.pipe(
+        filter((isAuthInitialized: boolean) => isAuthInitialized === true),
+        take(1),
+      );
     }),
   ],
 };

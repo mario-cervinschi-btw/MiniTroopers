@@ -3,6 +3,7 @@ import { inject, Injectable } from '@angular/core';
 import { environment } from '../../../environments/environment.development';
 import { Observable } from 'rxjs';
 import { jwtDecode } from 'jwt-decode';
+import { loginSuccess } from '../../shared/store/auth/auth.actions';
 
 export interface AuthCredentials {
   email: string;
@@ -41,11 +42,35 @@ export class AuthService {
     return sessionStorage.getItem('authToken');
   }
 
+  // returns userId if token valid. otherwise null.
   verifyTokenValidity(): number | null {
     const token = this.getSessionToken();
     if (token) {
-      console.log(jwtDecode(token));
+      const decodedJwt = jwtDecode(token);
+      const userId = decodedJwt.sub;
+
+      if (decodedJwt.exp) {
+        const exp = decodedJwt.exp < (new Date().getTime() + 1) / 1000;
+        if (exp) {
+          this.deleteToken();
+          return null;
+        }
+      } else {
+        this.deleteToken();
+        return null;
+      }
+
+      if (userId) {
+        return +userId;
+      } else {
+        this.deleteToken();
+        return null;
+      }
     }
     return null;
+  }
+
+  deleteToken() {
+    sessionStorage.removeItem('authToken');
   }
 }

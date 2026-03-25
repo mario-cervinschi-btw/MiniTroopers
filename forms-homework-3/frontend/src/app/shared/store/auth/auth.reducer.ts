@@ -15,7 +15,7 @@ import {
 export const authReducer = createReducer(
   initialAuthState,
 
-  on(checkAuthToken, (state) => ({ ...state, error: null })),
+  on(checkAuthToken, (state) => ({ ...state, error: null, isAuthenticating: true })),
 
   on(authTokenFailure, (state, { error }) => ({ ...state, isAuthenticated: false, error: error })),
 

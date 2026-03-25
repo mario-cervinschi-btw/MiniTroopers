@@ -4,6 +4,7 @@ import { checkAuthToken, loadCurrentUser, updateCurrentUser } from './auth.actio
 import {
   selectCurrentUser,
   selectErrorUpdateCurrentUser,
+  selectIsLoggedIn,
   selectLoadingCurrentUser,
   selectLoadingUpdateCurrentUser,
 } from './auth.selectors';
@@ -15,13 +16,14 @@ export class AuthFacade {
 
   readonly currentUser$ = this.store.select(selectCurrentUser);
 
+  readonly isAuthInitialized$ = this.store.select(selectIsLoggedIn);
+
   readonly loadingCurrentUser$ = this.store.select(selectLoadingCurrentUser);
   readonly loadingUpdateCurrentUser$ = this.store.select(selectLoadingUpdateCurrentUser);
 
   readonly errorUpdateCurrentUser$ = this.store.select(selectErrorUpdateCurrentUser);
 
   init(): void {
-    console.log('init auth facade');
     this.store.dispatch(checkAuthToken());
   }
 

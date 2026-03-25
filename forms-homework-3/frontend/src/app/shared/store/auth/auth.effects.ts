@@ -8,6 +8,8 @@ import {
   loadCurrentUser,
   loadCurrentUserFailure,
   loadCurrentUserSuccess,
+  loginSuccess,
+  logout,
   updateCurrentUser,
   updateCurrentUserFailure,
   updateCurrentUserSuccess,
@@ -30,7 +32,7 @@ export class AuthEffects {
       switchMap(() => {
         const id = this.authService.verifyTokenValidity();
         if (id) {
-          return of();
+          return of(loadCurrentUser({ id: id }));
         } else {
           return of(authTokenFailure({ error: 'Invalid token' }));
         }
@@ -41,22 +43,23 @@ export class AuthEffects {
   loadCurrentUser$ = createEffect(() =>
     this.actions$.pipe(
       ofType(loadCurrentUser),
-      switchMap(() =>
-        this.usersService.getAllUsers({ limit: 1 }).pipe(
+      switchMap((val) =>
+        this.usersService.getUserById(val.id).pipe(
           switchMap((response) => {
-            const user = response.data[0];
+            const user = response;
             if (user) {
               return of(
                 loadCurrentUserSuccess({ user }),
-                loadUserTableSuccess({ preferences: user.tablePreferences }),
+                loginSuccess({ user }),
+                // loadUserTableSuccess({ preferences: user.tablePreferences }),
                 loadTheme({ isDarkTheme: user.isDarkTheme }),
               );
             } else {
               return of(
                 loadCurrentUserFailure({ error: 'No user found' }),
-                loadUserTableFailure({
-                  error: 'Error on loading user preferences. Try again later.',
-                }),
+                // loadUserTableFailure({
+                // error: 'Error on loading user preferences. Try again later.',
+                // }),
               );
             }
           }),
