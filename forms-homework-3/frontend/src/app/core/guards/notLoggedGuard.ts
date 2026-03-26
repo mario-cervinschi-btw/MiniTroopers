@@ -7,7 +7,7 @@ export const notLoggedGuard: CanActivateChildFn = (route, state) => {
   const authFacade = inject(AuthFacade);
   const router = inject(Router);
 
-  return authFacade.isAuthInitialized$.pipe(
+  return authFacade.isLoggedIn$.pipe(
     take(1),
     map((isLogged) => {
       if (isLogged) {

@@ -8,6 +8,7 @@ import { MatButtonModule } from '@angular/material/button';
 import { UiFacade } from '../../store/ui/ui.facade';
 import { takeUntilDestroyed } from '@angular/core/rxjs-interop';
 import { take } from 'rxjs';
+import { AuthFacade } from '../../store/auth/auth.facade';
 
 @Component({
   selector: 'app-header',
@@ -25,6 +26,7 @@ import { take } from 'rxjs';
 export class HeaderComponent {
   private readonly destroyRef = inject(DestroyRef);
 
+  protected readonly authFacade = inject(AuthFacade);
   protected readonly uiFacade = inject(UiFacade);
 
   handleDarkMode() {

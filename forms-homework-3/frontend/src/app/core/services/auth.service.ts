@@ -1,9 +1,12 @@
 import { HttpClient } from '@angular/common/http';
-import { inject, Injectable } from '@angular/core';
+import { DestroyRef, inject, Injectable } from '@angular/core';
 import { environment } from '../../../environments/environment.development';
-import { Observable } from 'rxjs';
+import { catchError, Observable, tap } from 'rxjs';
 import { jwtDecode } from 'jwt-decode';
 import { loginSuccess } from '../../shared/store/auth/auth.actions';
+import { Router } from '@angular/router';
+import { AuthFacade } from '../../shared/store/auth/auth.facade';
+import { takeUntilDestroyed } from '@angular/core/rxjs-interop';
 
 export interface AuthCredentials {
   email: string;
@@ -27,16 +30,28 @@ export interface AuthResponse {
 export class AuthService {
   private readonly http = inject(HttpClient);
   private readonly base = `${environment.baseURL}/auth`;
+  private readonly router = inject(Router);
+  private readonly authFacade = inject(AuthFacade);
 
   auth(data: AuthCredentials): Observable<AuthResponse> {
-    return this.http.post<AuthResponse>(this.base + '/login', data);
+    return this.http.post<AuthResponse>(this.base + '/login', data).pipe(
+      tap((response) => {
+        const token = response.accessToken;
+        sessionStorage.setItem('authToken', token);
+
+        const id = this.verifyTokenValidity();
+        if (id) {
+          this.authFacade.loadUser(id);
+        }
+      }),
+    );
   }
 
-  register(data: RegisterCredentials) {}
-
-  setSessionToken(token: string) {
-    sessionStorage.setItem('authToken', token);
+  register(data: RegisterCredentials): Observable<void> {
+    return this.http.post<void>(this.base + '/register', data);
   }
+
+  setSessionToken(token: string) {}
 
   getSessionToken(): string | null {
     return sessionStorage.getItem('authToken');
@@ -72,5 +87,6 @@ export class AuthService {
 
   deleteToken() {
     sessionStorage.removeItem('authToken');
+    this.router.navigate(['/login']);
   }
 }

@@ -12,6 +12,9 @@ import { MatAnchor, MatButtonModule } from '@angular/material/button';
 import { MatInputModule } from '@angular/material/input';
 import { MatIcon } from '@angular/material/icon';
 import { Router } from '@angular/router';
+import { AuthService, RegisterCredentials } from '../../core/services/auth.service';
+import { takeUntilDestroyed } from '@angular/core/rxjs-interop';
+import { catchError, tap, timer } from 'rxjs';
 
 @Component({
   selector: 'app-register',
@@ -29,8 +32,12 @@ import { Router } from '@angular/router';
   styleUrl: './register.component.scss',
 })
 export class RegisterComponent {
-  private readonly destroyRef = inject(DestroyRef);
   private readonly router = inject(Router);
+
+  private readonly authService = inject(AuthService);
+
+  protected errorMessage: string | null = null;
+  protected successMessage: string | null = null;
 
   protected hide: boolean = true;
   protected readonly registerForm = new FormGroup({
@@ -54,6 +61,25 @@ export class RegisterComponent {
   }
 
   onSubmit() {
-    console.log(this.registerForm.value);
+    this.errorMessage = null;
+    const credentials: RegisterCredentials = {
+      email: this.registerForm.value.email!,
+      password: this.registerForm.value.password!,
+      firstName: this.registerForm.value.firstName!,
+      lastName: this.registerForm.value.lastName!,
+    };
+
+    this.authService
+      .register(credentials)
+      .pipe(
+        tap(() => {
+          this.successMessage = 'Successful register. Redirecting to login...';
+          setTimeout(() => {
+            this.router.navigate(['/login']);
+          }, 2000);
+        }),
+        catchError((err) => (this.errorMessage = err.error.message)),
+      )
+      .subscribe();
   }
 }

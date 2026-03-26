@@ -7,22 +7,27 @@
         <h2>{{ firstName }} {{ lastName }}</h2>
         <p class="subheading">{{ headline }}</p>
         <p class="subheading">
-          <mat-icon class="field-icon default-color">location_on</mat-icon>{{ location }}
+          <mat-icon class="field-icon default-color">location_on</mat-icon
+          >{{ location ?? 'No location provided.' }}
         </p>
         <p class="subheading blue">
           <mat-icon class="field-icon">groups</mat-icon>
           <strong>{{ connections }}</strong> connections
         </p>
       </div>
-      <button matButton="elevated" (click)="onSettingsClick()">
+      <button type="button" matButton="elevated" (click)="onSettingsClick()">
         <mat-icon>settings</mat-icon> Settings
       </button>
     </section>
     <mat-divider></mat-divider>
     <section class="card-section">
       <p class="blue"><mat-icon class="field-icon">mail</mat-icon> {{ email }}</p>
-      <p><mat-icon class="field-icon">call</mat-icon>{{ phone }}</p>
-      <p class="blue"><mat-icon class="field-icon">link</mat-icon> {{ website }}</p>
+      @if (phone) {
+        <p><mat-icon class="field-icon">call</mat-icon>{{ phone }}</p>
+      }
+      @if (website) {
+        <p class="blue"><mat-icon class="field-icon">link</mat-icon> {{ website }}</p>
+      }
     </section>
   </mat-card-content>
 </mat-card>

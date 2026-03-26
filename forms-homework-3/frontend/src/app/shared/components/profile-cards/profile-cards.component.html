@@ -3,42 +3,50 @@
     <mat-card-title>{{ cardTitle }}</mat-card-title>
   </mat-card-header>
   <mat-card-content>
-    @for (content of data; let last = $last; track $index) {
-      <section class="card-section">
-        @for (item of getEntries(content); track item[0]) {
-          @if (isSubtitle(item[0])) {
-            <div class="subheading-wrapper">
-              @if (getIcon(item[0])) {
-                <mat-icon class="field-icon">{{ getIcon(item[0]) }}</mat-icon>
-              }
-              <p class="subheading">{{ item[1] }}</p>
-            </div>
-          } @else if (isTitle(item[0])) {
-            <p class="title">{{ item[1] }}</p>
-          } @else if (isShowcase(item[0])) {
-            <mat-chip-set aria-label="User skills">
-              @for (chip of getShowcaseArray(item[1]); track $index) {
-                <mat-chip appChipColors>{{ chip }}</mat-chip>
-              }
-            </mat-chip-set>
-          } @else {
-            <div class="content-wrapper">
-              @if (getIcon(item[0])) {
-                <mat-icon class="field-icon">{{ getIcon(item[0]) }}</mat-icon>
-              }
-              <p
-                class="content"
-                [style]="isLink(item[0]) ? { color: 'var(--mat-sys-primary)' } : {}"
-              >
-                {{ item[1] }}
-              </p>
-            </div>
+    @if (data.length > 0) {
+      @for (content of data; let last = $last; track $index) {
+        <section class="card-section">
+          @for (item of getEntries(content); track item[0]) {
+            @if (isSubtitle(item[0])) {
+              <div class="subheading-wrapper">
+                @if (getIcon(item[0])) {
+                  <mat-icon class="field-icon">{{ getIcon(item[0]) }}</mat-icon>
+                }
+                <p class="subheading">{{ item[1] }}</p>
+              </div>
+            } @else if (isTitle(item[0])) {
+              <p class="title">{{ item[1] }}</p>
+            } @else if (isShowcase(item[0])) {
+              <mat-chip-set aria-label="User skills">
+                @for (chip of getShowcaseArray(item[1]); track $index) {
+                  <mat-chip appChipColors>{{ chip }}</mat-chip>
+                }
+              </mat-chip-set>
+            } @else {
+              <div class="content-wrapper">
+                @if (getIcon(item[0])) {
+                  <mat-icon class="field-icon">{{ getIcon(item[0]) }}</mat-icon>
+                }
+                <p
+                  class="content"
+                  [style]="isLink(item[0]) ? { color: 'var(--mat-sys-primary)' } : {}"
+                >
+                  {{ item[1] }}
+                </p>
+              </div>
+            }
           }
+        </section>
+        @if (!last) {
+          <mat-divider></mat-divider>
         }
-      </section>
-      @if (!last) {
-        <mat-divider></mat-divider>
       }
+    } @else {
+      <section class="card-section">
+        <div class="subheading-wrapper">
+          <p class="subheading">No info provided</p>
+        </div>
+      </section>
     }
   </mat-card-content>
 </mat-card>

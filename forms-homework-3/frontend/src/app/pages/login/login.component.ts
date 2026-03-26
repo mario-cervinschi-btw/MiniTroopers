@@ -14,7 +14,10 @@ import { MatIcon } from '@angular/material/icon';
 import { Router } from '@angular/router';
 import { AuthCredentials, AuthService } from '../../core/services/auth.service';
 import { takeUntilDestroyed } from '@angular/core/rxjs-interop';
-import { catchError, tap } from 'rxjs';
+import { catchError, finalize, tap } from 'rxjs';
+import { checkAuthToken } from '../../shared/store/auth/auth.actions';
+import { AuthFacade } from '../../shared/store/auth/auth.facade';
+import { jwtDecode } from 'jwt-decode';
 
 @Component({
   selector: 'app-login',
@@ -32,10 +35,10 @@ import { catchError, tap } from 'rxjs';
   styleUrl: './login.component.scss',
 })
 export class LoginComponent {
-  private readonly destroyRef = inject(DestroyRef);
   private readonly router = inject(Router);
 
   private readonly authService = inject(AuthService);
+  private readonly destroyRef = inject(DestroyRef);
 
   protected errorMessage: string | null = null;
   protected hide: boolean = true;
@@ -68,9 +71,10 @@ export class LoginComponent {
       .auth(credentials)
       .pipe(
         takeUntilDestroyed(this.destroyRef),
-        tap((token) => this.authService.setSessionToken(token.accessToken)),
         catchError((err) => (this.errorMessage = err.error.message)),
       )
-      .subscribe();
+      .subscribe((_) => {
+        this.router.navigate(['/']);
+      });
   }
 }

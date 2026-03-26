@@ -33,5 +33,3 @@ export const updateCurrentUserFailure = createAction(
 );
 
 export const logout = createAction('[Auth] Logout');
-// new actions ^^^^^
-// old actions vvvvv

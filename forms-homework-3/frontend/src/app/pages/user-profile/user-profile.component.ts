@@ -103,6 +103,10 @@ export class UserProfileComponent implements OnInit {
   }
 
   private buildAboutData(): void {
+    if (!this.currentUser?.about) {
+      return;
+    }
+
     const cardData: CardItem[] = [
       {
         about: this.currentUser?.about,
@@ -147,6 +151,10 @@ export class UserProfileComponent implements OnInit {
     this.currentUser?.skills.forEach((s) => {
       skillsArray.push(s.name);
     });
+
+    if (skillsArray.length <= 0) {
+      return;
+    }
 
     const cardData: CardItem[] = [
       {

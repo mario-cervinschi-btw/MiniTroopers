@@ -22,6 +22,7 @@
           <mat-label>Password</mat-label>
           <input matInput formControlName="password" [type]="hide ? 'password' : 'text'" />
           <button
+            type="button"
             matIconButton
             matSuffix
             (click)="clickEvent($event)"
@@ -37,6 +38,12 @@
         <button matButton="filled" type="submit" [disabled]="disabledRegister">Register</button>
         <button matButton="outlined" type="button" (click)="onLoginClick()">Back to login</button>
       </section>
+      @if (errorMessage) {
+        <mat-error>{{ errorMessage }}</mat-error>
+      }
+      @if (successMessage) {
+        <p class="success-message">{{ successMessage }}</p>
+      }
     </div>
   </app-wrapper>
 </form>

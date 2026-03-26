@@ -15,7 +15,6 @@ import {
   updateCurrentUserSuccess,
 } from './auth.actions';
 import { UsersService } from '../../services/users.service';
-import { loadUserTableFailure, loadUserTableSuccess } from '../user-table/user-table.actions';
 import { loadTheme } from '../ui/ui.actions';
 import { AuthService } from '../../../core/services/auth.service';
 
@@ -40,6 +39,17 @@ export class AuthEffects {
     ),
   );
 
+  logout$ = createEffect(
+    () =>
+      this.actions$.pipe(
+        ofType(logout),
+        tap(() => {
+          this.authService.deleteToken();
+        }),
+      ),
+    { dispatch: false },
+  );
+
   loadCurrentUser$ = createEffect(() =>
     this.actions$.pipe(
       ofType(loadCurrentUser),
@@ -50,17 +60,11 @@ export class AuthEffects {
             if (user) {
               return of(
                 loadCurrentUserSuccess({ user }),
-                loginSuccess({ user }),
-                // loadUserTableSuccess({ preferences: user.tablePreferences }),
                 loadTheme({ isDarkTheme: user.isDarkTheme }),
+                loginSuccess({ user }),
               );
             } else {
-              return of(
-                loadCurrentUserFailure({ error: 'No user found' }),
-                // loadUserTableFailure({
-                // error: 'Error on loading user preferences. Try again later.',
-                // }),
-              );
+              return of(loadCurrentUserFailure({ error: 'No user found' }));
             }
           }),
           catchError((err) =>

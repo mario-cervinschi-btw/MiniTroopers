@@ -38,4 +38,8 @@ export class SidebarComponent implements OnInit {
   toggleSidebar() {
     this.sidebarExpanded = !this.sidebarExpanded;
   }
+
+  handleLogout() {
+    this.authFacade.logout();
+  }
 }

@@ -26,7 +26,7 @@ export interface CardItem {
   styleUrl: './profile-cards.component.scss',
 })
 export class ProfileCardsComponent {
-  @Input()
+  @Input({ required: true })
   public cardTitle!: string;
   @Input()
   public data: CardItem[] = [];

@@ -13,29 +13,29 @@ import { Router } from '@angular/router';
   styleUrl: './user-profile-card.component.scss',
 })
 export class UserProfileCardComponent {
-  @Input()
+  @Input({ required: true })
   public firstName!: string;
 
-  @Input()
+  @Input({ required: true })
   public lastName!: string;
 
   @Input()
-  public headline!: string;
+  public headline: string | null = null;
 
   @Input()
-  public location!: string;
+  public location: string | null = null;
 
   @Input()
-  public connections!: number;
+  public connections: number | null = null;
 
   @Input()
-  public email?: string;
+  public email: string | null = null;
 
   @Input()
-  public phone?: string;
+  public phone: string | null = null;
 
   @Input()
-  public website?: string;
+  public website: string | null = null;
 
   private readonly router = inject(Router);
 

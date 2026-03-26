@@ -58,7 +58,16 @@
       </div>
     }
 
-    <button class="toggle-btn" (click)="toggleSidebar()">
+    <button type="button" class="toggle-btn logout" (click)="handleLogout()">
+      <p>
+        <mat-icon>logout</mat-icon>
+        @if (sidebarExpanded) {
+          <span class="label">Logout</span>
+        }
+      </p>
+    </button>
+
+    <button type="button" class="toggle-btn" (click)="toggleSidebar()">
       <mat-icon>{{ sidebarExpanded ? 'chevron_left' : 'chevron_right' }}</mat-icon>
     </button>
   </section>

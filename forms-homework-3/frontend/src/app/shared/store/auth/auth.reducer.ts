@@ -7,6 +7,7 @@ import {
   loadCurrentUserFailure,
   loadCurrentUserSuccess,
   loginSuccess,
+  logout,
   updateCurrentUser,
   updateCurrentUserFailure,
   updateCurrentUserSuccess,
@@ -15,9 +16,19 @@ import {
 export const authReducer = createReducer(
   initialAuthState,
 
-  on(checkAuthToken, (state) => ({ ...state, error: null, isAuthenticating: true })),
+  on(checkAuthToken, (state) => ({ ...state, error: null, isInitAuth: false })),
 
-  on(authTokenFailure, (state, { error }) => ({ ...state, isAuthenticated: false, error: error })),
+  on(authTokenFailure, (state, { error }) => ({
+    ...state,
+    isAuthenticated: false,
+    isInitAuth: true,
+    error: error,
+  })),
+
+  on(logout, (state) => ({
+    ...state,
+    isAuthenticated: false,
+  })),
 
   on(loadCurrentUser, (state) => ({ ...state, loadingCurrentUser: true, error: null })),
 
@@ -52,6 +63,7 @@ export const authReducer = createReducer(
     ...state,
     loadingCurrentUser: false,
     isAuthenticated: true,
+    isInitAuth: true,
     currentUser: user,
   })),
 );
