@@ -1,12 +1,10 @@
 import { HttpClient } from '@angular/common/http';
-import { DestroyRef, inject, Injectable } from '@angular/core';
+import { inject, Injectable } from '@angular/core';
 import { environment } from '../../../environments/environment.development';
-import { catchError, Observable, tap } from 'rxjs';
+import { Observable, tap } from 'rxjs';
 import { jwtDecode } from 'jwt-decode';
-import { loginSuccess } from '../../shared/store/auth/auth.actions';
 import { Router } from '@angular/router';
 import { AuthFacade } from '../../shared/store/auth/auth.facade';
-import { takeUntilDestroyed } from '@angular/core/rxjs-interop';
 
 export interface AuthCredentials {
   email: string;
@@ -51,8 +49,6 @@ export class AuthService {
     return this.http.post<void>(this.base + '/register', data);
   }
 
-  setSessionToken(token: string) {}
-
   getSessionToken(): string | null {
     return sessionStorage.getItem('authToken');
   }
@@ -60,29 +56,28 @@ export class AuthService {
   // returns userId if token valid. otherwise null.
   verifyTokenValidity(): number | null {
     const token = this.getSessionToken();
-    if (token) {
-      const decodedJwt = jwtDecode(token);
+    if (!token) return null;
+
+    try {
+      const decodedJwt: any = jwtDecode(token);
+      const currentTime = Math.floor(Date.now() / 1000);
+
+      if (!decodedJwt.exp || decodedJwt.exp < currentTime) {
+        this.deleteToken();
+        return null;
+      }
+
       const userId = decodedJwt.sub;
-
-      if (decodedJwt.exp) {
-        const exp = decodedJwt.exp < (new Date().getTime() + 1) / 1000;
-        if (exp) {
-          this.deleteToken();
-          return null;
-        }
-      } else {
+      if (!userId) {
         this.deleteToken();
         return null;
       }
 
-      if (userId) {
-        return +userId;
-      } else {
-        this.deleteToken();
-        return null;
-      }
+      return +userId;
+    } catch (error) {
+      this.deleteToken();
+      return null;
     }
-    return null;
   }
 
   deleteToken() {

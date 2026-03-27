@@ -1,23 +1,15 @@
-import { Component, DestroyRef, inject, OnInit, signal } from '@angular/core';
-import {
-  FormControl,
-  FormGroup,
-  FormsModule,
-  Validators,
-  ReactiveFormsModule,
-} from '@angular/forms';
+import { Component, DestroyRef, inject, OnInit } from '@angular/core';
+import { FormControl, FormGroup, Validators, ReactiveFormsModule } from '@angular/forms';
 import { WrapperComponent } from '../../shared/components/wrapper/wrapper.component';
-import { MatFormField, MatLabel, MatError, MatFormFieldModule } from '@angular/material/form-field';
-import { MatAnchor, MatButtonModule } from '@angular/material/button';
+import { MatFormField, MatLabel, MatFormFieldModule } from '@angular/material/form-field';
+import { MatButtonModule } from '@angular/material/button';
 import { MatInputModule } from '@angular/material/input';
 import { MatIcon } from '@angular/material/icon';
 import { Router } from '@angular/router';
 import { AuthCredentials, AuthService } from '../../core/services/auth.service';
 import { takeUntilDestroyed } from '@angular/core/rxjs-interop';
-import { catchError, debounce, delay, filter, finalize, tap } from 'rxjs';
-import { checkAuthToken } from '../../shared/store/auth/auth.actions';
+import { catchError, filter, tap } from 'rxjs';
 import { AuthFacade } from '../../shared/store/auth/auth.facade';
-import { jwtDecode } from 'jwt-decode';
 
 @Component({
   selector: 'app-login',

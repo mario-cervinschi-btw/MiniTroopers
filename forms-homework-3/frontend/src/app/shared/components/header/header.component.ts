@@ -1,4 +1,4 @@
-import { Component, DestroyRef, inject } from '@angular/core';
+import { Component, inject } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { MatToolbarModule } from '@angular/material/toolbar';
 import { MatIconModule } from '@angular/material/icon';
@@ -6,7 +6,6 @@ import { MatMenuModule } from '@angular/material/menu';
 import { RouterLink } from '@angular/router';
 import { MatButtonModule } from '@angular/material/button';
 import { UiFacade } from '../../store/ui/ui.facade';
-import { takeUntilDestroyed } from '@angular/core/rxjs-interop';
 import { take } from 'rxjs';
 import { AuthFacade } from '../../store/auth/auth.facade';
 
@@ -24,16 +23,12 @@ import { AuthFacade } from '../../store/auth/auth.facade';
   styleUrl: './header.component.scss',
 })
 export class HeaderComponent {
-  private readonly destroyRef = inject(DestroyRef);
-
   protected readonly authFacade = inject(AuthFacade);
   protected readonly uiFacade = inject(UiFacade);
 
   handleDarkMode() {
-    this.uiFacade.isDarkTheme$
-      .pipe(takeUntilDestroyed(this.destroyRef), take(1))
-      .subscribe((val) => {
-        this.uiFacade.updateDarkTheme(!val);
-      });
+    this.uiFacade.isDarkTheme$.pipe(take(1)).subscribe((val) => {
+      this.uiFacade.updateDarkTheme(!val);
+    });
   }
 }

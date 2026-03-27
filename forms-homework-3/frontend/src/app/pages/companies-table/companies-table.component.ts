@@ -14,9 +14,7 @@ import {
   debounceTime,
   distinctUntilChanged,
   finalize,
-  Subject,
   switchMap,
-  take,
   tap,
 } from 'rxjs';
 import { CompaniesService } from '../../shared/services/company.service';

@@ -2,7 +2,6 @@ import { HttpInterceptorFn, HttpErrorResponse } from '@angular/common/http';
 import { inject } from '@angular/core';
 import { AuthService } from '../services/auth.service';
 import { catchError, throwError } from 'rxjs';
-import { logout } from '../../shared/store/auth/auth.actions';
 import { AuthFacade } from '../../shared/store/auth/auth.facade';
 
 export const authInterceptor: HttpInterceptorFn = (req, next) => {

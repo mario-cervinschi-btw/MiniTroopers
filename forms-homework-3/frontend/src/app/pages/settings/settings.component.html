@@ -79,7 +79,10 @@
       @if (settingsForm.invalid || settingsForm.pristine) {
         <button
           matIconButton
-          [appSettingsInfo]="settingsForm.pristine ? 'No fields modified yet.' : null"
+          (click)="settingsForm.markAllAsTouched()"
+          [appSettingsInfo]="
+            settingsForm.pristine && !settingsForm.invalid ? 'No fields modified yet.' : null
+          "
           type="button"
         >
           <mat-icon>info</mat-icon>

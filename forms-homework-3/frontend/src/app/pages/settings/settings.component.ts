@@ -89,11 +89,13 @@ export class SettingsComponent implements OnInit {
         filter(([prev, curr]) => prev === true && curr === false),
       )
       .subscribe(() => {
-        this.authFacade.errorUpdateCurrentUser$.pipe().subscribe((error) => {
-          this.message = error || 'Updated Successfully';
+        this.authFacade.errorUpdateCurrentUser$
+          .pipe(takeUntilDestroyed(this.destroyRef))
+          .subscribe((error) => {
+            this.message = error || 'Updated Successfully';
 
-          setTimeout(() => (this.message = ''), 100);
-        });
+            setTimeout(() => (this.message = ''), 100);
+          });
       });
   }
 

@@ -1,20 +1,13 @@
-import { Component, DestroyRef, inject, signal } from '@angular/core';
-import {
-  FormControl,
-  FormGroup,
-  FormsModule,
-  Validators,
-  ReactiveFormsModule,
-} from '@angular/forms';
+import { Component, inject } from '@angular/core';
+import { FormControl, FormGroup, Validators, ReactiveFormsModule } from '@angular/forms';
 import { WrapperComponent } from '../../shared/components/wrapper/wrapper.component';
-import { MatFormField, MatLabel, MatError, MatFormFieldModule } from '@angular/material/form-field';
-import { MatAnchor, MatButtonModule } from '@angular/material/button';
+import { MatFormField, MatLabel, MatFormFieldModule } from '@angular/material/form-field';
+import { MatButtonModule } from '@angular/material/button';
 import { MatInputModule } from '@angular/material/input';
 import { MatIcon } from '@angular/material/icon';
 import { Router } from '@angular/router';
 import { AuthService, RegisterCredentials } from '../../core/services/auth.service';
-import { takeUntilDestroyed } from '@angular/core/rxjs-interop';
-import { catchError, tap, timer } from 'rxjs';
+import { catchError, take, tap } from 'rxjs';
 
 @Component({
   selector: 'app-register',
@@ -72,6 +65,7 @@ export class RegisterComponent {
     this.authService
       .register(credentials)
       .pipe(
+        take(1),
         tap(() => {
           this.successMessage = 'Successful register. Redirecting to login...';
           setTimeout(() => {

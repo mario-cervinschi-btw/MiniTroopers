@@ -24,9 +24,7 @@ import { UI_KEY } from './shared/store/ui/ui.selector';
 import { uiReducer } from './shared/store/ui/ui.reducer';
 import { UiEffects } from './shared/store/ui/ui.effects';
 import { AuthFacade } from './shared/store/auth/auth.facade';
-import { filter, take, tap } from 'rxjs';
-import { AuthService } from './core/services/auth.service';
-import { loadCurrentUser } from './shared/store/auth/auth.actions';
+import { filter, take } from 'rxjs';
 import { authInterceptor } from './core/interceptors/authInterceptor';
 
 export const appConfig: ApplicationConfig = {
@@ -45,7 +43,6 @@ export const appConfig: ApplicationConfig = {
     provideStoreDevtools({ maxAge: 25, logOnly: !isDevMode() }),
     provideAppInitializer(() => {
       const authFacade = inject(AuthFacade);
-      const authService = inject(AuthService);
 
       authFacade.init();
 
