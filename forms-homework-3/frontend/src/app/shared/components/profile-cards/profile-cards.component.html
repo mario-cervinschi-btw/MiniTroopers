@@ -12,7 +12,7 @@
                 @if (getIcon(item[0])) {
                   <mat-icon class="field-icon">{{ getIcon(item[0]) }}</mat-icon>
                 }
-                <p class="subheading">{{ item[1] }}</p>
+                <p class="subheading">{{ item[1] || 'No info provided.' }}</p>
               </div>
             } @else if (isTitle(item[0])) {
               <p class="title">{{ item[1] }}</p>

@@ -1,5 +1,5 @@
 import { DestroyRef, Directive, inject, Input, TemplateRef, ViewContainerRef } from '@angular/core';
-import { tap } from 'rxjs';
+import { take, tap } from 'rxjs';
 import { Router } from '@angular/router';
 import { takeUntilDestroyed } from '@angular/core/rxjs-interop';
 import { AuthFacade } from '../store/auth/auth.facade';
@@ -21,7 +21,7 @@ export class IfCurrentUserDirective {
   @Input() set appIfCurrentUser(id: number) {
     this.authFacade.currentUser$
       .pipe(
-        takeUntilDestroyed(this.destroyRef),
+        take(1),
         tap((val) => {
           this.currentUserId = val?.id;
 

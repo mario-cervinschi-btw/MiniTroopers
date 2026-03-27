@@ -1,4 +1,4 @@
-import { Component, DestroyRef, inject, signal } from '@angular/core';
+import { Component, DestroyRef, inject, OnInit, signal } from '@angular/core';
 import {
   FormControl,
   FormGroup,
@@ -14,7 +14,7 @@ import { MatIcon } from '@angular/material/icon';
 import { Router } from '@angular/router';
 import { AuthCredentials, AuthService } from '../../core/services/auth.service';
 import { takeUntilDestroyed } from '@angular/core/rxjs-interop';
-import { catchError, finalize, tap } from 'rxjs';
+import { catchError, debounce, delay, filter, finalize, tap } from 'rxjs';
 import { checkAuthToken } from '../../shared/store/auth/auth.actions';
 import { AuthFacade } from '../../shared/store/auth/auth.facade';
 import { jwtDecode } from 'jwt-decode';
@@ -34,9 +34,10 @@ import { jwtDecode } from 'jwt-decode';
   templateUrl: './login.component.html',
   styleUrl: './login.component.scss',
 })
-export class LoginComponent {
+export class LoginComponent implements OnInit {
   private readonly router = inject(Router);
 
+  private readonly authFacade = inject(AuthFacade);
   private readonly authService = inject(AuthService);
   private readonly destroyRef = inject(DestroyRef);
 
@@ -46,6 +47,18 @@ export class LoginComponent {
     email: new FormControl('', [Validators.required, Validators.email]),
     password: new FormControl('', Validators.required),
   });
+
+  ngOnInit() {
+    this.authFacade.isLoggedIn$
+      .pipe(
+        takeUntilDestroyed(this.destroyRef),
+        filter((val) => val === true),
+        tap((_) => {
+          this.router.navigate(['/']);
+        }),
+      )
+      .subscribe();
+  }
 
   get disabledLogin() {
     return !this.loginForm.valid;
@@ -73,8 +86,6 @@ export class LoginComponent {
         takeUntilDestroyed(this.destroyRef),
         catchError((err) => (this.errorMessage = err.error.message)),
       )
-      .subscribe((_) => {
-        this.router.navigate(['/']);
-      });
+      .subscribe();
   }
 }
