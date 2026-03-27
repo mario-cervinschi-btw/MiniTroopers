@@ -7,8 +7,8 @@
     <mat-label>Search</mat-label>
     <input
       matInput
-      [(ngModel)]="searchValue"
-      (keyup)="applyFilter($event)"
+      [value]="searchValue$ | async"
+      (input)="applyFilter($event)"
       placeholder="Search jobs"
     />
   </mat-form-field>
@@ -54,8 +54,8 @@
   </table>
   <mat-paginator
     [length]="totalJobs"
-    [pageSize]="itemsPerPage"
-    [pageIndex]="pageIndex"
+    [pageSize]="itemsPerPage$ | async"
+    [pageIndex]="pageIndex$ | async"
     [pageSizeOptions]="[10, 50, 100]"
     (page)="handlePageEvent($event)"
     aria-label="Select page"
