@@ -1,3 +1,11 @@
-<div class="avatar" [ngStyle]="{ 'width.px': size, 'height.px': size, 'fontSize.px': size / 2.5 }">
+<div
+  class="avatar"
+  [ngStyle]="{
+    'width.px': plainSize,
+    'height.px': plainSize,
+    'fontSize.px': plainSize / 2.5,
+    backgroundColor: backgroundColor,
+  }"
+>
   {{ initials }}
 </div>
