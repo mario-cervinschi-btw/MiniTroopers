@@ -21,9 +21,10 @@ export class IfCurrentUserDirective {
   @Input() set appIfCurrentUser(id: number) {
     this.authFacade.currentUser$
       .pipe(
-        take(1),
+        takeUntilDestroyed(this.destroyRef),
         tap((val) => {
           this.currentUserId = val?.id;
+          this.viewContainerRef.clear();
 
           if (id == this.currentUserId) {
             this.viewContainerRef.createEmbeddedView(this.templateRef);
