@@ -58,7 +58,6 @@ export class UserProfileComponent {
         finalize(() => (this.isLoadingUser = false)),
       )
       .subscribe((next) => {
-        console.log(next);
         this.currentUser = next;
       });
   }

@@ -1,4 +1,4 @@
-import { inject, Injectable } from '@angular/core';
+import { DestroyRef, inject, Injectable } from '@angular/core';
 import { Store } from '@ngrx/store';
 import {
   selectLoadingUsers,
@@ -7,7 +7,7 @@ import {
   selectUsersPrefereces,
 } from './user-table.selector';
 import { loadUsers, updateUserTablePreferences } from './user-table.actions';
-import { first, map, of, switchMap } from 'rxjs';
+import { map } from 'rxjs';
 import { TablePreferences } from '../../models/table-preferences.model';
 import { takeUntilDestroyed } from '@angular/core/rxjs-interop';
 
@@ -21,10 +21,12 @@ export class UserTableFacade {
   readonly tablePrefences$ = this.store.select(selectUsersPrefereces);
   readonly loadingTablePreferences$ = this.store.select(selectLoadingUsersPrefereces);
 
+  readonly destroyRef = inject(DestroyRef);
+
   init(): void {
     this.tablePrefences$
       .pipe(
-        // first(),
+        takeUntilDestroyed(this.destroyRef),
         map((pref) => {
           return pref
             ? {

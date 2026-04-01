@@ -104,7 +104,6 @@ export class NetworkTableComponent implements OnInit {
     this.userTableFacade.tablePrefences$
       .pipe(takeUntilDestroyed(this.destroyRef))
       .subscribe((pref) => {
-        console.log(pref);
         if (pref) this.tablePreferences = pref;
         if (pref?.pagination.pageNumber) {
           this.pageIndex = pref.pagination.pageNumber - 1;

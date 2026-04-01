@@ -9,7 +9,7 @@ export const routes: Routes = [
   {
     path: '',
     component: MainLayoutComponent,
-    canActivate: [authGuard],
+    canActivateChild: [authGuard],
     children: [
       {
         path: '',
@@ -49,7 +49,7 @@ export const routes: Routes = [
   },
   {
     path: '',
-    canActivate: [notLoggedGuard],
+    canActivateChild: [notLoggedGuard],
     children: [
       {
         path: 'login',

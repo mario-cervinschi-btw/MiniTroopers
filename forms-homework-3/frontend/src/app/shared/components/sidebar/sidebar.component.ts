@@ -27,7 +27,6 @@ export class SidebarComponent implements OnInit {
     this.authFacade.currentUser$
       .pipe(
         tap((currentUser) => {
-          console.log('once');
           this.currentUser = currentUser;
         }),
         takeUntilDestroyed(this.destroyRef),
