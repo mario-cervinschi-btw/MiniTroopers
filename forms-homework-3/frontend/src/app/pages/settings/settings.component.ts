@@ -6,7 +6,7 @@ import { MatIconModule } from '@angular/material/icon';
 import { MatInputModule } from '@angular/material/input';
 import { MatDatepickerModule } from '@angular/material/datepicker';
 import { provideNativeDateAdapter } from '@angular/material/core';
-import { filter, pairwise, tap } from 'rxjs';
+import { filter, of, pairwise, switchMap, take, tap } from 'rxjs';
 import { MatProgressBarModule } from '@angular/material/progress-bar';
 import { MatButtonModule } from '@angular/material/button';
 import { User } from '../../shared/models/user.model';
@@ -87,16 +87,17 @@ export class SettingsComponent implements OnInit {
         takeUntilDestroyed(this.destroyRef),
         pairwise(),
         filter(([prev, curr]) => prev === true && curr === false),
+        switchMap(() => {
+          return this.authFacade.errorUpdateCurrentUser$.pipe(
+            take(1),
+            tap((error) => {
+              this.message = error || 'Updated Successfully';
+              setTimeout(() => (this.message = ''), 100);
+            }),
+          );
+        }),
       )
-      .subscribe(() => {
-        this.authFacade.errorUpdateCurrentUser$
-          .pipe(takeUntilDestroyed(this.destroyRef))
-          .subscribe((error) => {
-            this.message = error || 'Updated Successfully';
-
-            setTimeout(() => (this.message = ''), 100);
-          });
-      });
+      .subscribe();
   }
 
   onSubmit() {

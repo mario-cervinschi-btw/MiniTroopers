@@ -8,7 +8,7 @@ import { MatIcon } from '@angular/material/icon';
 import { Router } from '@angular/router';
 import { AuthCredentials, AuthService } from '../../core/services/auth.service';
 import { takeUntilDestroyed } from '@angular/core/rxjs-interop';
-import { catchError, filter, tap } from 'rxjs';
+import { catchError, filter, of, tap } from 'rxjs';
 import { AuthFacade } from '../../shared/store/auth/auth.facade';
 
 @Component({
@@ -76,7 +76,10 @@ export class LoginComponent implements OnInit {
       .auth(credentials)
       .pipe(
         takeUntilDestroyed(this.destroyRef),
-        catchError((err) => (this.errorMessage = err.error.message)),
+        catchError((err) => {
+          this.errorMessage = err.error.message;
+          return of(err.error.message);
+        }),
       )
       .subscribe();
   }

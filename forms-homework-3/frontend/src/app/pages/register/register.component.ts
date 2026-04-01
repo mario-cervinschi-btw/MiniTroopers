@@ -7,7 +7,7 @@ import { MatInputModule } from '@angular/material/input';
 import { MatIcon } from '@angular/material/icon';
 import { Router } from '@angular/router';
 import { AuthService, RegisterCredentials } from '../../core/services/auth.service';
-import { catchError, take, tap } from 'rxjs';
+import { catchError, of, take, tap } from 'rxjs';
 
 @Component({
   selector: 'app-register',
@@ -72,7 +72,10 @@ export class RegisterComponent {
             this.router.navigate(['/login']);
           }, 2000);
         }),
-        catchError((err) => (this.errorMessage = err.error.message)),
+        catchError((err) => {
+          this.errorMessage = err.error.message;
+          return of(err.error.message);
+        }),
       )
       .subscribe();
   }
