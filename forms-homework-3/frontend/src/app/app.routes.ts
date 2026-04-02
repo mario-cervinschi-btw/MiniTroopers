@@ -35,8 +35,8 @@ export const routes: Routes = [
         path: 'companies',
         title: 'Companies',
         loadComponent: () =>
-          import('./pages/companies-table/companies-table.component').then(
-            (c) => c.CompaniesTableComponent,
+          import('./pages/companies-table/companies-table-signals.component').then(
+            (c) => c.CompaniesTableSignalsComponent,
           ),
       },
       {
