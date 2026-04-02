@@ -15,6 +15,8 @@ import {
   tap,
   debounceTime,
   distinctUntilChanged,
+  catchError,
+  of,
 } from 'rxjs';
 import { takeUntilDestroyed } from '@angular/core/rxjs-interop';
 import { JobsService } from '../../shared/services/jobs.service';
@@ -57,8 +59,8 @@ export class JobsTableComponent implements OnInit {
   ngOnInit() {
     combineLatest({
       search: this.searchValue$.pipe(debounceTime(500), distinctUntilChanged()),
-      page: this.pageIndex$,
-      limit: this.itemsPerPage$,
+      page: this.pageIndex$.pipe(distinctUntilChanged()),
+      limit: this.itemsPerPage$.pipe(distinctUntilChanged()),
     })
       .pipe(
         takeUntilDestroyed(this.destroyRef),
@@ -70,7 +72,12 @@ export class JobsTableComponent implements OnInit {
               page: page + 1,
               limit,
             })
-            .pipe(finalize(() => (this.loadingJobs = false))),
+            .pipe(
+              finalize(() => (this.loadingJobs = false)),
+              catchError(() => {
+                return of({ data: [], pagination: { totalItems: 0 } });
+              }),
+            ),
         ),
       )
       .subscribe((res) => {

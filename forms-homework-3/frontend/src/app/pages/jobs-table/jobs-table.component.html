@@ -21,7 +21,7 @@
           <mat-icon>corporate_fare</mat-icon>
           <div class="column">
             <strong>{{ job.title }}</strong>
-            {{ job.company.name }}
+            {{ job.company ? job.company.name : '' }}
           </div>
         </div>
       </td>
