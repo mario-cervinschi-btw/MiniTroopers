@@ -5,6 +5,7 @@ import { IfCurrentUserDirective } from './if-current-user.directive';
 import { AuthFacade } from '../store/auth/auth.facade';
 import { BehaviorSubject } from 'rxjs';
 import { User } from '../models/user.model';
+import { describe, beforeEach, it, expect } from 'vitest';
 
 @Component({
   imports: [IfCurrentUserDirective],

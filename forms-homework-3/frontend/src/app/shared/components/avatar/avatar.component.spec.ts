@@ -1,6 +1,7 @@
 import { ComponentFixture, TestBed } from '@angular/core/testing';
 import { AvatarComponent } from './avatar.component';
 import { By } from '@angular/platform-browser';
+import { describe, beforeEach, it, expect } from 'vitest';
 
 describe('AvatarComponent', () => {
   let component: AvatarComponent;
