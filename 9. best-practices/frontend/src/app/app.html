@@ -1,0 +1,96 @@
+<div class="app-shell">
+  <nav class="sidebar" [class.sidebar--collapsed]="!sidebarOpen">
+    <button class="sidebar-toggle" type="button" (click)="toggleSidebar()">
+      <span class="material-icons">menu</span>
+    </button>
+
+    <ul class="sidebar-nav">
+      <li
+        *ngFor="let section of sidebarSections"
+        class="sidebar-nav-item"
+        [class.sidebar-nav-item--active]="isSidebarItemActive(section.id)"
+        (click)="selectSidebarItem(section.id)"
+      >
+        <span class="sidebar-icon">{{ section.icon }}</span>
+        <span *ngIf="sidebarOpen" class="sidebar-label">{{ section.label }}</span>
+      </li>
+    </ul>
+  </nav>
+
+  <main class="dashboard">
+    <ng-container *ngIf="activeSidebarItem === 'rxjs'">
+      <app-rxjs></app-rxjs>
+    </ng-container>
+
+    <ng-container *ngIf="activeSidebarItem === 'ngrx'">
+      <app-ngrx></app-ngrx>
+    </ng-container>
+
+    <ng-container *ngIf="activeSidebarItem === 'signals'">
+      <app-signals></app-signals>
+    </ng-container>
+
+    <ng-container
+      *ngIf="
+        activeSidebarItem !== 'rxjs' &&
+        activeSidebarItem !== 'ngrx' &&
+        activeSidebarItem !== 'signals'
+      "
+    >
+      <header class="hero">
+        <p class="eyebrow">Learning Dashboard</p>
+        <h1>Best Practices Catalog</h1>
+        <p>Expand each section to view details, why it matters, and good/bad examples.</p>
+      </header>
+
+      <p *ngIf="loading" class="status">Loading practices...</p>
+
+      <p *ngIf="errorMessage" class="status status--error">{{ errorMessage }}</p>
+
+      <section class="accordion">
+        <article
+          *ngFor="let category of categories"
+          class="accordion-item"
+          [class.accordion-item--open]="isOpen(category.slug)"
+        >
+          <button
+            class="accordion-trigger"
+            type="button"
+            (click)="toggleCategory(category.slug, category)"
+          >
+            <span>
+              <strong>{{ category.title }}</strong>
+              <small>{{ category.description }}</small>
+            </span>
+            <span class="accordion-meta">
+              <span class="item-count">{{ category.itemCount }} items</span>
+              <span class="material-icons chevron">expand_more</span>
+            </span>
+          </button>
+
+          <div *ngIf="isOpen(category.slug)" class="accordion-panel">
+            <p *ngIf="!getDetails(category.slug)" class="status">
+              Loading {{ category.title }} details...
+            </p>
+
+            <ng-container *ngIf="getDetails(category.slug) as details">
+              <ul class="practice-list">
+                <li *ngFor="let item of details.items" class="practice-card">
+                  <h3>{{ item.title }}</h3>
+                  <p>{{ item.summary }}</p>
+                  <p><strong>Details:</strong> {{ item.details }}</p>
+                  <p><strong>Why it matters:</strong> {{ item.whyItMatters }}</p>
+                  <p><strong>Good example:</strong> {{ item.goodExample }}</p>
+                  <p><strong>Bad example:</strong> {{ item.badExample }}</p>
+                  <div class="tags">
+                    <span *ngFor="let tag of item.tags" class="tag">{{ tag }}</span>
+                  </div>
+                </li>
+              </ul>
+            </ng-container>
+          </div>
+        </article>
+      </section>
+    </ng-container>
+  </main>
+</div>

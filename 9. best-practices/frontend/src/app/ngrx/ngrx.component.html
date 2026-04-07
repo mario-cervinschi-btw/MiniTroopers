@@ -1,0 +1,216 @@
+<div class="ngrx-page">
+  <header class="ngrx-hero">
+    <p class="eyebrow">Architecture Guide</p>
+    <h1>NgRx Store</h1>
+    <p>
+      Unidirectional data flow, immutable state, and reactive architecture — from first principles
+      to production patterns.
+    </p>
+  </header>
+
+  <nav class="tab-bar">
+    <button
+      class="tab-btn"
+      [class.tab-btn--active]="activeTab === 'concepts'"
+      (click)="selectTab('concepts')"
+      type="button"
+    >
+      📚 Concepts
+    </button>
+    <button
+      class="tab-btn"
+      [class.tab-btn--active]="activeTab === 'flow'"
+      (click)="selectTab('flow')"
+      type="button"
+    >
+      🔄 Data Flow
+    </button>
+    <button
+      class="tab-btn"
+      [class.tab-btn--active]="activeTab === 'quiz'"
+      (click)="selectTab('quiz')"
+      type="button"
+    >
+      🐛 Spot the Bug
+    </button>
+    <button
+      class="tab-btn"
+      [class.tab-btn--active]="activeTab === 'analogies'"
+      (click)="selectTab('analogies')"
+      type="button"
+    >
+      🌍 Analogies
+    </button>
+  </nav>
+
+  <!-- ─── CONCEPTS TAB ─── -->
+  <section *ngIf="activeTab === 'concepts'" class="concepts">
+    <p *ngIf="loading$ | async" class="status">Loading NgRx concepts...</p>
+
+    <div
+      *ngFor="let topic of topics$ | async; let i = index"
+      class="topic-card"
+      [class.topic-card--expanded]="isExpanded(i)"
+    >
+      <button class="topic-trigger" type="button" (click)="toggle(i)">
+        <span class="topic-title">
+          {{ topic.title }}
+          <span class="topic-tag topic-tag--{{ topic.tag }}">{{ topic.tag }}</span>
+        </span>
+        <span class="material-icons chevron" [class.chevron--open]="isExpanded(i)"
+          >expand_more</span
+        >
+      </button>
+
+      <div *ngIf="isExpanded(i)" class="topic-body">
+        <p class="topic-description">{{ topic.description }}</p>
+
+        <ul class="key-points">
+          <li *ngFor="let point of topic.keyPoints">{{ point }}</li>
+        </ul>
+
+        <pre class="code-block"><code>{{ topic.example }}</code></pre>
+      </div>
+    </div>
+  </section>
+
+  <!-- ─── DATA FLOW TAB ─── -->
+  <section *ngIf="activeTab === 'flow'" class="flow-section">
+    <p class="section-intro">
+      Every state change in NgRx follows the same unidirectional cycle. Click a step to learn more.
+    </p>
+
+    <div class="flow-cycle">
+      <div class="flow-step flow-step--component">
+        <div class="flow-step-icon">🖥️</div>
+        <div class="flow-step-label">Component</div>
+        <div class="flow-step-desc">dispatches an Action on user event or lifecycle hook</div>
+      </div>
+      <div class="flow-arrow">→</div>
+      <div class="flow-step flow-step--action">
+        <div class="flow-step-icon">⚡</div>
+        <div class="flow-step-label">Action</div>
+        <div class="flow-step-desc">plain object with a type and optional typed payload</div>
+      </div>
+      <div class="flow-arrow">→</div>
+      <div class="flow-step flow-step--effect">
+        <div class="flow-step-icon">🌐</div>
+        <div class="flow-step-label">Effect</div>
+        <div class="flow-step-desc">
+          handles async work (HTTP), then dispatches success / failure
+        </div>
+        <div class="flow-step-optional">optional</div>
+      </div>
+      <div class="flow-arrow">→</div>
+      <div class="flow-step flow-step--reducer">
+        <div class="flow-step-icon">⚙️</div>
+        <div class="flow-step-label">Reducer</div>
+        <div class="flow-step-desc">pure function: (state, action) → new state, no mutation</div>
+      </div>
+      <div class="flow-arrow">→</div>
+      <div class="flow-step flow-step--store">
+        <div class="flow-step-icon">🗄️</div>
+        <div class="flow-step-label">Store</div>
+        <div class="flow-step-desc">single immutable state tree; notifies all subscribers</div>
+      </div>
+      <div class="flow-arrow">→</div>
+      <div class="flow-step flow-step--selector">
+        <div class="flow-step-icon">🔍</div>
+        <div class="flow-step-label">Selector</div>
+        <div class="flow-step-desc">
+          memoized projection — recomputes only when its slice changes
+        </div>
+      </div>
+      <div class="flow-arrow flow-arrow--back">↩ back to Component</div>
+    </div>
+
+    <div class="flow-rules">
+      <div class="flow-rule">
+        <span class="flow-rule-icon">✅</span>
+        <span
+          ><strong>Actions</strong> are the only way to mutate state — no direct store writes.</span
+        >
+      </div>
+      <div class="flow-rule">
+        <span class="flow-rule-icon">✅</span>
+        <span><strong>Reducers</strong> are pure: same input always produces the same output.</span>
+      </div>
+      <div class="flow-rule">
+        <span class="flow-rule-icon">✅</span>
+        <span><strong>Effects</strong> keep reducers pure by isolating all side effects.</span>
+      </div>
+      <div class="flow-rule">
+        <span class="flow-rule-icon">✅</span>
+        <span
+          ><strong>Selectors</strong> are memoized — use the <code>async</code> pipe, never
+          <code>.subscribe()</code>.</span
+        >
+      </div>
+    </div>
+  </section>
+
+  <!-- ─── QUIZ TAB ─── -->
+  <section *ngIf="activeTab === 'quiz'" class="quiz-section">
+    <p class="section-intro">
+      Each snippet below contains a real NgRx bug that has burned developers in production. Can you
+      spot it before revealing the answer?
+    </p>
+
+    <div *ngFor="let quiz of quizzes; let i = index" class="quiz-card">
+      <p class="quiz-question">{{ quiz.question }}</p>
+      <pre class="code-block"><code>{{ quiz.codeSnippet }}</code></pre>
+
+      <div class="quiz-options">
+        <button
+          *ngFor="let option of quiz.options; let optionIndex = index"
+          class="quiz-option"
+          [class.quiz-option--selected]="selectedAnswers[i] === optionIndex"
+          [class.quiz-option--correct]="revealedQuizzes[i] && optionIndex === quiz.correctIndex"
+          [class.quiz-option--wrong]="
+            revealedQuizzes[i] &&
+            selectedAnswers[i] === optionIndex &&
+            optionIndex !== quiz.correctIndex
+          "
+          (click)="selectAnswer(i, optionIndex)"
+          type="button"
+        >
+          {{ option }}
+        </button>
+      </div>
+
+      <div *ngIf="isAnswered(i) && !revealedQuizzes[i]" class="quiz-actions">
+        <button class="reveal-btn" (click)="revealExplanation(i)" type="button">
+          Reveal explanation
+        </button>
+      </div>
+
+      <div
+        *ngIf="revealedQuizzes[i]"
+        class="quiz-explanation"
+        [class.quiz-explanation--correct]="isCorrect(i)"
+        [class.quiz-explanation--wrong]="!isCorrect(i)"
+      >
+        <strong *ngIf="isCorrect(i)">✅ Correct!</strong>
+        <strong *ngIf="!isCorrect(i)">❌ Not quite.</strong>
+        {{ quiz.explanation }}
+      </div>
+    </div>
+  </section>
+
+  <!-- ─── ANALOGIES TAB ─── -->
+  <section *ngIf="activeTab === 'analogies'" class="analogies-section">
+    <p class="section-intro">
+      NgRx concepts mapped to familiar real-world situations — no prior NgRx experience needed to
+      get the mental model.
+    </p>
+
+    <div *ngFor="let topic of topics$ | async" class="analogy-card">
+      <div class="analogy-card-header">
+        <span class="analogy-card-title">{{ topic.title }}</span>
+        <span class="topic-tag topic-tag--{{ topic.tag }}">{{ topic.tag }}</span>
+      </div>
+      <p class="analogy-card-text">{{ topic.analogy }}</p>
+      <p class="analogy-card-desc">{{ topic.description }}</p>
+    </div>
+  </section>
+</div>

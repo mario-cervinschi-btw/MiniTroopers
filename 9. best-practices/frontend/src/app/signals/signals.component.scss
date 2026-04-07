@@ -1,0 +1,384 @@
+:host {
+  display: block;
+}
+
+.signals-page {
+  max-width: 760px;
+  margin: 0 auto;
+  padding: 48px 24px 72px;
+}
+
+.status {
+  margin: 0 0 20px;
+  padding: 14px 18px;
+  border-radius: 10px;
+  background: #fff7ed;
+  border: 1px solid #fed7aa;
+  color: #c2410c;
+  font-size: 0.875rem;
+}
+
+.status--error {
+  background: #fff1f2;
+  border-color: #fecdd3;
+  color: #be123c;
+}
+
+/* ── Hero ── */
+.signals-hero {
+  text-align: center;
+  padding: 40px 0 36px;
+  margin-bottom: 32px;
+}
+
+.eyebrow {
+  display: inline-block;
+  font-size: 11px;
+  font-weight: 600;
+  letter-spacing: 0.15em;
+  text-transform: uppercase;
+  color: #ea580c;
+  background: #fff7ed;
+  padding: 4px 14px;
+  border-radius: 999px;
+  margin: 0 0 14px;
+}
+
+h1 {
+  font-size: 2.2rem;
+  font-weight: 800;
+  margin: 0 0 12px;
+  background: linear-gradient(135deg, #9a3412 0%, #ea580c 100%);
+  -webkit-background-clip: text;
+  -webkit-text-fill-color: transparent;
+  background-clip: text;
+}
+
+.signals-hero p:last-child {
+  color: #6b7280;
+  font-size: 0.95rem;
+  margin: 0;
+  line-height: 1.6;
+}
+
+/* ── Tabs ── */
+.tab-bar {
+  display: flex;
+  gap: 8px;
+  margin-bottom: 28px;
+  border-bottom: 1px solid #e5e7eb;
+  padding-bottom: 0;
+}
+
+.tab-btn {
+  background: transparent;
+  border: none;
+  border-bottom: 2px solid transparent;
+  padding: 10px 16px;
+  font-size: 0.875rem;
+  font-weight: 600;
+  color: #6b7280;
+  cursor: pointer;
+  margin-bottom: -1px;
+  transition:
+    color 0.15s,
+    border-color 0.15s;
+
+  &:hover {
+    color: #ea580c;
+  }
+
+  &.tab-btn--active {
+    color: #ea580c;
+    border-bottom-color: #ea580c;
+  }
+}
+
+/* ── Topics ── */
+.topics {
+  display: grid;
+  gap: 10px;
+}
+
+.search-input {
+  width: 100%;
+  padding: 10px 14px;
+  border: 1px solid #e5e7eb;
+  border-radius: 8px;
+  font-size: 0.875rem;
+  color: #1f2937;
+  outline: none;
+  box-sizing: border-box;
+
+  &:focus {
+    border-color: #ea580c;
+    box-shadow: 0 0 0 3px rgb(234 88 12 / 0.15);
+  }
+}
+
+.topic-card {
+  border: 1px solid #e5e7eb;
+  border-radius: 10px;
+  overflow: hidden;
+  transition: box-shadow 0.15s;
+
+  &:hover {
+    box-shadow: 0 2px 8px rgb(0 0 0 / 0.07);
+  }
+
+  &.topic-card--expanded {
+    border-color: #fed7aa;
+  }
+}
+
+.topic-trigger {
+  width: 100%;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  padding: 14px 18px;
+  background: none;
+  border: none;
+  cursor: pointer;
+  text-align: left;
+  gap: 12px;
+}
+
+.topic-title {
+  font-size: 0.9rem;
+  font-weight: 600;
+  color: #1f2937;
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  flex-wrap: wrap;
+}
+
+.topic-tag {
+  font-size: 0.7rem;
+  font-weight: 700;
+  padding: 2px 8px;
+  border-radius: 999px;
+  text-transform: uppercase;
+  letter-spacing: 0.05em;
+
+  &.topic-tag--core {
+    background: #fff7ed;
+    color: #ea580c;
+  }
+
+  &.topic-tag--angular {
+    background: #fef2f2;
+    color: #dc2626;
+  }
+
+  &.topic-tag--best-practice {
+    background: #f0fdf4;
+    color: #16a34a;
+  }
+}
+
+.chevron {
+  font-size: 20px;
+  color: #9ca3af;
+  transition: transform 0.2s;
+  flex-shrink: 0;
+
+  &.chevron--open {
+    transform: rotate(180deg);
+  }
+}
+
+.topic-body {
+  padding: 0 18px 18px;
+  border-top: 1px solid #f3f4f6;
+}
+
+.topic-description {
+  font-size: 0.875rem;
+  color: #374151;
+  line-height: 1.65;
+  margin: 14px 0 12px;
+}
+
+.key-points {
+  margin: 0 0 14px;
+  padding-left: 20px;
+
+  li {
+    font-size: 0.85rem;
+    color: #4b5563;
+    line-height: 1.6;
+    margin-bottom: 4px;
+  }
+}
+
+.code-block {
+  background: #1e1e2e;
+  border-radius: 8px;
+  padding: 16px;
+  overflow-x: auto;
+  margin: 0;
+
+  code {
+    font-family: 'Fira Code', 'Cascadia Code', monospace;
+    font-size: 0.8rem;
+    color: #cdd6f4;
+    white-space: pre;
+  }
+}
+
+/* ── Quiz ── */
+.quiz-section {
+  display: grid;
+  gap: 24px;
+}
+
+.section-intro {
+  font-size: 0.9rem;
+  color: #6b7280;
+  line-height: 1.6;
+  margin: 0 0 4px;
+}
+
+.quiz-card {
+  border: 1px solid #e5e7eb;
+  border-radius: 12px;
+  padding: 20px;
+  display: grid;
+  gap: 14px;
+}
+
+.quiz-question {
+  font-size: 0.9rem;
+  font-weight: 600;
+  color: #1f2937;
+  margin: 0;
+}
+
+.quiz-options {
+  display: grid;
+  gap: 8px;
+}
+
+.quiz-option {
+  text-align: left;
+  padding: 10px 14px;
+  border: 1px solid #e5e7eb;
+  border-radius: 8px;
+  background: #fafafa;
+  font-size: 0.85rem;
+  color: #374151;
+  cursor: pointer;
+  transition:
+    border-color 0.15s,
+    background 0.15s;
+
+  &:hover {
+    border-color: #ea580c;
+    background: #fff7ed;
+  }
+
+  &.quiz-option--selected {
+    border-color: #ea580c;
+    background: #fff7ed;
+  }
+
+  &.quiz-option--correct {
+    border-color: #16a34a;
+    background: #f0fdf4;
+    color: #15803d;
+    font-weight: 600;
+  }
+
+  &.quiz-option--wrong {
+    border-color: #dc2626;
+    background: #fff1f2;
+    color: #be123c;
+  }
+}
+
+.quiz-actions {
+  display: flex;
+  gap: 8px;
+}
+
+.reveal-btn {
+  padding: 8px 16px;
+  background: #ea580c;
+  color: white;
+  border: none;
+  border-radius: 8px;
+  font-size: 0.85rem;
+  font-weight: 600;
+  cursor: pointer;
+  transition: background 0.15s;
+
+  &:hover {
+    background: #c2410c;
+  }
+}
+
+.quiz-explanation {
+  padding: 14px 16px;
+  border-radius: 8px;
+  font-size: 0.85rem;
+  line-height: 1.6;
+  color: #374151;
+
+  strong {
+    display: block;
+    margin-bottom: 6px;
+  }
+
+  &.quiz-explanation--correct {
+    background: #f0fdf4;
+    border: 1px solid #bbf7d0;
+  }
+
+  &.quiz-explanation--wrong {
+    background: #fff1f2;
+    border: 1px solid #fecdd3;
+  }
+}
+
+/* ── Analogies ── */
+.analogies-section {
+  display: grid;
+  gap: 16px;
+}
+
+.analogy-card {
+  border: 1px solid #fed7aa;
+  border-radius: 12px;
+  padding: 20px;
+  background: linear-gradient(135deg, #fff7ed 0%, #fff 100%);
+}
+
+.analogy-card-header {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  margin-bottom: 10px;
+}
+
+.analogy-card-title {
+  font-size: 0.95rem;
+  font-weight: 700;
+  color: #1f2937;
+}
+
+.analogy-card-text {
+  font-size: 0.9rem;
+  color: #374151;
+  line-height: 1.65;
+  margin: 0 0 8px;
+  font-style: italic;
+}
+
+.analogy-card-desc {
+  font-size: 0.85rem;
+  color: #6b7280;
+  line-height: 1.6;
+  margin: 0;
+}
