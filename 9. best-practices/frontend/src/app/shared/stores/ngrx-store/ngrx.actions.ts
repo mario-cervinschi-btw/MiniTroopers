@@ -1,5 +1,5 @@
 import { createAction, props } from '@ngrx/store';
-import { NgrxTopic } from './ngrx.types';
+import { NgrxTopic } from '../../../features/ngrx-page/ngrx.types';
 
 export const loadTopics = createAction('[NgRx Page] Load Topics');
 

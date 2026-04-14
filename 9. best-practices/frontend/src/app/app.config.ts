@@ -10,8 +10,8 @@ import { provideEffects } from '@ngrx/effects';
 import { provideStoreDevtools } from '@ngrx/store-devtools';
 
 import { routes } from './app.routes';
-import { ngrxPageReducer } from './ngrx/ngrx.reducer';
-import { NgrxPageEffects } from './ngrx/ngrx.effects';
+import { ngrxPageReducer } from './shared/stores/ngrx-store/ngrx.reducer';
+import { NgrxPageEffects } from './shared/stores/ngrx-store/ngrx.effects';
 
 export const appConfig: ApplicationConfig = {
   providers: [

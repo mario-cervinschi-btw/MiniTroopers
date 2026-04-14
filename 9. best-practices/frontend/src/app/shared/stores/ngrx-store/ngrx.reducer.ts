@@ -1,6 +1,6 @@
 import { createReducer, on } from '@ngrx/store';
 import { loadTopics, loadTopicsFailure, loadTopicsSuccess } from './ngrx.actions';
-import { NgrxQuiz, NgrxTopic } from './ngrx.types';
+import { NgrxQuiz, NgrxTopic } from '../../../features/ngrx-page/ngrx.types';
 
 export interface NgrxPageState {
   topics: NgrxTopic[];

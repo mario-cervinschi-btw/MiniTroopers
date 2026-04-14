@@ -1,9 +1,9 @@
 import { CommonModule } from '@angular/common';
 import { HttpClient } from '@angular/common/http';
 import { Component } from '@angular/core';
-import { NgrxComponent } from './ngrx/ngrx.component';
-import { RxjsComponent } from './rxjs/rxjs.component';
-import { SignalsComponent } from './signals/signals.component';
+import { NgrxComponent } from './features/ngrx-page/ngrx.component';
+import { RxjsComponent } from './features/rxjs-page/rxjs.component';
+import { SignalsComponent } from './features/signals-page/signals.component';
 
 interface PracticeCategorySummary {
   slug: string;
