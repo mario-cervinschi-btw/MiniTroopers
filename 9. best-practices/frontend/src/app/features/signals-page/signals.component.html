@@ -1,9 +1,12 @@
 <div class="signals-page">
-  <header class="signals-hero">
-    <p class="eyebrow">Modern Angular</p>
-    <h1>Angular Signals</h1>
-    <p>Fine-grained reactivity without Observables — from primitives to patterns.</p>
-  </header>
+  <app-page-header
+    [headerTitle]="'Angular Signals'"
+    [eyebrowText]="'Modern Angular'"
+    [description]="'Fine-grained reactivity without Observables — from primitives to patterns.'"
+    [customGradient]="'linear-gradient(135deg, #9a3412 0%, #ea580c 100%)'"
+    [eyebrowColor]="'#ea580c'"
+    [eyebrowBg]="'#fff7ed'"
+  ></app-page-header>
 
   <nav class="tab-bar">
     <button

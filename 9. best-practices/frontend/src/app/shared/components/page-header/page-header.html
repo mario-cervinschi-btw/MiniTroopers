@@ -1,0 +1,9 @@
+<header class="hero">
+  <p class="eyebrow" [style.--eyebrow-color]="eyebrowColor()" [style.--eyebrow-bg]="eyebrowBg()">
+    {{ eyebrowText() }}
+  </p>
+  <h1 [style.--hero-gradient]="customGradient()">{{ headerTitle() }}</h1>
+  <p>
+    {{ description() }}
+  </p>
+</header>

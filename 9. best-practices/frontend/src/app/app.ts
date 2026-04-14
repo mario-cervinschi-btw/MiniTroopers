@@ -1,9 +1,11 @@
 import { CommonModule } from '@angular/common';
 import { HttpClient } from '@angular/common/http';
-import { Component } from '@angular/core';
+import { Component, inject } from '@angular/core';
 import { NgrxComponent } from './features/ngrx-page/ngrx.component';
 import { RxjsComponent } from './features/rxjs-page/rxjs.component';
 import { SignalsComponent } from './features/signals-page/signals.component';
+import { PracticesPage } from './features/practices-page/practices-page';
+import { Router, RouterOutlet } from '@angular/router';
 
 interface PracticeCategorySummary {
   slug: string;
@@ -32,27 +34,22 @@ interface PracticeCategoryDetails extends PracticeCategorySummary {
   selector: 'app-root',
   templateUrl: './app.html',
   styleUrl: './app.scss',
-  imports: [CommonModule, RxjsComponent, NgrxComponent, SignalsComponent],
+  imports: [
+    CommonModule,
+    // RxjsComponent,
+    // NgrxComponent,
+    // SignalsComponent,
+    // PracticesPage,
+    RouterOutlet,
+  ],
 })
 export class App {
-  private http: HttpClient;
-
-  constructor(http: HttpClient) {
-    this.http = http;
-  }
-
-  readonly apiBaseUrl = 'http://localhost:3000/practices';
-
-  categories: any[] = [];
-  openedCategorySlugs = new Set<string>();
-  categoryDetails: Record<string, any> = {};
-  loading = false;
-  errorMessage = '';
+  private readonly router = inject(Router);
 
   sidebarOpen = true;
   activeSidebarItem: string | null = null;
   sidebarSections = [
-    { id: 'practices', label: 'Practices', icon: '📋' },
+    { id: '', label: 'Practices', icon: '📋' },
     { id: 'rxjs', label: 'RxJS', icon: '🌊' },
     { id: 'ngrx', label: 'NgRx Store', icon: '🏪' },
     { id: 'signals', label: 'Signals', icon: '⚡' },
@@ -63,49 +60,10 @@ export class App {
   }
 
   selectSidebarItem(id: string): void {
-    this.activeSidebarItem = id;
+    this.router.navigate([id]);
   }
 
   isSidebarItemActive(id: string): boolean {
     return this.activeSidebarItem === id;
-  }
-
-  ngOnInit(): void {
-    this.fetchCategories();
-  }
-
-  fetchCategories(): void {
-    this.loading = true;
-    this.errorMessage = '';
-
-    this.http.get<any[]>(`${this.apiBaseUrl}/categories`).subscribe((categories) => {
-      this.categories = categories.sort((a: any, b: any) => a.orderIndex - b.orderIndex);
-      this.loading = false;
-    });
-  }
-
-  toggleCategory(slug: string, category: any): void {
-    if (this.openedCategorySlugs.has(slug)) {
-      this.openedCategorySlugs.delete(slug);
-      return;
-    }
-
-    this.openedCategorySlugs.add(slug);
-
-    if (this.categoryDetails[slug]) {
-      return;
-    }
-
-    this.http.get<any>(`${this.apiBaseUrl}/categories/${slug}`).subscribe((details) => {
-      this.categoryDetails[slug] = details;
-    });
-  }
-
-  isOpen(slug: string): boolean {
-    return this.openedCategorySlugs.has(slug);
-  }
-
-  getDetails(slug: string): any {
-    return this.categoryDetails[slug] ?? null;
   }
 }

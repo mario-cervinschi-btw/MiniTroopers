@@ -1,12 +1,13 @@
 import { CommonModule } from '@angular/common';
 import { HttpClient } from '@angular/common/http';
 import { Component, effect, signal } from '@angular/core';
+import { PageHeader } from '../../shared/components/page-header/page-header';
 
 @Component({
   selector: 'app-signals',
   templateUrl: './signals.component.html',
   styleUrl: './signals.component.scss',
-  imports: [CommonModule],
+  imports: [CommonModule, PageHeader],
 })
 export class SignalsComponent {
   private http: HttpClient;
