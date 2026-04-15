@@ -1,0 +1,17 @@
+<nav class="sidebar" [class.sidebar--collapsed]="!sidebarOpen">
+  <button class="sidebar-toggle" type="button" (click)="toggleSidebar()">
+    <span class="material-icons">menu</span>
+  </button>
+
+  <ul class="sidebar-nav">
+    <li
+      *ngFor="let section of sidebarSections"
+      class="sidebar-nav-item"
+      [class.sidebar-nav-item--active]="isSidebarItemActive(section.id)"
+      (click)="selectSidebarItem(section.id)"
+    >
+      <span class="sidebar-icon">{{ section.icon }}</span>
+      <span *ngIf="sidebarOpen" class="sidebar-label">{{ section.label }}</span>
+    </li>
+  </ul>
+</nav>
