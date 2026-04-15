@@ -24,43 +24,6 @@
   color: #be123c;
 }
 
-/* ── Hero ── */
-.rxjs-hero {
-  text-align: center;
-  padding: 40px 0 36px;
-  margin-bottom: 32px;
-}
-
-.eyebrow {
-  display: inline-block;
-  font-size: 11px;
-  font-weight: 600;
-  letter-spacing: 0.15em;
-  text-transform: uppercase;
-  color: #7c3aed;
-  background: #f5f3ff;
-  padding: 4px 14px;
-  border-radius: 999px;
-  margin: 0 0 14px;
-}
-
-h1 {
-  font-size: 2.2rem;
-  font-weight: 800;
-  margin: 0 0 12px;
-  background: linear-gradient(135deg, #4c1d95 0%, #7c3aed 100%);
-  -webkit-background-clip: text;
-  -webkit-text-fill-color: transparent;
-  background-clip: text;
-}
-
-.rxjs-hero p:last-child {
-  color: #6b7280;
-  font-size: 0.95rem;
-  margin: 0;
-  line-height: 1.6;
-}
-
 /* ── Topics ── */
 .topics {
   display: grid;
@@ -212,7 +175,7 @@ h1 {
   margin: 0;
 
   code {
-    font-family: 'JetBrains Mono', 'Fira Code', 'Cascadia Code', monospace;
+    font-family: "JetBrains Mono", "Fira Code", "Cascadia Code", monospace;
   }
 }
 

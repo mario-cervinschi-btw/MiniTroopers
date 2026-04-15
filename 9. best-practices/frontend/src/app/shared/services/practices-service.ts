@@ -1,5 +1,6 @@
 import { HttpClient } from '@angular/common/http';
 import { inject, Injectable } from '@angular/core';
+import { API_BASE_URL } from '../../../environments/environments';
 
 @Injectable({
   providedIn: 'root',
@@ -7,7 +8,7 @@ import { inject, Injectable } from '@angular/core';
 export class PracticesService {
   private readonly http = inject(HttpClient);
 
-  readonly apiBaseUrl = 'http://localhost:3000/practices';
+  readonly apiBaseUrl = API_BASE_URL + '/practices';
 
   fetchCategories() {
     return this.http.get<any[]>(`${this.apiBaseUrl}/categories`);

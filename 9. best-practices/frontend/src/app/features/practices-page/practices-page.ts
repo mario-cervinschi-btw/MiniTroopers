@@ -1,7 +1,8 @@
 import { CommonModule } from '@angular/common';
-import { Component, inject, OnInit } from '@angular/core';
+import { Component, inject, OnInit, signal } from '@angular/core';
 import { PracticesService } from '../../shared/services/practices-service';
 import { PageHeader } from '../../shared/components/page-header/page-header';
+import { PracticeCategoryDetails, PracticeItem } from '../../shared/models/practice.model';
 
 @Component({
   selector: 'app-practices-page',
@@ -11,24 +12,24 @@ import { PageHeader } from '../../shared/components/page-header/page-header';
 })
 export class PracticesPage implements OnInit {
   private readonly practicesService = inject(PracticesService);
-  categories: any[] = [];
-  loading = false;
-  errorMessage = '';
+  protected categories = signal<PracticeCategoryDetails[]>([]);
+  protected loading = signal(false);
+  protected errorMessage = signal('');
 
   openedCategorySlugs = new Set<string>();
-  categoryDetails: Record<string, any> = {};
+  categoryDetails: Record<string, PracticeCategoryDetails> = {};
 
   ngOnInit(): void {
     this.fetchCategories();
   }
 
   fetchCategories(): void {
-    this.loading = true;
-    this.errorMessage = '';
+    this.loading.set(true);
+    this.errorMessage.set('');
 
     this.practicesService.fetchCategories().subscribe((categories) => {
-      this.categories = categories.sort((a: any, b: any) => a.orderIndex - b.orderIndex);
-      this.loading = false;
+      this.categories.set(categories.sort((a: any, b: any) => a.orderIndex - b.orderIndex));
+      this.loading.set(false);
     });
   }
 

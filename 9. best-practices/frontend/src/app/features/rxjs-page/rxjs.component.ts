@@ -1,6 +1,6 @@
 import { CommonModule } from '@angular/common';
 import { HttpClient } from '@angular/common/http';
-import { Component } from '@angular/core';
+import { Component, inject } from '@angular/core';
 import { FormControl, ReactiveFormsModule } from '@angular/forms';
 import {
   concatMap,
@@ -16,54 +16,34 @@ import {
   tap,
   toArray,
 } from 'rxjs';
-
-interface RxjsTopic {
-  title: string;
-  description: string;
-  keyPoints: string[];
-  example: string;
-  analogy: string;
-  tag: string;
-  orderIndex: number;
-}
-
-interface RxjsQuiz {
-  question: string;
-  codeSnippet: string;
-  options: string[];
-  correctIndex: number;
-  explanation: string;
-  orderIndex: number;
-}
+import { PageHeader } from '../../shared/components/page-header/page-header';
+import { RxjsService } from '../../shared/services/rxjs-service';
+import { RxjsQuiz, RxjsTopic } from '../../shared/models/rxjs.model';
 
 @Component({
   selector: 'app-rxjs',
   templateUrl: './rxjs.component.html',
   styleUrl: './rxjs.component.scss',
-  imports: [CommonModule, ReactiveFormsModule],
+  imports: [CommonModule, ReactiveFormsModule, PageHeader],
 })
 export class RxjsComponent {
-  private http: HttpClient;
+  private rxjsService = inject(RxjsService);
 
-  topics: any[] = [];
+  topics: RxjsTopic[] = [];
   loading = false;
   searchControl = new FormControl('');
 
   activeTab: 'topics' | 'quiz' | 'analogies' = 'topics';
 
-  constructor(http: HttpClient) {
-    this.http = http;
-  }
-
   ngOnInit(): void {
     this.loading = true;
-    this.http.get<any>('http://localhost:3000/rxjs/topics').subscribe((topics) => {
+    this.rxjsService.fetchTopics().subscribe((topics) => {
       this.topics = topics;
       this.filteredTopics = topics;
       this.loading = false;
     });
 
-    this.http.get<any>('http://localhost:3000/rxjs/quizzes').subscribe((quizzes) => {
+    this.rxjsService.fetchQuizzes().subscribe((quizzes) => {
       this.quizzes = quizzes;
     });
 
@@ -99,7 +79,7 @@ export class RxjsComponent {
     this.activeTab = tab;
   }
 
-  quizzes: any[] = [];
+  quizzes: RxjsQuiz[] = [];
   expandedIndex: number | null = null;
 
   toggle(index: number): void {

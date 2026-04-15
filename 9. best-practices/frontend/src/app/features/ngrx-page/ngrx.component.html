@@ -11,7 +11,7 @@
   <nav class="tab-bar">
     <button
       class="tab-btn"
-      [class.tab-btn--active]="activeTab === 'concepts'"
+      [class.tab-btn--active]="activeTab() === 'concepts'"
       (click)="selectTab('concepts')"
       type="button"
     >
@@ -19,7 +19,7 @@
     </button>
     <button
       class="tab-btn"
-      [class.tab-btn--active]="activeTab === 'flow'"
+      [class.tab-btn--active]="activeTab() === 'flow'"
       (click)="selectTab('flow')"
       type="button"
     >
@@ -27,7 +27,7 @@
     </button>
     <button
       class="tab-btn"
-      [class.tab-btn--active]="activeTab === 'quiz'"
+      [class.tab-btn--active]="activeTab() === 'quiz'"
       (click)="selectTab('quiz')"
       type="button"
     >
@@ -35,7 +35,7 @@
     </button>
     <button
       class="tab-btn"
-      [class.tab-btn--active]="activeTab === 'analogies'"
+      [class.tab-btn--active]="activeTab() === 'analogies'"
       (click)="selectTab('analogies')"
       type="button"
     >
@@ -44,25 +44,25 @@
   </nav>
 
   <!-- ─── CONCEPTS TAB ─── -->
-  <section *ngIf="activeTab === 'concepts'" class="concepts">
-    <p *ngIf="loading$ | async" class="status">Loading NgRx concepts...</p>
+  <section *ngIf="activeTab() === 'concepts'" class="concepts">
+    <p *ngIf="loading()" class="status">Loading NgRx concepts...</p>
 
     <div
-      *ngFor="let topic of topics$ | async; let i = index"
+      *ngFor="let topic of topics(); let i = index"
       class="topic-card"
-      [class.topic-card--expanded]="isExpanded(i)"
+      [class.topic-card--expanded]="expandedIndex() === i"
     >
       <button class="topic-trigger" type="button" (click)="toggle(i)">
         <span class="topic-title">
           {{ topic.title }}
           <span class="topic-tag topic-tag--{{ topic.tag }}">{{ topic.tag }}</span>
         </span>
-        <span class="material-icons chevron" [class.chevron--open]="isExpanded(i)"
+        <span class="material-icons chevron" [class.chevron--open]="expandedIndex() === i"
           >expand_more</span
         >
       </button>
 
-      <div *ngIf="isExpanded(i)" class="topic-body">
+      <div *ngIf="expandedIndex() === i" class="topic-body">
         <p class="topic-description">{{ topic.description }}</p>
 
         <ul class="key-points">
@@ -75,7 +75,7 @@
   </section>
 
   <!-- ─── DATA FLOW TAB ─── -->
-  <section *ngIf="activeTab === 'flow'" class="flow-section">
+  <section *ngIf="activeTab() === 'flow'" class="flow-section">
     <p class="section-intro">
       Every state change in NgRx follows the same unidirectional cycle. Click a step to learn more.
     </p>
@@ -150,13 +150,13 @@
   </section>
 
   <!-- ─── QUIZ TAB ─── -->
-  <section *ngIf="activeTab === 'quiz'" class="quiz-section">
+  <section *ngIf="activeTab() === 'quiz'" class="quiz-section">
     <p class="section-intro">
       Each snippet below contains a real NgRx bug that has burned developers in production. Can you
       spot it before revealing the answer?
     </p>
 
-    <div *ngFor="let quiz of quizzes; let i = index" class="quiz-card">
+    <div *ngFor="let quiz of quizzes(); let i = index" class="quiz-card">
       <p class="quiz-question">{{ quiz.question }}</p>
       <pre class="code-block"><code>{{ quiz.codeSnippet }}</code></pre>
 
@@ -164,11 +164,11 @@
         <button
           *ngFor="let option of quiz.options; let optionIndex = index"
           class="quiz-option"
-          [class.quiz-option--selected]="selectedAnswers[i] === optionIndex"
-          [class.quiz-option--correct]="revealedQuizzes[i] && optionIndex === quiz.correctIndex"
+          [class.quiz-option--selected]="selectedAnswers()[i] === optionIndex"
+          [class.quiz-option--correct]="revealedQuizzes()[i] && optionIndex === quiz.correctIndex"
           [class.quiz-option--wrong]="
-            revealedQuizzes[i] &&
-            selectedAnswers[i] === optionIndex &&
+            revealedQuizzes()[i] &&
+            selectedAnswers()[i] === optionIndex &&
             optionIndex !== quiz.correctIndex
           "
           (click)="selectAnswer(i, optionIndex)"
@@ -178,14 +178,14 @@
         </button>
       </div>
 
-      <div *ngIf="isAnswered(i) && !revealedQuizzes[i]" class="quiz-actions">
+      <div *ngIf="isAnswered(i) && !revealedQuizzes()[i]" class="quiz-actions">
         <button class="reveal-btn" (click)="revealExplanation(i)" type="button">
           Reveal explanation
         </button>
       </div>
 
       <div
-        *ngIf="revealedQuizzes[i]"
+        *ngIf="revealedQuizzes()[i]"
         class="quiz-explanation"
         [class.quiz-explanation--correct]="isCorrect(i)"
         [class.quiz-explanation--wrong]="!isCorrect(i)"
@@ -198,13 +198,13 @@
   </section>
 
   <!-- ─── ANALOGIES TAB ─── -->
-  <section *ngIf="activeTab === 'analogies'" class="analogies-section">
+  <section *ngIf="activeTab() === 'analogies'" class="analogies-section">
     <p class="section-intro">
       NgRx concepts mapped to familiar real-world situations — no prior NgRx experience needed to
       get the mental model.
     </p>
 
-    <div *ngFor="let topic of topics$ | async" class="analogy-card">
+    <div *ngFor="let topic of topics()" class="analogy-card">
       <div class="analogy-card-header">
         <span class="analogy-card-title">{{ topic.title }}</span>
         <span class="topic-tag topic-tag--{{ topic.tag }}">{{ topic.tag }}</span>

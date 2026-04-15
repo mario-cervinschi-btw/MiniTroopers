@@ -4,13 +4,13 @@
   [description]="'Expand each section to view details, why it matters, and good/bad examples.'"
 ></app-page-header>
 
-<p *ngIf="loading" class="status">Loading practices...</p>
+<p *ngIf="loading()" class="status">Loading practices...</p>
 
-<p *ngIf="errorMessage" class="status status--error">{{ errorMessage }}</p>
+<p *ngIf="errorMessage()" class="status status--error">{{ errorMessage() }}</p>
 
 <section class="accordion">
   <article
-    *ngFor="let category of categories"
+    *ngFor="let category of categories()"
     class="accordion-item"
     [class.accordion-item--open]="isOpen(category.slug)"
   >

@@ -1,9 +1,14 @@
 <div class="rxjs-page">
-  <header class="rxjs-hero">
-    <p class="eyebrow">Reference Guide</p>
-    <h1>RxJS Essentials</h1>
-    <p>Core concepts, operators, and best practices every Angular developer should know.</p>
-  </header>
+  <app-page-header
+    [headerTitle]="'RxJS Essentials'"
+    [eyebrowText]="'Reference Guide'"
+    [description]="
+      'Core concepts, operators, and best practices every Angular developer should know.'
+    "
+    [customGradient]="'linear-gradient(135deg, #4c1d95 0%, #7c3aed 100%)'"
+    [eyebrowColor]="'#7c3aed'"
+    [eyebrowBg]="'#f5f3ff'"
+  ></app-page-header>
 
   <nav class="tab-bar">
     <button

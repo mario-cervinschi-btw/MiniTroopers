@@ -1,6 +1,7 @@
 import { CommonModule } from '@angular/common';
-import { Component, inject } from '@angular/core';
-import { Router } from '@angular/router';
+import { Component, inject, signal } from '@angular/core';
+import { IsActiveMatchOptions, Router } from '@angular/router';
+import { SidebarData } from '../../models/sidebar.model';
 
 @Component({
   selector: 'app-sidebar',
@@ -11,9 +12,10 @@ import { Router } from '@angular/router';
 export class Sidebar {
   private readonly router = inject(Router);
 
-  sidebarOpen = true;
-  activeSidebarItem: string | null = null;
-  sidebarSections = [
+  protected readonly sidebarOpen = signal(true);
+  protected readonly activeSidebarItem = signal<string | null>(null);
+
+  protected readonly sidebarSections: SidebarData[] = [
     { id: '', label: 'Practices', icon: '📋' },
     { id: 'rxjs', label: 'RxJS', icon: '🌊' },
     { id: 'ngrx', label: 'NgRx Store', icon: '🏪' },
@@ -21,7 +23,7 @@ export class Sidebar {
   ];
 
   toggleSidebar(): void {
-    this.sidebarOpen = !this.sidebarOpen;
+    this.sidebarOpen.update((val) => !val);
   }
 
   selectSidebarItem(id: string): void {
@@ -29,6 +31,13 @@ export class Sidebar {
   }
 
   isSidebarItemActive(id: string): boolean {
-    return this.activeSidebarItem === id;
+    const matchOptions: IsActiveMatchOptions = {
+      paths: 'exact',
+      queryParams: 'ignored',
+      fragment: 'ignored',
+      matrixParams: 'ignored',
+    };
+
+    return this.router.isActive(id, matchOptions);
   }
 }
