@@ -1,5 +1,4 @@
-
-import { Component, inject, signal } from '@angular/core';
+import { Component, DestroyRef, inject, OnInit, signal } from '@angular/core';
 import { FormControl, ReactiveFormsModule } from '@angular/forms';
 import {
   concatMap,
@@ -18,6 +17,7 @@ import {
 import { PageHeader } from '../../shared/components/page-header/page-header';
 import { RxjsService } from '../../shared/services/rxjs-service';
 import { RxjsQuiz, RxjsTopic } from '../../shared/models/rxjs.model';
+import { takeUntilDestroyed } from '@angular/core/rxjs-interop';
 
 @Component({
   selector: 'app-rxjs',
@@ -25,11 +25,13 @@ import { RxjsQuiz, RxjsTopic } from '../../shared/models/rxjs.model';
   styleUrl: './rxjs.component.scss',
   imports: [ReactiveFormsModule, PageHeader],
 })
-export class RxjsComponent {
+export class RxjsComponent implements OnInit {
   private rxjsService = inject(RxjsService);
+  private destroyRef = inject(DestroyRef);
 
   private readonly topics = signal<RxjsTopic[]>([]);
   protected readonly filteredTopics = signal<RxjsTopic[]>([]);
+
   protected readonly loading = signal(false);
   protected readonly searchControl = new FormControl('');
 
@@ -43,38 +45,31 @@ export class RxjsComponent {
 
   ngOnInit(): void {
     this.loading.set(true);
-    this.rxjsService.fetchTopics().subscribe((topics) => {
-      this.topics.set(topics);
-      this.filteredTopics.set(topics);
-      this.loading.set(false);
-    });
+    this.rxjsService
+      .fetchTopics()
+      .pipe(takeUntilDestroyed(this.destroyRef))
+      .subscribe((topics) => {
+        this.topics.set(topics);
+        this.filteredTopics.set(topics);
+        this.loading.set(false);
+      });
 
-    this.rxjsService.fetchQuizzes().subscribe((quizzes) => {
-      this.quizzes.set(quizzes);
-    });
+    this.rxjsService
+      .fetchQuizzes()
+      .pipe(takeUntilDestroyed(this.destroyRef))
+      .subscribe((quizzes) => {
+        this.quizzes.set(quizzes);
+      });
 
     this.searchControl.valueChanges
       .pipe(
-        debounceTime(0),
+        debounceTime(300),
         distinctUntilChanged(),
-        map((term) => term ?? ''),
-        filter(() => true),
-        tap((term) => console.log('searching for:', term)),
-        concatMap((term) =>
-          of(term).pipe(
-            delay(0),
-            map((t) => t.toLowerCase()),
-            mergeMap((lowerTerm) =>
-              from(this.topics()).pipe(
-                filter((t) => t.title.toLowerCase().includes(lowerTerm)),
-                toArray(),
-              ),
-            ),
-          ),
-        ),
-        shareReplay(1),
+        map((term) => (term ?? '').toLowerCase()),
+        takeUntilDestroyed(this.destroyRef),
       )
-      .subscribe((filtered) => {
+      .subscribe((term) => {
+        const filtered = this.topics().filter((t) => t.title.toLowerCase().includes(term));
         this.filteredTopics.set(filtered);
       });
   }

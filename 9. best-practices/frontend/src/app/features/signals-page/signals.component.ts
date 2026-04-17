@@ -1,5 +1,4 @@
-
-import { Component, inject, signal } from '@angular/core';
+import { Component, DestroyRef, inject, OnInit, signal } from '@angular/core';
 import { PageHeader } from '../../shared/components/page-header/page-header';
 import { SignalsQuiz, SignalsTopic } from '../../shared/models/signals.model';
 import { SignalService } from '../../shared/services/signal-service';
@@ -18,6 +17,7 @@ import {
   tap,
   toArray,
 } from 'rxjs';
+import { takeUntilDestroyed } from '@angular/core/rxjs-interop';
 
 @Component({
   selector: 'app-signals',
@@ -25,8 +25,9 @@ import {
   styleUrl: './signals.component.scss',
   imports: [PageHeader, ReactiveFormsModule],
 })
-export class SignalsComponent {
+export class SignalsComponent implements OnInit {
   private readonly signalService = inject(SignalService);
+  private readonly destroyRef = inject(DestroyRef);
 
   protected readonly topics = signal<SignalsTopic[]>([]);
   protected readonly loading = signal(false);
@@ -45,43 +46,36 @@ export class SignalsComponent {
   ngOnInit(): void {
     this.loading.set(true);
 
-    this.signalService.fetchTopics().subscribe({
-      next: (topics) => {
-        this.topics.set(topics);
-        this.filteredTopics.set(topics);
-        this.loading.set(false);
-      },
-      error: () => {
-        this.loading.set(false);
-      },
-    });
+    this.signalService
+      .fetchTopics()
+      .pipe(takeUntilDestroyed(this.destroyRef))
+      .subscribe({
+        next: (topics) => {
+          this.topics.set(topics);
+          this.filteredTopics.set(topics);
+          this.loading.set(false);
+        },
+        error: () => {
+          this.loading.set(false);
+        },
+      });
 
-    this.signalService.fetchQuizzes().subscribe({
-      next: (quizzes) => this.quizzes.set(quizzes),
-    });
+    this.signalService
+      .fetchQuizzes()
+      .pipe(takeUntilDestroyed(this.destroyRef))
+      .subscribe({
+        next: (quizzes) => this.quizzes.set(quizzes),
+      });
 
     this.searchControl.valueChanges
       .pipe(
-        debounceTime(0),
+        debounceTime(300),
         distinctUntilChanged(),
-        map((term) => term ?? ''),
-        filter(() => true),
-        tap((term) => console.log('searching for:', term)),
-        concatMap((term) =>
-          of(term).pipe(
-            delay(0),
-            map((t) => t.toLowerCase()),
-            mergeMap((lowerTerm) =>
-              from(this.topics()).pipe(
-                filter((t) => t.title.toLowerCase().includes(lowerTerm)),
-                toArray(),
-              ),
-            ),
-          ),
-        ),
-        shareReplay(1),
+        map((term) => (term ?? '').toLowerCase()),
+        takeUntilDestroyed(this.destroyRef),
       )
-      .subscribe((filtered) => {
+      .subscribe((term) => {
+        const filtered = this.topics().filter((t) => t.title.toLowerCase().includes(term));
         this.filteredTopics.set(filtered);
       });
   }

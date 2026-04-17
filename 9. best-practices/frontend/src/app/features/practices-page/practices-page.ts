@@ -1,8 +1,8 @@
-
-import { Component, inject, OnInit, signal } from '@angular/core';
+import { Component, DestroyRef, inject, OnInit, signal } from '@angular/core';
 import { PracticesService } from '../../shared/services/practices-service';
 import { PageHeader } from '../../shared/components/page-header/page-header';
 import { PracticeCategoryDetails } from '../../shared/models/practice.model';
+import { takeUntilDestroyed } from '@angular/core/rxjs-interop';
 
 @Component({
   selector: 'app-practices-page',
@@ -12,6 +12,8 @@ import { PracticeCategoryDetails } from '../../shared/models/practice.model';
 })
 export class PracticesPage implements OnInit {
   private readonly practicesService = inject(PracticesService);
+  private readonly destroyRef = inject(DestroyRef);
+
   protected readonly categories = signal<PracticeCategoryDetails[]>([]);
   protected readonly loading = signal(false);
   protected readonly errorMessage = signal('');
@@ -20,17 +22,20 @@ export class PracticesPage implements OnInit {
   protected readonly categoryDetails = signal<Record<string, PracticeCategoryDetails>>({});
 
   ngOnInit(): void {
-    this.fetchCategories();
+    this.initData();
   }
 
-  private fetchCategories(): void {
+  private initData(): void {
     this.loading.set(true);
     this.errorMessage.set('');
 
-    this.practicesService.fetchCategories().subscribe((categories) => {
-      this.categories.set(categories.sort((a: any, b: any) => a.orderIndex - b.orderIndex));
-      this.loading.set(false);
-    });
+    this.practicesService
+      .fetchCategories()
+      .pipe(takeUntilDestroyed(this.destroyRef))
+      .subscribe((categories) => {
+        this.categories.set(categories.sort((a: any, b: any) => a.orderIndex - b.orderIndex));
+        this.loading.set(false);
+      });
   }
 
   protected toggleCategory(slug: string, category: any): void {

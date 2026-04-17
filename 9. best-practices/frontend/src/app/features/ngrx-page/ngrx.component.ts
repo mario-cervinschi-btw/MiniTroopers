@@ -1,7 +1,5 @@
-
-import { HttpClient } from '@angular/common/http';
-import { Component, inject, OnInit, signal } from '@angular/core';
-import { toSignal } from '@angular/core/rxjs-interop';
+import { Component, DestroyRef, inject, OnInit, signal } from '@angular/core';
+import { takeUntilDestroyed, toSignal } from '@angular/core/rxjs-interop';
 import { Store } from '@ngrx/store';
 import { loadTopics } from '../../shared/stores/ngrx-store/ngrx.actions';
 import { selectAllTopics, selectLoading } from '../../shared/stores/ngrx-store/ngrx.selectors';
@@ -17,6 +15,7 @@ import { NgrxService } from '../../shared/services/ngrx-service';
 export class NgrxComponent implements OnInit {
   private readonly store = inject(Store);
   private readonly ngrxService = inject(NgrxService);
+  private readonly destroyRef = inject(DestroyRef);
 
   protected topics = toSignal(this.store.select(selectAllTopics));
   protected loading = toSignal(this.store.select(selectLoading));
@@ -29,9 +28,16 @@ export class NgrxComponent implements OnInit {
   protected revealedQuizzes = signal<Record<number, boolean>>({});
 
   ngOnInit(): void {
+    this.initData();
+  }
+
+  private initData() {
     this.store.dispatch(loadTopics());
 
-    this.ngrxService.fetchQuizzes().subscribe((data) => this.quizzes.set(data));
+    this.ngrxService
+      .fetchQuizzes()
+      .pipe(takeUntilDestroyed(this.destroyRef))
+      .subscribe((data) => this.quizzes.set(data));
   }
 
   protected selectTab(tab: 'concepts' | 'flow' | 'quiz' | 'analogies'): void {
