@@ -1,11 +1,12 @@
 import { CommonModule } from '@angular/common';
 import { HttpClient } from '@angular/common/http';
-import { Component, inject, OnInit, signal, computed } from '@angular/core';
+import { Component, inject, OnInit, signal } from '@angular/core';
 import { toSignal } from '@angular/core/rxjs-interop';
 import { Store } from '@ngrx/store';
 import { loadTopics } from '../../shared/stores/ngrx-store/ngrx.actions';
 import { selectAllTopics, selectLoading } from '../../shared/stores/ngrx-store/ngrx.selectors';
-import { NgrxQuiz, NgrxTopic } from '../../shared/models/ngrx.model';
+import { NgrxQuiz } from '../../shared/models/ngrx.model';
+import { NgrxService } from '../../shared/services/ngrx-service';
 
 @Component({
   selector: 'app-ngrx',
@@ -15,7 +16,7 @@ import { NgrxQuiz, NgrxTopic } from '../../shared/models/ngrx.model';
 })
 export class NgrxComponent implements OnInit {
   private readonly store = inject(Store);
-  private readonly http = inject(HttpClient);
+  private readonly ngrxService = inject(NgrxService);
 
   protected topics = toSignal(this.store.select(selectAllTopics));
   protected loading = toSignal(this.store.select(selectLoading));
@@ -30,38 +31,36 @@ export class NgrxComponent implements OnInit {
   ngOnInit(): void {
     this.store.dispatch(loadTopics());
 
-    this.http
-      .get<NgrxQuiz[]>('http://localhost:3000/ngrx/quizzes')
-      .subscribe((data) => this.quizzes.set(data));
+    this.ngrxService.fetchQuizzes().subscribe((data) => this.quizzes.set(data));
   }
 
-  selectTab(tab: 'concepts' | 'flow' | 'quiz' | 'analogies'): void {
+  protected selectTab(tab: 'concepts' | 'flow' | 'quiz' | 'analogies'): void {
     this.activeTab.set(tab);
   }
 
-  toggle(index: number): void {
+  protected toggle(index: number): void {
     this.expandedIndex.update((current) => (current === index ? null : index));
   }
 
-  selectAnswer(quizIndex: number, optionIndex: number): void {
+  protected selectAnswer(quizIndex: number, optionIndex: number): void {
     this.selectedAnswers.update((prev) => ({
       ...prev,
       [quizIndex]: optionIndex,
     }));
   }
 
-  revealExplanation(quizIndex: number): void {
+  protected revealExplanation(quizIndex: number): void {
     this.revealedQuizzes.update((prev) => ({
       ...prev,
       [quizIndex]: true,
     }));
   }
 
-  isAnswered(quizIndex: number): boolean {
+  protected isAnswered(quizIndex: number): boolean {
     return this.selectedAnswers()[quizIndex] !== undefined;
   }
 
-  isCorrect(quizIndex: number): boolean {
+  protected isCorrect(quizIndex: number): boolean {
     return this.selectedAnswers()[quizIndex] === this.quizzes()[quizIndex]?.correctIndex;
   }
 }

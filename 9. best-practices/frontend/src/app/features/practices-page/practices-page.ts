@@ -2,7 +2,7 @@ import { CommonModule } from '@angular/common';
 import { Component, inject, OnInit, signal } from '@angular/core';
 import { PracticesService } from '../../shared/services/practices-service';
 import { PageHeader } from '../../shared/components/page-header/page-header';
-import { PracticeCategoryDetails, PracticeItem } from '../../shared/models/practice.model';
+import { PracticeCategoryDetails } from '../../shared/models/practice.model';
 
 @Component({
   selector: 'app-practices-page',
@@ -23,7 +23,7 @@ export class PracticesPage implements OnInit {
     this.fetchCategories();
   }
 
-  fetchCategories(): void {
+  private fetchCategories(): void {
     this.loading.set(true);
     this.errorMessage.set('');
 
@@ -33,7 +33,7 @@ export class PracticesPage implements OnInit {
     });
   }
 
-  toggleCategory(slug: string, category: any): void {
+  protected toggleCategory(slug: string, category: any): void {
     if (this.openedCategorySlugs().has(slug)) {
       this.openedCategorySlugs.update((set) => {
         const next = new Set(set);
@@ -61,11 +61,11 @@ export class PracticesPage implements OnInit {
     });
   }
 
-  isOpen(slug: string): boolean {
+  protected isOpen(slug: string): boolean {
     return this.openedCategorySlugs().has(slug);
   }
 
-  getDetails(slug: string): any {
+  protected getDetails(slug: string): any {
     return this.categoryDetails()[slug] ?? null;
   }
 }

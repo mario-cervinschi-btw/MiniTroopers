@@ -22,15 +22,15 @@ export class Sidebar {
     { id: 'signals', label: 'Signals', icon: '⚡' },
   ];
 
-  toggleSidebar(): void {
+  protected toggleSidebar(): void {
     this.sidebarOpen.update((val) => !val);
   }
 
-  selectSidebarItem(id: string): void {
+  protected selectSidebarItem(id: string): void {
     this.router.navigate([id]);
   }
 
-  isSidebarItemActive(id: string): boolean {
+  protected isSidebarItemActive(id: string): boolean {
     const matchOptions: IsActiveMatchOptions = {
       paths: 'exact',
       queryParams: 'ignored',

@@ -1,5 +1,5 @@
 import { CommonModule } from '@angular/common';
-import { Component, effect, inject, signal } from '@angular/core';
+import { Component, inject, signal } from '@angular/core';
 import { PageHeader } from '../../shared/components/page-header/page-header';
 import { SignalsQuiz, SignalsTopic } from '../../shared/models/signals.model';
 import { SignalService } from '../../shared/services/signal-service';
@@ -28,19 +28,19 @@ import {
 export class SignalsComponent {
   private readonly signalService = inject(SignalService);
 
-  topics = signal<SignalsTopic[]>([]);
-  loading = signal(false);
+  protected readonly topics = signal<SignalsTopic[]>([]);
+  protected readonly loading = signal(false);
 
-  activeTab = signal<'topics' | 'quiz' | 'analogies'>('topics');
+  protected readonly activeTab = signal<'topics' | 'quiz' | 'analogies'>('topics');
   protected readonly searchControl = new FormControl('');
 
-  filteredTopics = signal<SignalsTopic[]>([]);
+  protected readonly filteredTopics = signal<SignalsTopic[]>([]);
 
-  expandedIndex = signal<number | null>(null);
+  protected readonly expandedIndex = signal<number | null>(null);
 
-  quizzes = signal<SignalsQuiz[]>([]);
-  selectedAnswers = signal<Record<number, number>>({});
-  revealedQuizzes = signal<Record<number, boolean>>({});
+  protected readonly quizzes = signal<SignalsQuiz[]>([]);
+  protected readonly selectedAnswers = signal<Record<number, number>>({});
+  protected readonly revealedQuizzes = signal<Record<number, boolean>>({});
 
   ngOnInit(): void {
     this.loading.set(true);
@@ -86,31 +86,31 @@ export class SignalsComponent {
       });
   }
 
-  selectTab(tab: 'topics' | 'quiz' | 'analogies'): void {
+  protected selectTab(tab: 'topics' | 'quiz' | 'analogies'): void {
     this.activeTab.set(tab);
   }
 
-  toggle(index: number): void {
+  protected toggle(index: number): void {
     this.expandedIndex.set(this.expandedIndex() === index ? null : index);
   }
 
-  isExpanded(index: number): boolean {
+  protected isExpanded(index: number): boolean {
     return this.expandedIndex() === index;
   }
 
-  selectAnswer(quizIndex: number, optionIndex: number): void {
+  protected selectAnswer(quizIndex: number, optionIndex: number): void {
     this.selectedAnswers.update((prev) => ({ ...prev, [quizIndex]: optionIndex }));
   }
 
-  revealExplanation(quizIndex: number): void {
+  protected revealExplanation(quizIndex: number): void {
     this.revealedQuizzes.update((prev) => ({ ...prev, [quizIndex]: true }));
   }
 
-  isAnswered(quizIndex: number): boolean {
+  protected isAnswered(quizIndex: number): boolean {
     return this.selectedAnswers()[quizIndex] !== undefined;
   }
 
-  isCorrect(quizIndex: number): boolean {
+  protected isCorrect(quizIndex: number): boolean {
     return this.selectedAnswers()[quizIndex] === this.quizzes()[quizIndex]?.correctIndex;
   }
 }

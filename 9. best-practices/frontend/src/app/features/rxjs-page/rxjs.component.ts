@@ -79,38 +79,38 @@ export class RxjsComponent {
       });
   }
 
-  selectTab(tab: any): void {
+  protected selectTab(tab: any): void {
     this.activeTab.set(tab);
   }
 
-  toggle(index: number): void {
+  protected toggle(index: number): void {
     const val = this.expandedIndex() === index ? null : index;
     this.expandedIndex.set(val);
   }
 
-  isExpanded(index: number): boolean {
+  protected isExpanded(index: number): boolean {
     return this.expandedIndex() === index;
   }
 
-  selectAnswer(quizIndex: any, optionIndex: any): void {
+  protected selectAnswer(quizIndex: any, optionIndex: any): void {
     this.selectedAnswers.update((prev) => ({
       ...prev,
       [quizIndex]: optionIndex,
     }));
   }
 
-  revealExplanation(quizIndex: any): void {
+  protected revealExplanation(quizIndex: any): void {
     this.revealedQuizzes.update((prev) => ({
       ...prev,
       [quizIndex]: true,
     }));
   }
 
-  isAnswered(quizIndex: any): boolean {
+  protected isAnswered(quizIndex: any): boolean {
     return this.selectedAnswers()[quizIndex] !== undefined;
   }
 
-  isCorrect(quizIndex: any): boolean {
+  protected isCorrect(quizIndex: any): boolean {
     const quiz = this.quizzes()[quizIndex];
     return quiz ? this.selectedAnswers()[quizIndex] === quiz.correctIndex : false;
   }
