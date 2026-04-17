@@ -1,50 +1,54 @@
 import { CommonModule } from '@angular/common';
-import { HttpClient } from '@angular/common/http';
-import { Component, effect, signal } from '@angular/core';
+import { Component, effect, inject, signal } from '@angular/core';
 import { PageHeader } from '../../shared/components/page-header/page-header';
+import { SignalsQuiz, SignalsTopic } from '../../shared/models/signals.model';
+import { SignalService } from '../../shared/services/signal-service';
+import { FormControl, ReactiveFormsModule } from '@angular/forms';
+import {
+  concatMap,
+  debounceTime,
+  delay,
+  distinctUntilChanged,
+  filter,
+  from,
+  map,
+  mergeMap,
+  of,
+  shareReplay,
+  tap,
+  toArray,
+} from 'rxjs';
 
 @Component({
   selector: 'app-signals',
   templateUrl: './signals.component.html',
   styleUrl: './signals.component.scss',
-  imports: [CommonModule, PageHeader],
+  imports: [CommonModule, PageHeader, ReactiveFormsModule],
 })
 export class SignalsComponent {
-  private http: HttpClient;
+  private readonly signalService = inject(SignalService);
 
-  topics = signal<any[]>([]);
+  topics = signal<SignalsTopic[]>([]);
   loading = signal(false);
 
   activeTab = signal<'topics' | 'quiz' | 'analogies'>('topics');
-  searchTerm = signal('');
+  protected readonly searchControl = new FormControl('');
 
-  filteredTopics = signal<any[]>([]);
+  filteredTopics = signal<SignalsTopic[]>([]);
 
   expandedIndex = signal<number | null>(null);
 
-  quizzes = signal<any[]>([]);
+  quizzes = signal<SignalsQuiz[]>([]);
   selectedAnswers = signal<Record<number, number>>({});
   revealedQuizzes = signal<Record<number, boolean>>({});
-
-  constructor(http: HttpClient) {
-    this.http = http;
-
-    effect(() => {
-      const term = this.searchTerm().toLowerCase();
-      this.filteredTopics.set(this.topics().filter((t) => t.title.toLowerCase().includes(term)));
-    });
-
-    effect(() => {
-      console.log('[Signals] active tab:', this.activeTab());
-    });
-  }
 
   ngOnInit(): void {
     this.loading.set(true);
 
-    this.http.get<any[]>('http://localhost:3000/signals/topics').subscribe({
+    this.signalService.fetchTopics().subscribe({
       next: (topics) => {
         this.topics.set(topics);
+        this.filteredTopics.set(topics);
         this.loading.set(false);
       },
       error: () => {
@@ -52,17 +56,38 @@ export class SignalsComponent {
       },
     });
 
-    this.http.get<any[]>('http://localhost:3000/signals/quizzes').subscribe({
+    this.signalService.fetchQuizzes().subscribe({
       next: (quizzes) => this.quizzes.set(quizzes),
     });
+
+    this.searchControl.valueChanges
+      .pipe(
+        debounceTime(0),
+        distinctUntilChanged(),
+        map((term) => term ?? ''),
+        filter(() => true),
+        tap((term) => console.log('searching for:', term)),
+        concatMap((term) =>
+          of(term).pipe(
+            delay(0),
+            map((t) => t.toLowerCase()),
+            mergeMap((lowerTerm) =>
+              from(this.topics()).pipe(
+                filter((t) => t.title.toLowerCase().includes(lowerTerm)),
+                toArray(),
+              ),
+            ),
+          ),
+        ),
+        shareReplay(1),
+      )
+      .subscribe((filtered) => {
+        this.filteredTopics.set(filtered);
+      });
   }
 
   selectTab(tab: 'topics' | 'quiz' | 'analogies'): void {
     this.activeTab.set(tab);
-  }
-
-  updateSearch(event: Event): void {
-    this.searchTerm.set((event.target as HTMLInputElement).value);
   }
 
   toggle(index: number): void {

@@ -5,10 +5,10 @@ import { API_BASE_URL } from '../../../environments/environments';
 @Injectable({
   providedIn: 'root',
 })
-export class RxjsService {
+export class SignalService {
   private readonly http = inject(HttpClient);
 
-  readonly apiBaseUrl = API_BASE_URL + '/rxjs';
+  readonly apiBaseUrl = API_BASE_URL + '/signals';
 
   fetchTopics() {
     return this.http.get<any[]>(`${this.apiBaseUrl}/topics`);

@@ -43,8 +43,7 @@
       class="search-input"
       type="text"
       placeholder="Search topics..."
-      [value]="searchTerm()"
-      (input)="updateSearch($event)"
+      [formControl]="searchControl"
     />
 
     <div

@@ -12,12 +12,12 @@ import { PracticeCategoryDetails, PracticeItem } from '../../shared/models/pract
 })
 export class PracticesPage implements OnInit {
   private readonly practicesService = inject(PracticesService);
-  protected categories = signal<PracticeCategoryDetails[]>([]);
-  protected loading = signal(false);
-  protected errorMessage = signal('');
+  protected readonly categories = signal<PracticeCategoryDetails[]>([]);
+  protected readonly loading = signal(false);
+  protected readonly errorMessage = signal('');
 
-  openedCategorySlugs = new Set<string>();
-  categoryDetails: Record<string, PracticeCategoryDetails> = {};
+  protected readonly openedCategorySlugs = signal(new Set<string>());
+  protected readonly categoryDetails = signal<Record<string, PracticeCategoryDetails>>({});
 
   ngOnInit(): void {
     this.fetchCategories();
@@ -34,27 +34,38 @@ export class PracticesPage implements OnInit {
   }
 
   toggleCategory(slug: string, category: any): void {
-    if (this.openedCategorySlugs.has(slug)) {
-      this.openedCategorySlugs.delete(slug);
+    if (this.openedCategorySlugs().has(slug)) {
+      this.openedCategorySlugs.update((set) => {
+        const next = new Set(set);
+        next.delete(slug);
+        return next;
+      });
       return;
     }
 
-    this.openedCategorySlugs.add(slug);
+    this.openedCategorySlugs.update((set) => {
+      const next = new Set(set);
+      next.add(slug);
+      return next;
+    });
 
-    if (this.categoryDetails[slug]) {
+    if (this.categoryDetails()[slug]) {
       return;
     }
 
     this.practicesService.fetchCategoryDetails(slug).subscribe((details) => {
-      this.categoryDetails[slug] = details;
+      this.categoryDetails.update((val) => ({
+        ...val,
+        [slug]: details,
+      }));
     });
   }
 
   isOpen(slug: string): boolean {
-    return this.openedCategorySlugs.has(slug);
+    return this.openedCategorySlugs().has(slug);
   }
 
   getDetails(slug: string): any {
-    return this.categoryDetails[slug] ?? null;
+    return this.categoryDetails()[slug] ?? null;
   }
 }

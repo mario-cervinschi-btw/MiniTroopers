@@ -13,7 +13,7 @@
   <nav class="tab-bar">
     <button
       class="tab-btn"
-      [class.tab-btn--active]="activeTab === 'topics'"
+      [class.tab-btn--active]="activeTab() === 'topics'"
       (click)="selectTab('topics')"
       type="button"
     >
@@ -21,7 +21,7 @@
     </button>
     <button
       class="tab-btn"
-      [class.tab-btn--active]="activeTab === 'quiz'"
+      [class.tab-btn--active]="activeTab() === 'quiz'"
       (click)="selectTab('quiz')"
       type="button"
     >
@@ -29,7 +29,7 @@
     </button>
     <button
       class="tab-btn"
-      [class.tab-btn--active]="activeTab === 'analogies'"
+      [class.tab-btn--active]="activeTab() === 'analogies'"
       (click)="selectTab('analogies')"
       type="button"
     >
@@ -38,8 +38,8 @@
   </nav>
 
   <!-- TOPICS TAB -->
-  <section *ngIf="activeTab === 'topics'" class="topics">
-    <p *ngIf="loading" class="status">Loading RxJS topics...</p>
+  <section *ngIf="activeTab() === 'topics'" class="topics">
+    <p *ngIf="loading()" class="status">Loading RxJS topics...</p>
 
     <input
       class="search-input"
@@ -49,7 +49,7 @@
     />
 
     <div
-      *ngFor="let topic of topics; let i = index"
+      *ngFor="let topic of filteredTopics(); let i = index"
       class="topic-card"
       [class.topic-card--expanded]="isExpanded(i)"
     >
@@ -76,12 +76,12 @@
   </section>
 
   <!-- QUIZ TAB -->
-  <section *ngIf="activeTab === 'quiz'" class="quiz-section">
+  <section *ngIf="activeTab() === 'quiz'" class="quiz-section">
     <p class="section-intro">
       Each snippet below has a real-world Angular/RxJS bug. Can you spot it?
     </p>
 
-    <div *ngFor="let quiz of quizzes; let i = index" class="quiz-card">
+    <div *ngFor="let quiz of quizzes(); let i = index" class="quiz-card">
       <p class="quiz-question">{{ quiz.question }}</p>
       <pre class="code-block"><code>{{ quiz.codeSnippet }}</code></pre>
 
@@ -89,11 +89,11 @@
         <button
           *ngFor="let option of quiz.options; let optionIndex = index"
           class="quiz-option"
-          [class.quiz-option--selected]="selectedAnswers[i] === optionIndex"
-          [class.quiz-option--correct]="revealedQuizzes[i] && optionIndex === quiz.correctIndex"
+          [class.quiz-option--selected]="selectedAnswers()[i] === optionIndex"
+          [class.quiz-option--correct]="revealedQuizzes()[i] && optionIndex === quiz.correctIndex"
           [class.quiz-option--wrong]="
-            revealedQuizzes[i] &&
-            selectedAnswers[i] === optionIndex &&
+            revealedQuizzes()[i] &&
+            selectedAnswers()[i] === optionIndex &&
             optionIndex !== quiz.correctIndex
           "
           (click)="selectAnswer(i, optionIndex)"
@@ -103,14 +103,14 @@
         </button>
       </div>
 
-      <div *ngIf="isAnswered(i) && !revealedQuizzes[i]" class="quiz-actions">
+      <div *ngIf="isAnswered(i) && !revealedQuizzes()[i]" class="quiz-actions">
         <button class="reveal-btn" (click)="revealExplanation(i)" type="button">
           Reveal explanation
         </button>
       </div>
 
       <div
-        *ngIf="revealedQuizzes[i]"
+        *ngIf="revealedQuizzes()[i]"
         class="quiz-explanation"
         [class.quiz-explanation--correct]="isCorrect(i)"
         [class.quiz-explanation--wrong]="!isCorrect(i)"
@@ -123,13 +123,13 @@
   </section>
 
   <!-- ANALOGIES TAB -->
-  <section *ngIf="activeTab === 'analogies'" class="analogies-section">
+  <section *ngIf="activeTab() === 'analogies'" class="analogies-section">
     <p class="section-intro">
       Each concept explained through a familiar, real-world situation — no prior RxJS knowledge
       needed.
     </p>
 
-    <div *ngFor="let topic of topics" class="analogy-card">
+    <div *ngFor="let topic of filteredTopics()" class="analogy-card">
       <div class="analogy-card-header">
         <span class="analogy-card-title">{{ topic.title }}</span>
         <span class="topic-tag topic-tag--{{ topic.tag }}">{{ topic.tag }}</span>

@@ -1,6 +1,5 @@
 import { CommonModule } from '@angular/common';
-import { HttpClient } from '@angular/common/http';
-import { Component, inject } from '@angular/core';
+import { Component, inject, signal } from '@angular/core';
 import { FormControl, ReactiveFormsModule } from '@angular/forms';
 import {
   concatMap,
@@ -29,22 +28,29 @@ import { RxjsQuiz, RxjsTopic } from '../../shared/models/rxjs.model';
 export class RxjsComponent {
   private rxjsService = inject(RxjsService);
 
-  topics: RxjsTopic[] = [];
-  loading = false;
-  searchControl = new FormControl('');
+  private readonly topics = signal<RxjsTopic[]>([]);
+  protected readonly filteredTopics = signal<RxjsTopic[]>([]);
+  protected readonly loading = signal(false);
+  protected readonly searchControl = new FormControl('');
 
-  activeTab: 'topics' | 'quiz' | 'analogies' = 'topics';
+  protected readonly activeTab = signal<'topics' | 'quiz' | 'analogies'>('topics');
+
+  protected readonly quizzes = signal<RxjsQuiz[]>([]);
+  protected readonly expandedIndex = signal<number | null>(null);
+
+  protected readonly selectedAnswers = signal<Record<number, number>>({});
+  protected readonly revealedQuizzes = signal<Record<number, boolean>>({});
 
   ngOnInit(): void {
-    this.loading = true;
+    this.loading.set(true);
     this.rxjsService.fetchTopics().subscribe((topics) => {
-      this.topics = topics;
-      this.filteredTopics = topics;
-      this.loading = false;
+      this.topics.set(topics);
+      this.filteredTopics.set(topics);
+      this.loading.set(false);
     });
 
     this.rxjsService.fetchQuizzes().subscribe((quizzes) => {
-      this.quizzes = quizzes;
+      this.quizzes.set(quizzes);
     });
 
     this.searchControl.valueChanges
@@ -59,7 +65,7 @@ export class RxjsComponent {
             delay(0),
             map((t) => t.toLowerCase()),
             mergeMap((lowerTerm) =>
-              from(this.topics).pipe(
+              from(this.topics()).pipe(
                 filter((t) => t.title.toLowerCase().includes(lowerTerm)),
                 toArray(),
               ),
@@ -69,44 +75,43 @@ export class RxjsComponent {
         shareReplay(1),
       )
       .subscribe((filtered) => {
-        this.filteredTopics = filtered;
+        this.filteredTopics.set(filtered);
       });
   }
 
-  filteredTopics: any[] = [];
-
   selectTab(tab: any): void {
-    this.activeTab = tab;
+    this.activeTab.set(tab);
   }
 
-  quizzes: RxjsQuiz[] = [];
-  expandedIndex: number | null = null;
-
   toggle(index: number): void {
-    this.expandedIndex = this.expandedIndex === index ? null : index;
+    const val = this.expandedIndex() === index ? null : index;
+    this.expandedIndex.set(val);
   }
 
   isExpanded(index: number): boolean {
-    return this.expandedIndex === index;
+    return this.expandedIndex() === index;
   }
-
-  selectedAnswers: any = {};
 
   selectAnswer(quizIndex: any, optionIndex: any): void {
-    this.selectedAnswers[quizIndex] = optionIndex;
+    this.selectedAnswers.update((prev) => ({
+      ...prev,
+      [quizIndex]: optionIndex,
+    }));
   }
 
-  revealedQuizzes: any = {};
-
   revealExplanation(quizIndex: any): void {
-    this.revealedQuizzes[quizIndex] = true;
+    this.revealedQuizzes.update((prev) => ({
+      ...prev,
+      [quizIndex]: true,
+    }));
   }
 
   isAnswered(quizIndex: any): boolean {
-    return this.selectedAnswers[quizIndex] !== undefined;
+    return this.selectedAnswers()[quizIndex] !== undefined;
   }
 
   isCorrect(quizIndex: any): boolean {
-    return this.selectedAnswers[quizIndex] === this.quizzes[quizIndex].correctIndex;
+    const quiz = this.quizzes()[quizIndex];
+    return quiz ? this.selectedAnswers()[quizIndex] === quiz.correctIndex : false;
   }
 }
