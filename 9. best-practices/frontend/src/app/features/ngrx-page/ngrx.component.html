@@ -49,7 +49,7 @@
       @if (loading()) {
         <p class="status">Loading NgRx concepts...</p>
       }
-      @for (topic of topics(); track topic; let i = $index) {
+      @for (topic of topics(); track $index; let i = $index) {
         <div class="topic-card" [class.topic-card--expanded]="expandedIndex() === i">
           <button class="topic-trigger" type="button" (click)="toggle(i)">
             <span class="topic-title">

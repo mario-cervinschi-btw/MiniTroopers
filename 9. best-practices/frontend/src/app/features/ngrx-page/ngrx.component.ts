@@ -5,6 +5,7 @@ import { loadTopics } from '../../shared/stores/ngrx-store/ngrx.actions';
 import { selectAllTopics, selectLoading } from '../../shared/stores/ngrx-store/ngrx.selectors';
 import { NgrxQuiz } from '../../shared/models/ngrx.model';
 import { NgrxService } from '../../shared/services/ngrx-service';
+import { NgrxFacade } from '../../shared/stores/ngrx-store/ngrx.facade';
 
 @Component({
   selector: 'app-ngrx',
@@ -13,12 +14,12 @@ import { NgrxService } from '../../shared/services/ngrx-service';
   imports: [],
 })
 export class NgrxComponent implements OnInit {
-  private readonly store = inject(Store);
   private readonly ngrxService = inject(NgrxService);
   private readonly destroyRef = inject(DestroyRef);
+  private readonly ngrxFacade = inject(NgrxFacade);
 
-  protected topics = toSignal(this.store.select(selectAllTopics));
-  protected loading = toSignal(this.store.select(selectLoading));
+  protected topics = toSignal(this.ngrxFacade.selectAllTopics$);
+  protected loading = toSignal(this.ngrxFacade.selectLoading$);
 
   protected quizzes = signal<NgrxQuiz[]>([]);
   protected activeTab = signal<'concepts' | 'flow' | 'quiz' | 'analogies'>('concepts');
@@ -32,7 +33,7 @@ export class NgrxComponent implements OnInit {
   }
 
   private initData() {
-    this.store.dispatch(loadTopics());
+    this.ngrxFacade.loadTopics();
 
     this.ngrxService
       .fetchQuizzes()
