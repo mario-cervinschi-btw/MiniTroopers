@@ -1,4 +1,4 @@
-import { CommonModule } from '@angular/common';
+
 import { HttpClient } from '@angular/common/http';
 import { Component, inject, OnInit, signal } from '@angular/core';
 import { toSignal } from '@angular/core/rxjs-interop';
@@ -12,7 +12,7 @@ import { NgrxService } from '../../shared/services/ngrx-service';
   selector: 'app-ngrx',
   templateUrl: './ngrx.component.html',
   styleUrl: './ngrx.component.scss',
-  imports: [CommonModule],
+  imports: [],
 })
 export class NgrxComponent implements OnInit {
   private readonly store = inject(Store);

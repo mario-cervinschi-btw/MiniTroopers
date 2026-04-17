@@ -1,4 +1,4 @@
-import { CommonModule } from '@angular/common';
+
 import { Component, inject, signal } from '@angular/core';
 import { PageHeader } from '../../shared/components/page-header/page-header';
 import { SignalsQuiz, SignalsTopic } from '../../shared/models/signals.model';
@@ -23,7 +23,7 @@ import {
   selector: 'app-signals',
   templateUrl: './signals.component.html',
   styleUrl: './signals.component.scss',
-  imports: [CommonModule, PageHeader, ReactiveFormsModule],
+  imports: [PageHeader, ReactiveFormsModule],
 })
 export class SignalsComponent {
   private readonly signalService = inject(SignalService);

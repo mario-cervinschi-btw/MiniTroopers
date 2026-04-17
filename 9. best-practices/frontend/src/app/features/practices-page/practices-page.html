@@ -4,51 +4,62 @@
   [description]="'Expand each section to view details, why it matters, and good/bad examples.'"
 ></app-page-header>
 
-<p *ngIf="loading()" class="status">Loading practices...</p>
+@if (loading()) {
+  <p class="status">Loading practices...</p>
+}
 
-<p *ngIf="errorMessage()" class="status status--error">{{ errorMessage() }}</p>
+@if (errorMessage()) {
+  <p class="status status--error">{{ errorMessage() }}</p>
+}
 
 <section class="accordion">
-  <article
-    *ngFor="let category of categories()"
-    class="accordion-item"
-    [class.accordion-item--open]="isOpen(category.slug)"
-  >
-    <button
-      class="accordion-trigger"
-      type="button"
-      (click)="toggleCategory(category.slug, category)"
-    >
-      <span>
-        <strong>{{ category.title }}</strong>
-        <small>{{ category.description }}</small>
-      </span>
-      <span class="accordion-meta">
-        <span class="item-count">{{ category.itemCount }} items</span>
-        <span class="material-icons chevron">expand_more</span>
-      </span>
-    </button>
-
-    <div *ngIf="isOpen(category.slug)" class="accordion-panel">
-      <p *ngIf="!getDetails(category.slug)" class="status">
-        Loading {{ category.title }} details...
-      </p>
-
-      <ng-container *ngIf="getDetails(category.slug) as details">
-        <ul class="practice-list">
-          <li *ngFor="let item of details.items" class="practice-card">
-            <h3>{{ item.title }}</h3>
-            <p>{{ item.summary }}</p>
-            <p><strong>Details:</strong> {{ item.details }}</p>
-            <p><strong>Why it matters:</strong> {{ item.whyItMatters }}</p>
-            <p><strong>Good example:</strong> {{ item.goodExample }}</p>
-            <p><strong>Bad example:</strong> {{ item.badExample }}</p>
-            <div class="tags">
-              <span *ngFor="let tag of item.tags" class="tag">{{ tag }}</span>
-            </div>
-          </li>
-        </ul>
-      </ng-container>
-    </div>
-  </article>
+  @for (category of categories(); track category) {
+    <article
+      class="accordion-item"
+      [class.accordion-item--open]="isOpen(category.slug)"
+      >
+      <button
+        class="accordion-trigger"
+        type="button"
+        (click)="toggleCategory(category.slug, category)"
+        >
+        <span>
+          <strong>{{ category.title }}</strong>
+          <small>{{ category.description }}</small>
+        </span>
+        <span class="accordion-meta">
+          <span class="item-count">{{ category.itemCount }} items</span>
+          <span class="material-icons chevron">expand_more</span>
+        </span>
+      </button>
+      @if (isOpen(category.slug)) {
+        <div class="accordion-panel">
+          @if (!getDetails(category.slug)) {
+            <p class="status">
+              Loading {{ category.title }} details...
+            </p>
+          }
+          @if (getDetails(category.slug); as details) {
+            <ul class="practice-list">
+              @for (item of details.items; track item) {
+                <li class="practice-card">
+                  <h3>{{ item.title }}</h3>
+                  <p>{{ item.summary }}</p>
+                  <p><strong>Details:</strong> {{ item.details }}</p>
+                  <p><strong>Why it matters:</strong> {{ item.whyItMatters }}</p>
+                  <p><strong>Good example:</strong> {{ item.goodExample }}</p>
+                  <p><strong>Bad example:</strong> {{ item.badExample }}</p>
+                  <div class="tags">
+                    @for (tag of item.tags; track tag) {
+                      <span class="tag">{{ tag }}</span>
+                    }
+                  </div>
+                </li>
+              }
+            </ul>
+          }
+        </div>
+      }
+    </article>
+  }
 </section>

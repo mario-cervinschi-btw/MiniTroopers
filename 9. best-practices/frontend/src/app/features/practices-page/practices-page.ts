@@ -1,4 +1,4 @@
-import { CommonModule } from '@angular/common';
+
 import { Component, inject, OnInit, signal } from '@angular/core';
 import { PracticesService } from '../../shared/services/practices-service';
 import { PageHeader } from '../../shared/components/page-header/page-header';
@@ -6,7 +6,7 @@ import { PracticeCategoryDetails } from '../../shared/models/practice.model';
 
 @Component({
   selector: 'app-practices-page',
-  imports: [CommonModule, PageHeader],
+  imports: [PageHeader],
   templateUrl: './practices-page.html',
   styleUrl: './practices-page.scss',
 })

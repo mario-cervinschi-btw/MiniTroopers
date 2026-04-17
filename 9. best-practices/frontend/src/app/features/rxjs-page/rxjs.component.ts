@@ -1,4 +1,4 @@
-import { CommonModule } from '@angular/common';
+
 import { Component, inject, signal } from '@angular/core';
 import { FormControl, ReactiveFormsModule } from '@angular/forms';
 import {
@@ -23,7 +23,7 @@ import { RxjsQuiz, RxjsTopic } from '../../shared/models/rxjs.model';
   selector: 'app-rxjs',
   templateUrl: './rxjs.component.html',
   styleUrl: './rxjs.component.scss',
-  imports: [CommonModule, ReactiveFormsModule, PageHeader],
+  imports: [ReactiveFormsModule, PageHeader],
 })
 export class RxjsComponent {
   private rxjsService = inject(RxjsService);
