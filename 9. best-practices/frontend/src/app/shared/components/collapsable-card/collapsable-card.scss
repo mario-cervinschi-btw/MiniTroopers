@@ -1,0 +1,117 @@
+.topic-card {
+    background: #ffffff;
+    border: 1px solid #e5e7eb;
+    border-radius: 12px;
+    overflow: hidden;
+    transition:
+        box-shadow 0.2s ease,
+        border-color 0.2s ease;
+}
+
+.topic-card:hover {
+    border-color: #ddd6fe;
+    box-shadow: 0 3px 16px rgba(124, 58, 237, 0.08);
+}
+
+.topic-card--expanded {
+    border-color: #c4b5fd;
+    box-shadow: 0 4px 20px rgba(124, 58, 237, 0.12);
+}
+
+.topic-trigger {
+    width: 100%;
+    border: none;
+    background: transparent;
+    padding: 16px 18px;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    cursor: pointer;
+    text-align: left;
+    transition: background 0.15s ease;
+
+    &:hover {
+        background: #fafafa;
+    }
+}
+
+.topic-card--expanded .topic-trigger {
+    background: #f5f3ff;
+    border-bottom: 1px solid #ede9fe;
+}
+
+.topic-title {
+    font-size: 0.925rem;
+    font-weight: 600;
+    color: #1f2937;
+    display: flex;
+    align-items: center;
+    gap: 10px;
+}
+
+.topic-tag {
+    font-size: 10px;
+    font-weight: 600;
+    text-transform: uppercase;
+    letter-spacing: 0.08em;
+    padding: 2px 8px;
+    border-radius: 999px;
+
+    &--core {
+        background: #ede9fe;
+        color: #5b21b6;
+    }
+
+    &--operators {
+        background: #e0f2fe;
+        color: #0369a1;
+    }
+
+    &--best-practice {
+        background: #dcfce7;
+        color: #15803d;
+    }
+
+    &--concept {
+        background: #fef3c7;
+        color: #92400e;
+    }
+}
+
+.chevron {
+    font-size: 17px;
+    color: #9ca3af;
+    transition:
+        transform 0.22s ease,
+        color 0.22s ease;
+    flex-shrink: 0;
+
+    &--open {
+        transform: rotate(180deg);
+        color: #7c3aed;
+    }
+}
+
+/* ── Body ── */
+.topic-body {
+    padding: 18px 20px;
+    background: var(--custom-topic-bg, #faf9ff);
+}
+
+.topic-description {
+    font-size: 0.875rem;
+    color: #374151;
+    line-height: 1.65;
+    margin: 0 0 14px;
+}
+
+.key-points {
+    margin: 0 0 16px;
+    padding-left: 18px;
+
+    li {
+        font-size: 0.845rem;
+        color: #4b5563;
+        line-height: 1.7;
+    }
+}

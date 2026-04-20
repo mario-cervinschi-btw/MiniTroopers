@@ -1,29 +1,17 @@
 import { Component, DestroyRef, inject, OnInit, signal } from '@angular/core';
 import { FormControl, ReactiveFormsModule } from '@angular/forms';
-import {
-  concatMap,
-  debounceTime,
-  delay,
-  distinctUntilChanged,
-  filter,
-  from,
-  map,
-  mergeMap,
-  of,
-  shareReplay,
-  tap,
-  toArray,
-} from 'rxjs';
+import { debounceTime, distinctUntilChanged, map } from 'rxjs';
 import { PageHeader } from '../../shared/components/page-header/page-header';
 import { RxjsService } from '../../shared/services/rxjs-service';
 import { RxjsQuiz, RxjsTopic } from '../../shared/models/rxjs.model';
 import { takeUntilDestroyed } from '@angular/core/rxjs-interop';
+import { CollapsableCard } from '../../shared/components/collapsable-card/collapsable-card';
 
 @Component({
   selector: 'app-rxjs',
   templateUrl: './rxjs.component.html',
   styleUrl: './rxjs.component.scss',
-  imports: [ReactiveFormsModule, PageHeader],
+  imports: [ReactiveFormsModule, PageHeader, CollapsableCard],
 })
 export class RxjsComponent implements OnInit {
   private rxjsService = inject(RxjsService);

@@ -213,21 +213,6 @@ h1 {
   }
 }
 
-.code-block {
-  background: #1e1e2e;
-  border-radius: 8px;
-  padding: 16px;
-  overflow-x: auto;
-  margin: 0;
-
-  code {
-    font-family: "Fira Code", "Cascadia Code", monospace;
-    font-size: 0.8rem;
-    color: #cdd6f4;
-    white-space: pre;
-  }
-}
-
 /* ── Quiz ── */
 .quiz-section {
   display: grid;

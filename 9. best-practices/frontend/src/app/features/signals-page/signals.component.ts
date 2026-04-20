@@ -3,27 +3,15 @@ import { PageHeader } from '../../shared/components/page-header/page-header';
 import { SignalsQuiz, SignalsTopic } from '../../shared/models/signals.model';
 import { SignalService } from '../../shared/services/signal-service';
 import { FormControl, ReactiveFormsModule } from '@angular/forms';
-import {
-  concatMap,
-  debounceTime,
-  delay,
-  distinctUntilChanged,
-  filter,
-  from,
-  map,
-  mergeMap,
-  of,
-  shareReplay,
-  tap,
-  toArray,
-} from 'rxjs';
+import { debounceTime, distinctUntilChanged, map } from 'rxjs';
 import { takeUntilDestroyed } from '@angular/core/rxjs-interop';
+import { CollapsableCard } from '../../shared/components/collapsable-card/collapsable-card';
 
 @Component({
   selector: 'app-signals',
   templateUrl: './signals.component.html',
   styleUrl: './signals.component.scss',
-  imports: [PageHeader, ReactiveFormsModule],
+  imports: [PageHeader, ReactiveFormsModule, CollapsableCard],
 })
 export class SignalsComponent implements OnInit {
   private readonly signalService = inject(SignalService);
