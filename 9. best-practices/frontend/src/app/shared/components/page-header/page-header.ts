@@ -7,10 +7,10 @@ import { Component, input } from '@angular/core';
   styleUrl: './page-header.scss',
 })
 export class PageHeader {
-  eyebrowText = input.required();
-  headerTitle = input.required();
-  description = input.required();
-  eyebrowColor = input<string>('#6366f1');
-  eyebrowBg = input<string>('#eef2ff');
-  customGradient = input<string>('linear-gradient(135deg, #1e1b4b 0%, #6366f1 100%)');
+  readonly eyebrowText = input.required();
+  readonly headerTitle = input.required();
+  readonly description = input.required();
+  readonly eyebrowColor = input<string>('#6366f1');
+  readonly eyebrowBg = input<string>('#eef2ff');
+  readonly customGradient = input<string>('linear-gradient(135deg, #1e1b4b 0%, #6366f1 100%)');
 }

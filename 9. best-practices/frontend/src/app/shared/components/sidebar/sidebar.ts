@@ -1,11 +1,9 @@
-import { CommonModule } from '@angular/common';
 import { Component, inject, signal } from '@angular/core';
 import { IsActiveMatchOptions, Router } from '@angular/router';
 import { SidebarData } from '../../models/sidebar.model';
 
 @Component({
   selector: 'app-sidebar',
-  imports: [CommonModule],
   templateUrl: './sidebar.html',
   styleUrl: './sidebar.scss',
 })

@@ -43,6 +43,10 @@
     </button>
   </nav>
 
+  @if (errorMessage()) {
+    <p class="status status--error">{{ errorMessage() }}</p>
+  }
+
   <!-- ─── CONCEPTS TAB ─── -->
   @if (activeTab() === 'concepts') {
     <section class="concepts">
@@ -64,7 +68,7 @@
             <div class="topic-body">
               <p class="topic-description">{{ topic.description }}</p>
               <ul class="key-points">
-                @for (point of topic.keyPoints; track point) {
+                @for (point of topic.keyPoints; track $index) {
                   <li>{{ point }}</li>
                 }
               </ul>
@@ -162,12 +166,12 @@
         Each snippet below contains a real NgRx bug that has burned developers in production. Can
         you spot it before revealing the answer?
       </p>
-      @for (quiz of quizzes(); track quiz; let i = $index) {
+      @for (quiz of quizzes(); track $index; let i = $index) {
         <div class="quiz-card">
           <p class="quiz-question">{{ quiz.question }}</p>
           <pre class="code-block"><code>{{ quiz.codeSnippet }}</code></pre>
           <div class="quiz-options">
-            @for (option of quiz.options; track option; let optionIndex = $index) {
+            @for (option of quiz.options; track $index; let optionIndex = $index) {
               <button
                 class="quiz-option"
                 [class.quiz-option--selected]="selectedAnswers()[i] === optionIndex"
@@ -220,7 +224,7 @@
         NgRx concepts mapped to familiar real-world situations — no prior NgRx experience needed to
         get the mental model.
       </p>
-      @for (topic of topics(); track topic) {
+      @for (topic of topics(); track topic.title) {
         <div class="analogy-card">
           <div class="analogy-card-header">
             <span class="analogy-card-title">{{ topic.title }}</span>

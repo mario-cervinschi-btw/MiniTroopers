@@ -1,11 +1,9 @@
 import { Component, DestroyRef, inject, OnInit, signal } from '@angular/core';
 import { takeUntilDestroyed, toSignal } from '@angular/core/rxjs-interop';
-import { Store } from '@ngrx/store';
-import { loadTopics } from '../../shared/stores/ngrx-store/ngrx.actions';
-import { selectAllTopics, selectLoading } from '../../shared/stores/ngrx-store/ngrx.selectors';
-import { NgrxQuiz } from '../../shared/models/ngrx.model';
 import { NgrxService } from '../../shared/services/ngrx-service';
 import { NgrxFacade } from '../../shared/stores/ngrx-store/ngrx.facade';
+import { filter } from 'rxjs';
+import { Quiz } from '../../shared/models/quiz.model';
 
 @Component({
   selector: 'app-ngrx',
@@ -18,15 +16,17 @@ export class NgrxComponent implements OnInit {
   private readonly destroyRef = inject(DestroyRef);
   private readonly ngrxFacade = inject(NgrxFacade);
 
-  protected topics = toSignal(this.ngrxFacade.selectAllTopics$);
-  protected loading = toSignal(this.ngrxFacade.selectLoading$);
+  protected readonly topics = toSignal(this.ngrxFacade.selectAllTopics$);
+  protected readonly loading = toSignal(this.ngrxFacade.selectLoading$);
 
-  protected quizzes = signal<NgrxQuiz[]>([]);
-  protected activeTab = signal<'concepts' | 'flow' | 'quiz' | 'analogies'>('concepts');
-  protected expandedIndex = signal<number | null>(null);
+  protected readonly quizzes = signal<Quiz[]>([]);
+  protected readonly activeTab = signal<'concepts' | 'flow' | 'quiz' | 'analogies'>('concepts');
+  protected readonly expandedIndex = signal<number | null>(null);
 
-  protected selectedAnswers = signal<Record<number, number>>({});
-  protected revealedQuizzes = signal<Record<number, boolean>>({});
+  protected readonly selectedAnswers = signal<Record<number, number>>({});
+  protected readonly revealedQuizzes = signal<Record<number, boolean>>({});
+
+  protected readonly errorMessage = signal<string>('');
 
   ngOnInit(): void {
     this.initData();
@@ -34,11 +34,25 @@ export class NgrxComponent implements OnInit {
 
   private initData() {
     this.ngrxFacade.loadTopics();
+    this.errorMessage.set('');
+
+    this.ngrxFacade.selectError$
+      .pipe(
+        takeUntilDestroyed(this.destroyRef),
+        filter((err) => err !== null),
+      )
+      .subscribe((err) => {
+        this.errorMessage.update((msg) => msg + 'Load topics error: ' + err + '. ');
+      });
 
     this.ngrxService
       .fetchQuizzes()
       .pipe(takeUntilDestroyed(this.destroyRef))
-      .subscribe((data) => this.quizzes.set(data));
+      .subscribe({
+        next: (data) => this.quizzes.set(data),
+        error: (err) =>
+          this.errorMessage.update((msg) => msg + 'Load quizzes error: ' + err.statusText + '. '),
+      });
   }
 
   protected selectTab(tab: 'concepts' | 'flow' | 'quiz' | 'analogies'): void {

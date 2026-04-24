@@ -1,23 +1,11 @@
 import { Component, DestroyRef, inject, OnInit, signal } from '@angular/core';
 import { PageHeader } from '../../shared/components/page-header/page-header';
-import { SignalsQuiz, SignalsTopic } from '../../shared/models/signals.model';
 import { SignalService } from '../../shared/services/signal-service';
 import { FormControl, ReactiveFormsModule } from '@angular/forms';
-import {
-  concatMap,
-  debounceTime,
-  delay,
-  distinctUntilChanged,
-  filter,
-  from,
-  map,
-  mergeMap,
-  of,
-  shareReplay,
-  tap,
-  toArray,
-} from 'rxjs';
+import { debounceTime, distinctUntilChanged, finalize, map } from 'rxjs';
 import { takeUntilDestroyed } from '@angular/core/rxjs-interop';
+import { Topic } from '../../shared/models/topic.model';
+import { Quiz } from '../../shared/models/quiz.model';
 
 @Component({
   selector: 'app-signals',
@@ -29,34 +17,41 @@ export class SignalsComponent implements OnInit {
   private readonly signalService = inject(SignalService);
   private readonly destroyRef = inject(DestroyRef);
 
-  protected readonly topics = signal<SignalsTopic[]>([]);
+  protected readonly topics = signal<Topic[]>([]);
   protected readonly loading = signal(false);
 
   protected readonly activeTab = signal<'topics' | 'quiz' | 'analogies'>('topics');
   protected readonly searchControl = new FormControl('');
 
-  protected readonly filteredTopics = signal<SignalsTopic[]>([]);
+  protected readonly filteredTopics = signal<Topic[]>([]);
 
   protected readonly expandedIndex = signal<number | null>(null);
 
-  protected readonly quizzes = signal<SignalsQuiz[]>([]);
+  protected readonly quizzes = signal<Quiz[]>([]);
   protected readonly selectedAnswers = signal<Record<number, number>>({});
   protected readonly revealedQuizzes = signal<Record<number, boolean>>({});
 
+  protected readonly errorMessage = signal<string>('');
+
   ngOnInit(): void {
     this.loading.set(true);
+    this.errorMessage.set('');
 
     this.signalService
       .fetchTopics()
-      .pipe(takeUntilDestroyed(this.destroyRef))
+      .pipe(
+        takeUntilDestroyed(this.destroyRef),
+        finalize(() => {
+          this.loading.set(false);
+        }),
+      )
       .subscribe({
-        next: (topics) => {
+        next: (topics: Topic[]) => {
           this.topics.set(topics);
           this.filteredTopics.set(topics);
-          this.loading.set(false);
         },
-        error: () => {
-          this.loading.set(false);
+        error: (err) => {
+          this.errorMessage.update((msg) => msg + `Load topics error: ${err.statusText}. `);
         },
       });
 
@@ -64,7 +59,10 @@ export class SignalsComponent implements OnInit {
       .fetchQuizzes()
       .pipe(takeUntilDestroyed(this.destroyRef))
       .subscribe({
-        next: (quizzes) => this.quizzes.set(quizzes),
+        next: (quizzes: Quiz[]) => this.quizzes.set(quizzes),
+        error: (err) => {
+          this.errorMessage.update((msg) => msg + `Load quizzes error: ${err.statusText}. `);
+        },
       });
 
     this.searchControl.valueChanges
@@ -75,7 +73,7 @@ export class SignalsComponent implements OnInit {
         takeUntilDestroyed(this.destroyRef),
       )
       .subscribe((term) => {
-        const filtered = this.topics().filter((t) => t.title.toLowerCase().includes(term));
+        const filtered = this.topics().filter((t: Topic) => t.title.toLowerCase().includes(term));
         this.filteredTopics.set(filtered);
       });
   }
