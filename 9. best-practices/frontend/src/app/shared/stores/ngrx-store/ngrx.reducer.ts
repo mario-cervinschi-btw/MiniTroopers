@@ -1,9 +1,9 @@
 import { createReducer, on } from '@ngrx/store';
 import { loadTopics, loadTopicsFailure, loadTopicsSuccess } from './ngrx.actions';
-import { NgrxQuiz, NgrxTopic } from '../../models/ngrx.model';
+import { Topic } from '../../models/topic.model';
 
 export interface NgrxPageState {
-  topics: NgrxTopic[];
+  topics: Topic[];
   loading: boolean;
   error: string | null;
 }

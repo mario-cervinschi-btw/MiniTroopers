@@ -1,12 +1,26 @@
 import { Routes } from '@angular/router';
-import { PracticesPage } from './features/practices-page/practices-page';
-import { RxjsComponent } from './features/rxjs-page/rxjs.component';
-import { NgrxComponent } from './features/ngrx-page/ngrx.component';
-import { SignalsComponent } from './features/signals-page/signals.component';
 
 export const routes: Routes = [
-  { path: '', component: PracticesPage, title: 'Best Practices' },
-  { path: 'rxjs', component: RxjsComponent, title: 'RxJS Essentials' },
-  { path: 'ngrx', component: NgrxComponent, title: 'NgRx Store' },
-  { path: 'signals', component: SignalsComponent, title: 'Angular Signals' },
+  {
+    path: '',
+    title: 'Best Practices',
+    loadComponent: () =>
+      import('./features/practices-page/practices-page').then((p) => p.PracticesPage),
+  },
+  {
+    path: 'rxjs',
+    title: 'RxJS Essentials',
+    loadComponent: () => import('./features/rxjs-page/rxjs.component').then((p) => p.RxjsComponent),
+  },
+  {
+    path: 'ngrx',
+    title: 'NgRx Store',
+    loadComponent: () => import('./features/ngrx-page/ngrx.component').then((p) => p.NgrxComponent),
+  },
+  {
+    path: 'signals',
+    title: 'Angular Signals',
+    loadComponent: () =>
+      import('./features/signals-page/signals.component').then((p) => p.SignalsComponent),
+  },
 ];

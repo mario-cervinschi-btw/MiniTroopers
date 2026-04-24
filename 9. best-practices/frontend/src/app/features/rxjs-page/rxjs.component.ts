@@ -1,10 +1,11 @@
 import { Component, DestroyRef, inject, OnInit, signal } from '@angular/core';
 import { FormControl, ReactiveFormsModule } from '@angular/forms';
-import { debounceTime, distinctUntilChanged, map } from 'rxjs';
+import { debounceTime, distinctUntilChanged, finalize, map } from 'rxjs';
 import { PageHeader } from '../../shared/components/page-header/page-header';
 import { RxjsService } from '../../shared/services/rxjs-service';
-import { RxjsQuiz, RxjsTopic } from '../../shared/models/rxjs.model';
 import { takeUntilDestroyed } from '@angular/core/rxjs-interop';
+import { Quiz } from '../../shared/models/quiz.model';
+import { Topic } from '../../shared/models/topic.model';
 
 @Component({
   selector: 'app-rxjs',
@@ -16,36 +17,52 @@ export class RxjsComponent implements OnInit {
   private rxjsService = inject(RxjsService);
   private destroyRef = inject(DestroyRef);
 
-  private readonly topics = signal<RxjsTopic[]>([]);
-  protected readonly filteredTopics = signal<RxjsTopic[]>([]);
+  protected readonly topics = signal<Topic[]>([]);
+  protected readonly filteredTopics = signal<Topic[]>([]);
 
   protected readonly loading = signal(false);
   protected readonly searchControl = new FormControl('');
 
   protected readonly activeTab = signal<'topics' | 'quiz' | 'analogies'>('topics');
 
-  protected readonly quizzes = signal<RxjsQuiz[]>([]);
+  protected readonly quizzes = signal<Quiz[]>([]);
   protected readonly expandedIndex = signal<number | null>(null);
 
   protected readonly selectedAnswers = signal<Record<number, number>>({});
   protected readonly revealedQuizzes = signal<Record<number, boolean>>({});
 
+  protected readonly errorMessage = signal<string>('');
+
   ngOnInit(): void {
     this.loading.set(true);
+    this.errorMessage.set('');
+
     this.rxjsService
       .fetchTopics()
-      .pipe(takeUntilDestroyed(this.destroyRef))
-      .subscribe((topics: RxjsTopic[]) => {
-        this.topics.set(topics);
-        this.filteredTopics.set(topics);
-        this.loading.set(false);
+      .pipe(
+        takeUntilDestroyed(this.destroyRef),
+        finalize(() => this.loading.set(false)),
+      )
+      .subscribe({
+        next: (topics: Topic[]) => {
+          this.topics.set(topics);
+          this.filteredTopics.set(topics);
+        },
+        error: (err) => {
+          this.errorMessage.update((msg) => msg + `Load topics error: ${err.statusText}. `);
+        },
       });
 
     this.rxjsService
       .fetchQuizzes()
       .pipe(takeUntilDestroyed(this.destroyRef))
-      .subscribe((quizzes: RxjsQuiz[]) => {
-        this.quizzes.set(quizzes);
+      .subscribe({
+        next: (quizzes: Quiz[]) => {
+          this.quizzes.set(quizzes);
+        },
+        error: (err) => {
+          this.errorMessage.update((msg) => msg + `Load quizzes error: ${err.statusText}. `);
+        },
       });
 
     this.searchControl.valueChanges
@@ -56,9 +73,7 @@ export class RxjsComponent implements OnInit {
         takeUntilDestroyed(this.destroyRef),
       )
       .subscribe((term) => {
-        const filtered = this.topics().filter((t: RxjsTopic) =>
-          t.title.toLowerCase().includes(term),
-        );
+        const filtered = this.topics().filter((t: Topic) => t.title.toLowerCase().includes(term));
         this.filteredTopics.set(filtered);
       });
   }

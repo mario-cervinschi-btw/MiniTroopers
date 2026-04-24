@@ -6,6 +6,7 @@ import {
   PracticeCategorySummary,
 } from '../../shared/models/practice.model';
 import { takeUntilDestroyed } from '@angular/core/rxjs-interop';
+import { finalize } from 'rxjs';
 
 @Component({
   selector: 'app-practices-page',
@@ -34,14 +35,22 @@ export class PracticesPage implements OnInit {
 
     this.practicesService
       .fetchCategories()
-      .pipe(takeUntilDestroyed(this.destroyRef))
-      .subscribe((categories: PracticeCategorySummary[]) => {
-        this.categories.set(
-          categories.sort(
-            (a: PracticeCategorySummary, b: PracticeCategorySummary) => a.orderIndex - b.orderIndex,
-          ),
-        );
-        this.loading.set(false);
+      .pipe(
+        takeUntilDestroyed(this.destroyRef),
+        finalize(() => {
+          this.loading.set(false);
+        }),
+      )
+      .subscribe({
+        next: (categories: PracticeCategorySummary[]) => {
+          this.categories.set(
+            categories.sort(
+              (a: PracticeCategorySummary, b: PracticeCategorySummary) =>
+                a.orderIndex - b.orderIndex,
+            ),
+          );
+        },
+        error: (err) => this.errorMessage.set('Loading categories error: ' + err.statusText),
       });
   }
 

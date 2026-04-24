@@ -1,8 +1,9 @@
 import { HttpClient } from '@angular/common/http';
 import { inject, Injectable } from '@angular/core';
 import { API_BASE_URL } from '../../../environments/environments';
-import { SignalsQuiz, SignalsTopic } from '../models/signals.model';
 import { Observable } from 'rxjs';
+import { Topic } from '../models/topic.model';
+import { Quiz } from '../models/quiz.model';
 
 @Injectable({
   providedIn: 'root',
@@ -10,13 +11,13 @@ import { Observable } from 'rxjs';
 export class SignalService {
   private readonly http = inject(HttpClient);
 
-  readonly apiBaseUrl = API_BASE_URL + '/signals';
+  private readonly apiBaseUrl = API_BASE_URL + '/signals';
 
-  fetchTopics(): Observable<SignalsTopic[]> {
-    return this.http.get<SignalsTopic[]>(`${this.apiBaseUrl}/topics`);
+  fetchTopics(): Observable<Topic[]> {
+    return this.http.get<Topic[]>(`${this.apiBaseUrl}/topics`);
   }
 
-  fetchQuizzes(): Observable<SignalsQuiz[]> {
-    return this.http.get<SignalsQuiz[]>(`${this.apiBaseUrl}/quizzes`);
+  fetchQuizzes(): Observable<Quiz[]> {
+    return this.http.get<Quiz[]>(`${this.apiBaseUrl}/quizzes`);
   }
 }

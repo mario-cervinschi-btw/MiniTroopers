@@ -10,7 +10,7 @@ import { Observable } from 'rxjs';
 export class PracticesService {
   private readonly http = inject(HttpClient);
 
-  readonly apiBaseUrl = API_BASE_URL + '/practices';
+  private readonly apiBaseUrl = API_BASE_URL + '/practices';
 
   fetchCategories(): Observable<PracticeCategorySummary[]> {
     return this.http.get<PracticeCategorySummary[]>(`${this.apiBaseUrl}/categories`);
