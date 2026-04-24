@@ -2,9 +2,9 @@ import { DestroyRef, inject, Injectable } from '@angular/core';
 import { Actions, createEffect, ofType } from '@ngrx/effects';
 import { catchError, map, of, switchMap } from 'rxjs';
 import { loadTopics, loadTopicsFailure, loadTopicsSuccess } from './ngrx.actions';
-import { NgrxTopic } from '../../models/ngrx.model';
 import { NgrxService } from '../../services/ngrx-service';
 import { takeUntilDestroyed } from '@angular/core/rxjs-interop';
+import { NgrxTopic } from '../../models/ngrx.model';
 
 @Injectable()
 export class NgrxPageEffects {
@@ -17,7 +17,7 @@ export class NgrxPageEffects {
       ofType(loadTopics),
       switchMap(() =>
         this.ngrxService.fetchTopics().pipe(
-          map((topics) => loadTopicsSuccess({ topics })),
+          map((topics: NgrxTopic[]) => loadTopicsSuccess({ topics })),
           takeUntilDestroyed(this.destroyRef),
           catchError((err) =>
             of(loadTopicsFailure({ error: err.message ?? 'Failed to load topics' })),

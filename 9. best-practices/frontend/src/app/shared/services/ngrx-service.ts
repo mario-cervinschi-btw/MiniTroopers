@@ -1,6 +1,8 @@
 import { HttpClient } from '@angular/common/http';
 import { inject, Injectable } from '@angular/core';
 import { API_BASE_URL } from '../../../environments/environments';
+import { NgrxQuiz, NgrxTopic } from '../models/ngrx.model';
+import { Observable } from 'rxjs';
 
 @Injectable({
   providedIn: 'root',
@@ -10,11 +12,11 @@ export class NgrxService {
 
   readonly apiBaseUrl = API_BASE_URL + '/ngrx';
 
-  fetchTopics() {
-    return this.http.get<any[]>(`${this.apiBaseUrl}/topics`);
+  fetchTopics(): Observable<NgrxTopic[]> {
+    return this.http.get<NgrxTopic[]>(`${this.apiBaseUrl}/topics`);
   }
 
-  fetchQuizzes() {
-    return this.http.get<any>(`${this.apiBaseUrl}/quizzes`);
+  fetchQuizzes(): Observable<NgrxQuiz[]> {
+    return this.http.get<NgrxQuiz[]>(`${this.apiBaseUrl}/quizzes`);
   }
 }

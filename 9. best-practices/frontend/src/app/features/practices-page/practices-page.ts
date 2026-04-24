@@ -1,7 +1,10 @@
 import { Component, DestroyRef, inject, OnInit, signal } from '@angular/core';
 import { PracticesService } from '../../shared/services/practices-service';
 import { PageHeader } from '../../shared/components/page-header/page-header';
-import { PracticeCategoryDetails } from '../../shared/models/practice.model';
+import {
+  PracticeCategoryDetails,
+  PracticeCategorySummary,
+} from '../../shared/models/practice.model';
 import { takeUntilDestroyed } from '@angular/core/rxjs-interop';
 
 @Component({
@@ -14,7 +17,7 @@ export class PracticesPage implements OnInit {
   private readonly practicesService = inject(PracticesService);
   private readonly destroyRef = inject(DestroyRef);
 
-  protected readonly categories = signal<PracticeCategoryDetails[]>([]);
+  protected readonly categories = signal<PracticeCategorySummary[]>([]);
   protected readonly loading = signal(false);
   protected readonly errorMessage = signal('');
 
@@ -32,15 +35,19 @@ export class PracticesPage implements OnInit {
     this.practicesService
       .fetchCategories()
       .pipe(takeUntilDestroyed(this.destroyRef))
-      .subscribe((categories) => {
-        this.categories.set(categories.sort((a: any, b: any) => a.orderIndex - b.orderIndex));
+      .subscribe((categories: PracticeCategorySummary[]) => {
+        this.categories.set(
+          categories.sort(
+            (a: PracticeCategorySummary, b: PracticeCategorySummary) => a.orderIndex - b.orderIndex,
+          ),
+        );
         this.loading.set(false);
       });
   }
 
-  protected toggleCategory(slug: string, category: any): void {
+  protected toggleCategory(slug: string): void {
     if (this.openedCategorySlugs().has(slug)) {
-      this.openedCategorySlugs.update((set) => {
+      this.openedCategorySlugs.update((set: Set<string>) => {
         const next = new Set(set);
         next.delete(slug);
         return next;
@@ -48,7 +55,7 @@ export class PracticesPage implements OnInit {
       return;
     }
 
-    this.openedCategorySlugs.update((set) => {
+    this.openedCategorySlugs.update((set: Set<string>) => {
       const next = new Set(set);
       next.add(slug);
       return next;
@@ -58,19 +65,22 @@ export class PracticesPage implements OnInit {
       return;
     }
 
-    this.practicesService.fetchCategoryDetails(slug).subscribe((details) => {
-      this.categoryDetails.update((val) => ({
-        ...val,
-        [slug]: details,
-      }));
-    });
+    this.practicesService
+      .fetchCategoryDetails(slug)
+      .pipe(takeUntilDestroyed(this.destroyRef))
+      .subscribe((details: PracticeCategoryDetails) => {
+        this.categoryDetails.update((val) => ({
+          ...val,
+          [slug]: details,
+        }));
+      });
   }
 
   protected isOpen(slug: string): boolean {
     return this.openedCategorySlugs().has(slug);
   }
 
-  protected getDetails(slug: string): any {
+  protected getDetails(slug: string): PracticeCategoryDetails {
     return this.categoryDetails()[slug] ?? null;
   }
 }

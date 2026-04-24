@@ -3,21 +3,9 @@ import { PageHeader } from '../../shared/components/page-header/page-header';
 import { SignalsQuiz, SignalsTopic } from '../../shared/models/signals.model';
 import { SignalService } from '../../shared/services/signal-service';
 import { FormControl, ReactiveFormsModule } from '@angular/forms';
-import {
-  concatMap,
-  debounceTime,
-  delay,
-  distinctUntilChanged,
-  filter,
-  from,
-  map,
-  mergeMap,
-  of,
-  shareReplay,
-  tap,
-  toArray,
-} from 'rxjs';
+import { debounceTime, distinctUntilChanged, map } from 'rxjs';
 import { takeUntilDestroyed } from '@angular/core/rxjs-interop';
+import { RxjsTopic } from '../../shared/models/rxjs.model';
 
 @Component({
   selector: 'app-signals',
@@ -50,7 +38,7 @@ export class SignalsComponent implements OnInit {
       .fetchTopics()
       .pipe(takeUntilDestroyed(this.destroyRef))
       .subscribe({
-        next: (topics) => {
+        next: (topics: SignalsTopic[]) => {
           this.topics.set(topics);
           this.filteredTopics.set(topics);
           this.loading.set(false);
@@ -64,7 +52,7 @@ export class SignalsComponent implements OnInit {
       .fetchQuizzes()
       .pipe(takeUntilDestroyed(this.destroyRef))
       .subscribe({
-        next: (quizzes) => this.quizzes.set(quizzes),
+        next: (quizzes: SignalsQuiz[]) => this.quizzes.set(quizzes),
       });
 
     this.searchControl.valueChanges
@@ -75,7 +63,9 @@ export class SignalsComponent implements OnInit {
         takeUntilDestroyed(this.destroyRef),
       )
       .subscribe((term) => {
-        const filtered = this.topics().filter((t) => t.title.toLowerCase().includes(term));
+        const filtered = this.topics().filter((t: RxjsTopic) =>
+          t.title.toLowerCase().includes(term),
+        );
         this.filteredTopics.set(filtered);
       });
   }

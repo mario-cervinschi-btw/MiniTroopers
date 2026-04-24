@@ -1,8 +1,5 @@
 import { Component, DestroyRef, inject, OnInit, signal } from '@angular/core';
 import { takeUntilDestroyed, toSignal } from '@angular/core/rxjs-interop';
-import { Store } from '@ngrx/store';
-import { loadTopics } from '../../shared/stores/ngrx-store/ngrx.actions';
-import { selectAllTopics, selectLoading } from '../../shared/stores/ngrx-store/ngrx.selectors';
 import { NgrxQuiz } from '../../shared/models/ngrx.model';
 import { NgrxService } from '../../shared/services/ngrx-service';
 import { NgrxFacade } from '../../shared/stores/ngrx-store/ngrx.facade';

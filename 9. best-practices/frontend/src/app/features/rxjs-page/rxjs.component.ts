@@ -1,19 +1,6 @@
 import { Component, DestroyRef, inject, OnInit, signal } from '@angular/core';
 import { FormControl, ReactiveFormsModule } from '@angular/forms';
-import {
-  concatMap,
-  debounceTime,
-  delay,
-  distinctUntilChanged,
-  filter,
-  from,
-  map,
-  mergeMap,
-  of,
-  shareReplay,
-  tap,
-  toArray,
-} from 'rxjs';
+import { debounceTime, distinctUntilChanged, map } from 'rxjs';
 import { PageHeader } from '../../shared/components/page-header/page-header';
 import { RxjsService } from '../../shared/services/rxjs-service';
 import { RxjsQuiz, RxjsTopic } from '../../shared/models/rxjs.model';
@@ -48,7 +35,7 @@ export class RxjsComponent implements OnInit {
     this.rxjsService
       .fetchTopics()
       .pipe(takeUntilDestroyed(this.destroyRef))
-      .subscribe((topics) => {
+      .subscribe((topics: RxjsTopic[]) => {
         this.topics.set(topics);
         this.filteredTopics.set(topics);
         this.loading.set(false);
@@ -57,7 +44,7 @@ export class RxjsComponent implements OnInit {
     this.rxjsService
       .fetchQuizzes()
       .pipe(takeUntilDestroyed(this.destroyRef))
-      .subscribe((quizzes) => {
+      .subscribe((quizzes: RxjsQuiz[]) => {
         this.quizzes.set(quizzes);
       });
 
@@ -69,12 +56,14 @@ export class RxjsComponent implements OnInit {
         takeUntilDestroyed(this.destroyRef),
       )
       .subscribe((term) => {
-        const filtered = this.topics().filter((t) => t.title.toLowerCase().includes(term));
+        const filtered = this.topics().filter((t: RxjsTopic) =>
+          t.title.toLowerCase().includes(term),
+        );
         this.filteredTopics.set(filtered);
       });
   }
 
-  protected selectTab(tab: any): void {
+  protected selectTab(tab: 'topics' | 'quiz' | 'analogies'): void {
     this.activeTab.set(tab);
   }
 
@@ -87,25 +76,25 @@ export class RxjsComponent implements OnInit {
     return this.expandedIndex() === index;
   }
 
-  protected selectAnswer(quizIndex: any, optionIndex: any): void {
+  protected selectAnswer(quizIndex: number, optionIndex: number): void {
     this.selectedAnswers.update((prev) => ({
       ...prev,
       [quizIndex]: optionIndex,
     }));
   }
 
-  protected revealExplanation(quizIndex: any): void {
+  protected revealExplanation(quizIndex: number): void {
     this.revealedQuizzes.update((prev) => ({
       ...prev,
       [quizIndex]: true,
     }));
   }
 
-  protected isAnswered(quizIndex: any): boolean {
+  protected isAnswered(quizIndex: number): boolean {
     return this.selectedAnswers()[quizIndex] !== undefined;
   }
 
-  protected isCorrect(quizIndex: any): boolean {
+  protected isCorrect(quizIndex: number): boolean {
     const quiz = this.quizzes()[quizIndex];
     return quiz ? this.selectedAnswers()[quizIndex] === quiz.correctIndex : false;
   }
