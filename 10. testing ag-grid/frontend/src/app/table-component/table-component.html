@@ -1,0 +1,16 @@
+<section class="content" style="width: 100%; height: 100%">
+  <ag-grid-angular
+    style="width: 100%; height: 550px"
+    [theme]="theme"
+    [defaultColDef]="defaultColDef"
+    [rowData]="rowData()"
+    [columnDefs]="colDefs()"
+    [pagination]="true"
+    [loading]="isLoading()"
+    [rowSelection]="rowSelection"
+    (gridReady)="onGridReady($event)"
+    (cellValueChanged)="onCellValueChanged($event)"
+    (selectionChanged)="onSelectionChanged($event)"
+  >
+  </ag-grid-angular>
+</section>
