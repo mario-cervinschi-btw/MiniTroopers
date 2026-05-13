@@ -8,9 +8,11 @@ import {
   type RowSelectionOptions,
   type SelectionChangedEvent,
 } from 'ag-grid-community';
-import { delay, finalize, of, take } from 'rxjs';
+import { delay, finalize, take } from 'rxjs';
 import { data$ } from './table.data';
 import { DatePipe } from '@angular/common';
+import { OrgHierarcy } from '../org-hierarcy/org-hierarcy';
+import { GenericCard } from '../generic-card/generic-card';
 
 interface IRow {
   firstName: string;
@@ -26,7 +28,7 @@ interface IRow {
 
 @Component({
   selector: 'app-table-component',
-  imports: [AgGridAngular],
+  imports: [AgGridAngular, OrgHierarcy, GenericCard],
   providers: [DatePipe],
   templateUrl: './table-component.html',
   styleUrl: './table-component.scss',
@@ -44,6 +46,7 @@ export class TableComponent {
   rowData = signal<IRow[]>([]);
 
   defaultColDef: ColDef = {
+    sortable: false,
     filter: true,
   };
 

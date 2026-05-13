@@ -1,0 +1,70 @@
+.list-hierarchy {
+    display: flex;
+    flex-direction: column;
+    gap: 1rem;
+
+    @for $i from 1 through 10 {
+        &__item:nth-child(#{$i}) {
+            margin-left: #{($i) * 24}px;
+        }
+    }
+
+    &__item {
+        display: flex;
+        flex-direction: row;
+        justify-content: space-between;
+        align-items: center;
+
+        &_data {
+            display: flex;
+            flex-direction: row;
+            align-items: center;
+            gap: 0.5rem;
+            &_icon {
+                padding: 0.5rem;
+                border-radius: 0.75rem;
+                display: flex;
+                &.dep {
+                    background-color: hsl(20, 100%, 90%);
+                }
+                &.cluster {
+                    background-color: hsl(0, 0%, 90%);
+                }
+                &.unit {
+                    background-color: hsl(109, 68%, 90%);
+                }
+            }
+
+            &_role {
+                p {
+                    font-weight: 600;
+                    padding: 0;
+                    margin: 0;
+                }
+
+                &_title {
+                    font-size: 12px;
+                    color: #616161;
+                }
+
+                &_name {
+                    font-size: 16px;
+                    color: #0d0d0d;
+                }
+            }
+        }
+
+        &_name {
+            display: flex;
+            font-size: 12px;
+            font-weight: 600;
+
+            gap: 0.5rem;
+            color: #2b4a87;
+
+            span {
+                color: #616161;
+            }
+        }
+    }
+}
