@@ -2,6 +2,7 @@
     display: flex;
     flex-direction: column;
     gap: 1rem;
+    padding: 12px 0px;
 
     @for $i from 1 through 10 {
         &__item:nth-child(#{$i}) {

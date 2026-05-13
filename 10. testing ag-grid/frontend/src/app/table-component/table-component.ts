@@ -13,6 +13,7 @@ import { data$ } from './table.data';
 import { DatePipe } from '@angular/common';
 import { OrgHierarcy } from '../org-hierarcy/org-hierarcy';
 import { GenericCard } from '../generic-card/generic-card';
+import { SummaryPeopleCard } from '../summary-people-card/summary-people-card';
 
 interface IRow {
   firstName: string;
@@ -28,7 +29,7 @@ interface IRow {
 
 @Component({
   selector: 'app-table-component',
-  imports: [AgGridAngular, OrgHierarcy, GenericCard],
+  imports: [AgGridAngular, OrgHierarcy, GenericCard, SummaryPeopleCard],
   providers: [DatePipe],
   templateUrl: './table-component.html',
   styleUrl: './table-component.scss',
